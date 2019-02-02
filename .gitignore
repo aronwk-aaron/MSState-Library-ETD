@@ -213,3 +213,6 @@ dmypy.json
 .history
 
 # End of https://www.gitignore.io/api/python,pycharm,visualstudiocode
+
+# ignore the whole .idea folder
+.idea/*
