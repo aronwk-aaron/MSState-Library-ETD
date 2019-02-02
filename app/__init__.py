@@ -1,4 +1,7 @@
 from flask import Flask
+from flask_assets import Environment
+from webassets import Bundle
+
 from config import configs
 
 
@@ -18,6 +21,10 @@ def create_app(config_name='default'):
     # register_extensions(app)
     register_blueprints(app)
 
+    assets = Environment(app)
+    assets.url = app.static_url_path
+    scss = Bundle('scss/site.scss', filters='libsass', output='site.css')
+    assets.register('scss_all', scss)
     return app
 
 
