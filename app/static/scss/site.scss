@@ -1,0 +1,22 @@
+
+$theme-colors: (
+        "primary": #660000
+);
+
+@import "../bootswatch-master/flatly/variables";
+@import "../bootstrap-4.2.1/scss/bootstrap";
+@import "../bootswatch-master/flatly/bootswatch";
+
+
+// NAVBAR
+// make the active nav link bold
+.nav-link.active {
+  font-weight: bold;
+}
+
+// nav-link colors <3
+.bg-primary {
+  .navbar-nav > .nav-link:hover {
+    color: $gray-400 !important;
+  }
+}
