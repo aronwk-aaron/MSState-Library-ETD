@@ -17,10 +17,12 @@ $theme-colors: (
 
 // nav-link colors <3
 .bg-primary {
-  .navbar-nav > .nav-link:hover {
-    color: $gray-300 !important;
+  .nav-link:hover {
+    color: white !important;
+    background-color: rgba($gray-200, .2);
   }
-  .navbar-nav > .nav-link:focus {
-    color: $gray-300 !important;
+  .nav-link:focus {
+    color: white !important;
+    background-color: rgba($gray-200, .2);
   }
 }
