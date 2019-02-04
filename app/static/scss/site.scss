@@ -26,3 +26,8 @@ $theme-colors: (
     background-color: rgba($gray-200, .2);
   }
 }
+
+// Responsive font
+@include media-breakpoint-down(sm) {
+  html{font-size: 14px;}
+}
