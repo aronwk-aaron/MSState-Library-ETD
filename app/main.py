@@ -13,3 +13,9 @@ def splash():
 def index():
     """Home/Index Page"""
     return render_template('main/index.jinja2')
+
+
+@main_blueprint.route('/dashboard')
+def dashboard():
+    """Dashboard Page"""
+    return render_template('main/dashboard.jinja2')
