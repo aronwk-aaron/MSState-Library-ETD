@@ -15,6 +15,18 @@ $theme-colors: (
   font-weight: bold;
 }
 
+a {
+  color: map_get($theme-colors, "primary");
+}
+
+a:hover {
+  color: darken(map_get($theme-colors, "primary"), 0.75)
+}
+
+a:focus {
+  color: darken(map_get($theme-colors, "primary"), 0.75)
+}
+
 // nav-link colors <3
 .bg-primary {
   .nav-link:hover {
