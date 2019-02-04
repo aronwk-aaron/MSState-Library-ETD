@@ -3,5 +3,26 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    El'Contento goes here!
+
+    <div class="jumbotron">
+        <div class="text-center pb-4">
+            <span class="h4">Mississippi State University Libraries</span>
+            <span class="h3"><br/>Electronic Thesis and Dissertation System</span>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-sm-8">
+                <form role="form">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="What would you like to search for?">
+                        <span class="input-group-btn">
+                        <button class="btn btn-secondary ml-1" type="submit">
+                            <i class="fas fa-search mr-2"></i>Search
+                        </button>
+                    </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
