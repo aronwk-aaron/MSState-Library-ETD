@@ -9,60 +9,62 @@
             <h2>Dashboard</h2>
         </div>
     </div>
+{% endblock %}
 
-    <div class='container'>
-        <div class='card'>
+{% block content %}
+
+    {# Profile Card #}
+    <div class='card'>
+        <div class='card-body'>
+            <div class='row'>
+                <div class='col'>
+                    <span class='h3'>Profile</span>
+                </div>
+                <div class='col-md-auto my-auto'>
+                    <a href='' class='btn btn-outline-primary mt-2 mt-sm-0'>
+                        Edit profile
+                    </a>
+                </div>
+            </div>
+            <hr/>
+
+            <p class="mb-1">
+                <b>First name:</b><br/>
+                Bully
+            </p>
+            <p class="mb-1">
+                <b>Last name:</b><br/>
+                Bulldog
+            </p>
+            <p class="mb-1">
+                <b>netID:</b><br/>
+                bb123
+            </p>
+
+        </div>
+    </div>
+
+    {# TODO: user type check #}
+    {# Submissions Card #}
+    {% if true %}
+        <div class='card my-4'>
             <div class='card-body'>
                 <div class='row'>
                     <div class='col'>
-                        <span class='h3'>Profile</span>
+                        <span class='h3'>Submissions</span>
                     </div>
                     <div class='col-md-auto my-auto'>
                         <a href='' class='btn btn-outline-primary mt-2 mt-sm-0'>
-                            Edit profile
+                            New submission
                         </a>
                     </div>
                 </div>
                 <hr/>
 
-                <p class="mb-1">
-                    <b>First name:</b><br/>
-                    Bully
-                </p>
-                <p class="mb-1">
-                    <b>Last name:</b><br/>
-                    Bulldog
-                </p>
-                <p class="mb-1">
-                    <b>netID:</b><br/>
-                    bb123
-                </p>
+                <p>You don't have any submissions!<br/><a href=''>Create one now?</a></p>
 
             </div>
         </div>
-
-        {# TODO: user type check #}
-        {% if true %}
-            <div class='card my-4'>
-                <div class='card-body'>
-                    <div class='row'>
-                        <div class='col'>
-                            <span class='h3'>Submissions</span>
-                        </div>
-                        <div class='col-md-auto my-auto'>
-                            <a href='' class='btn btn-outline-primary mt-2 mt-sm-0'>
-                                New submission
-                            </a>
-                        </div>
-                    </div>
-                    <hr/>
-
-                    <p>You don't have any submissions!<br/><a href=''>Create one now?</a></p>
-
-                </div>
-            </div>
-        {% endif %}
-
-    </div>
+    {% endif %}
 
 {% endblock %}
