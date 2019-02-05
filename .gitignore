@@ -216,3 +216,5 @@ dmypy.json
 
 # ignore the whole .idea folder
 .idea/*
+
+config\.py
