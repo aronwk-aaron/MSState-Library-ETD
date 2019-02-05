@@ -2,21 +2,21 @@ from flask import Flask
 from flask_assets import Environment
 from webassets import Bundle
 
-from config import configs
+from app.configuration import AppConfiguration
+
+# load the configuration
+config = AppConfiguration()
 
 
-def create_app(config_name='default'):
+def create_app():
     """Create and configure the Flask app
-
-    Args:
-        config_name (str): the configuration name, defined in config.py
 
     Returns:
         Flask: the configured app
     """
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object(configs[config_name])
+    app.config.from_object(config.flask_config)
 
     # register_extensions(app)
     register_blueprints(app)
