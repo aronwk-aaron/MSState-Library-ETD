@@ -1,0 +1,41 @@
+{% extends 'base.jinja2' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+
+    {# Profile Card #}
+    <div class='card mx-auto mt-5 col-lg-6 col-12 shadow'>
+        <div class='card-body'>
+            <div class='row justify-content-center mb-3'>
+                <i class='display-1 mx-auto text-muted fas fa-user-circle'></i>
+            </div>
+
+            {# user name / classification #}
+            <div class='row justify-content-center'>
+                <span class='h3'>Bully Bulldog</span>
+            </div>
+            <div class='row justify-content-center'>
+                <span class='h5'>Student</span>
+            </div>
+            <hr/>
+
+            {# TODO: dynamic data #}
+            {# user data #}
+            <p class='text-lg-left'>
+                <b>Email:</b><br/>
+                bb123@msstate.edu
+                <br/><br/>
+                <b>Phone:</b><br/>
+                662-325-5555
+            </p>
+            <hr/>
+
+            {# edit profile button #}
+            <div class='col text-center'>
+                <a href='' class='btn btn-primary px-5'>Edit profile</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

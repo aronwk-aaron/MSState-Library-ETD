@@ -4,7 +4,7 @@
 
 {% block content_before %}
 
-    <div class='jumbotron'>
+    <div class='jumbotron shadow'>
         <div class='container'>
             <h2>Dashboard</h2>
         </div>
@@ -14,20 +14,10 @@
 {% block content %}
 
     {# Profile Card #}
-    <div class='card'>
+    <div class='card shadow'>
         <div class='card-body'>
-            <div class='row'>
-                <div class='col'>
-                    <span class='h3'>Profile</span>
-                </div>
-                <div class='col-md-auto my-auto'>
-                    <a href='' class='btn btn-outline-primary mt-2 mt-sm-0'>
-                        Edit profile
-                    </a>
-                </div>
-            </div>
+            <h3 class='card-title'>Profile</h3>
             <hr/>
-
             <p class="mb-1">
                 <b>First name:</b><br/>
                 Bully
@@ -40,29 +30,29 @@
                 <b>netID:</b><br/>
                 bb123
             </p>
+        </div>
 
+        <div class='card-footer'>
+            <a href='{{ url_for('main.profile') }}' class='btn btn-outline-primary mt-2 mt-sm-0'>
+                View my profile
+            </a>
         </div>
     </div>
 
     {# TODO: user type check #}
     {# Submissions Card #}
     {% if true %}
-        <div class='card my-4'>
+        <div class='card shadow mt-5'>
             <div class='card-body'>
-                <div class='row'>
-                    <div class='col'>
-                        <span class='h3'>Submissions</span>
-                    </div>
-                    <div class='col-md-auto my-auto'>
-                        <a href='' class='btn btn-outline-primary mt-2 mt-sm-0'>
-                            New submission
-                        </a>
-                    </div>
-                </div>
+                <h3 class='card-title'>Submissions</h3>
                 <hr/>
-
                 <p>You don't have any submissions!<br/><a href=''>Create one now?</a></p>
+            </div>
 
+            <div class='card-footer'>
+                <a href='' class='btn btn-outline-primary mt-2 mt-sm-0'>
+                    Create a submission
+                </a>
             </div>
         </div>
     {% endif %}

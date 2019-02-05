@@ -38,7 +38,10 @@
 
 <footer>
     {# Footer #}
-    {% block footer %}{% endblock %}
+    {% block footer %}
+        <hr class="my-5"/>
+
+    {% endblock %}
 </footer>
 
 
@@ -49,7 +52,7 @@
     <script>
         // set the active nav-link item
         $(function () {
-            let target_nav = '#{{request.endpoint}}'.replace('\.','-');
+            let target_nav = '#{{request.endpoint}}'.replace('\.', '-');
             $(target_nav).addClass('active');
         });
     </script>

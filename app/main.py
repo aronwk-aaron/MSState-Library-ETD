@@ -19,3 +19,9 @@ def index():
 def dashboard():
     """Dashboard Page"""
     return render_template('main/dashboard.jinja2')
+
+
+@main_blueprint.route('/profile')
+def profile():
+    """Profile Page"""
+    return render_template('main/profile.jinja2')
