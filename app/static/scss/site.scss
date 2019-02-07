@@ -13,7 +13,7 @@ $theme-colors: (
   background-color: map_get($theme-colors, "primary") !important;
 }
 
-// Responsive font
+// responsive font
 @include media-breakpoint-down(sm) {
   html{font-size: 14px;}
 }
@@ -21,4 +21,10 @@ $theme-colors: (
 // theming
 .sandstone {
   font-size: 12px;
+}
+
+// nav link padding
+.nav-link {
+  @extend .p-sm-3;
+  @extend .px-3;
 }
