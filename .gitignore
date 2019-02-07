@@ -218,3 +218,5 @@ dmypy.json
 .idea/*
 
 config\.py
+
+config\.ini
