@@ -4,42 +4,22 @@ $theme-colors: (
         "secondary": #777777
 );
 
-@import "../bootswatch-master/flatly/variables";
+@import "../bootswatch-master/sandstone/variables";
 @import "../bootstrap-4.2.1/scss/bootstrap";
-@import "../bootswatch-master/flatly/bootswatch";
+@import "../bootswatch-master/sandstone/bootswatch";
 
-
-// NAVBAR
-// make the active nav link bold
-.nav-link.active {
-  font-weight: bold;
-}
-
-a {
-  color: map_get($theme-colors, "primary");
-}
-
-a:hover {
-  color: darken(map_get($theme-colors, "primary"), 0.75)
-}
-
-a:focus {
-  color: darken(map_get($theme-colors, "primary"), 0.75)
-}
-
-// nav-link colors <3
+// colors <3
 .bg-primary {
-  .nav-link:hover {
-    color: white !important;
-    background-color: rgba($gray-200, .2);
-  }
-  .nav-link:focus {
-    color: white !important;
-    background-color: rgba($gray-200, .2);
-  }
+  background-color: map_get($theme-colors, "primary") !important;
 }
 
 // Responsive font
 @include media-breakpoint-down(sm) {
   html{font-size: 14px;}
+}
+
+// theming
+.sandstone {
+  font-size: 13px;
+  text-transform: none !important;
 }
