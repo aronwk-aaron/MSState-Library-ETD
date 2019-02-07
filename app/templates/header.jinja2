@@ -14,7 +14,7 @@
         {# Visible only on large devices #}
         <nav class='navbar-nav'>
             <div class='collapse navbar-collapse'>
-                <a class='nav-link ml-auto p-3' href='{{ url_for('main.dashboard') }}'><i class='fas fa-book mr-1'></i>Dashboard</a>
+                <a class='btn-nav-dashboard' href='{{ url_for('main.dashboard') }}'><i class='fas fa-book mr-1'></i>Dashboard</a>
             </div>
         </nav>
 
@@ -27,12 +27,13 @@
 </nav>
 
 {# Navigation menu / links bar #}
-<nav class='navbar navbar-expand-sm navbar-dark bg-primary p-0 {% if navbar_shadow %}shadow-sm{% endif %}' style='margin-top: -16px;'>
+<nav class='navbar navbar-expand-sm navbar-dark bg-primary p-sm-0 py-0 {% if navbar_shadow %}shadow-sm{% endif %}'>
     <div class='container mt-0 pt-0'>
-        <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+        <div class='collapse navbar-collapse' id='navbarSupportedContent' style='margin-top: -16px;'>
             <nav class='navbar-nav mr-auto'>
                 <a class='nav-link d-sm-none' href='#'>Dashboard</a>
                 <a id='main-index' class='nav-link' href='{{ url_for('main.index') }}'>Home</a>
+                <a id='main-submissions' class='nav-link' href='#'>Submissions</a>
                 <a id='main-about' class='nav-link' href='#'>About</a>
             </nav>
         </div>
