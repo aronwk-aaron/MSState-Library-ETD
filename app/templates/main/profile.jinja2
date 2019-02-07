@@ -1,11 +1,12 @@
 {% extends 'base.jinja2' %}
 
+{% set navbar_shadow = True %}
 {% block title %}User Profile{% endblock %}
 
 {% block content %}
 
     {# Profile Card #}
-    <div class='card mx-auto mt-5 col-lg-6 col-12 shadow'>
+    <div class='card mx-auto mt-5 col-lg-6 col-12 shadow-sm'>
         <div class='card-body'>
             <div class='row justify-content-center mb-3'>
                 <i class='display-1 mx-auto text-muted fas fa-user-circle'></i>

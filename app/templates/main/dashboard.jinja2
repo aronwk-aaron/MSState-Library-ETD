@@ -4,7 +4,7 @@
 
 {% block content_before %}
 
-    <div class='jumbotron shadow'>
+    <div class='jumbotron shadow-sm'>
         <div class='container'>
             <h2>Dashboard</h2>
         </div>
@@ -33,7 +33,7 @@
         </div>
 
         <div class='card-footer'>
-            <a href='{{ url_for('main.profile') }}' class='btn btn-outline-primary mt-2 mt-sm-0'>
+            <a href='{{ url_for('main.profile') }}' class='btn btn-outline-primary'>
                 View my profile
             </a>
         </div>
@@ -42,15 +42,17 @@
     {# TODO: user type check #}
     {# Submissions Card #}
     {% if true %}
-        <div class='card shadow mt-5'>
+        <div class='card shadow mt-4'>
             <div class='card-body'>
                 <h3 class='card-title'>Submissions</h3>
                 <hr/>
-                <p>You don't have any submissions!<br/><a href=''>Create one now?</a></p>
+                <p class="mb-1">
+                    You don't have any submissions!
+                </p>
             </div>
 
             <div class='card-footer'>
-                <a href='' class='btn btn-outline-primary mt-2 mt-sm-0'>
+                <a href='' class='btn btn-outline-primary'>
                     Create a submission
                 </a>
             </div>
