@@ -220,3 +220,5 @@ dmypy.json
 config\.py
 
 config\.ini
+
+app/static/site\.css
