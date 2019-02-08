@@ -45,8 +45,10 @@ class AppConfiguration(object):
             'secret_key': 'SECRET_KEY_NOT_SET'
         }
 
-        # write the config
-        with open('config.ini', 'w') as configfile:
+        # write the config.
+        config_path = os.path.dirname(os.path.abspath(__file__))
+        config_path = os.path.join(os.path.dirname(config_path), 'config.ini')
+        with open(config_path, 'w') as configfile:
             config.write(configfile)
 
         return config
