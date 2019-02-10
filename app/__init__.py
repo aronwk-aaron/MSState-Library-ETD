@@ -41,3 +41,6 @@ def register_blueprints(app):
     """
     from .main import main_blueprint
     app.register_blueprint(main_blueprint)
+
+    from .tad import tad_blueprint
+    app.register_blueprint(tad_blueprint)

@@ -1,0 +1,72 @@
+{% extends 'base.jinja2' %}
+
+{% set navbar_shadow = True %}
+{% block title %}New Submission{% endblock %}
+
+{% block css %}
+    {{ super() }}
+    <link href='http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css' rel='stylesheet'>
+{% endblock %}
+
+{% block content %}
+
+    <button id="tad-save" class='btn btn-secondary px-4'>{% if new %}Create{% else %}Save{% endif %}</button>
+    <button id='tad-save-quit' class='btn btn-dark ml-auto px-4'>{% if new %}Create{% else %}Save{% endif %} & Quit</button>
+    <hr/>
+
+    <input type='text' id='tad-title' class='form-control form-control-lg font-weight-bold' placeholder='Title'
+           autofocus value='{{ title }}'/>
+    <input type='text' id='tad-desc' class='form-control mt-3' placeholder='Description' autofocus value='{{ description }}'/>
+    <hr/>
+
+    <div id='summernote'></div>
+
+{% endblock %}
+
+{% block js %}
+    {{ super() }}
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js'></script>
+    <script>
+        $(function () {
+            $('#summernote').summernote({
+                placeholder: 'Let\'s get creative...',
+                tabsize: 2,
+                minHeight: 500
+            });
+
+            $('#tad-save').click(function () {
+                let data = $('#summernote').serializeArray();
+                data.push({
+                    'action': 'save',
+                    'new': '{{ new }}'
+                });
+                $.ajax({
+                    url: '{{ url_for('tad.edit') }}',
+                    type: 'POST',
+                    data: data,
+                    success: function (data) {
+                    },
+                    error: function (request, error) {
+                    }
+                });
+            });
+
+            $('#tad-save-quit').click(function () {
+                let data = $('#summernote').serializeArray();
+                data.push({
+                    'action': 'save',
+                    'new': '{{ new }}'
+                });
+                $.ajax({
+                    url: '{{ url_for('tad.edit') }}',
+                    type: 'POST',
+                    data: data,
+                    success: function (data) {
+                    },
+                    error: function (request, error) {
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
