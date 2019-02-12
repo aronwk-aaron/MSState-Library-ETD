@@ -8,11 +8,15 @@
     {% endif %}
 {% endblock %}
 
+
+
 {% block css %}
     {{ super() }}
     {# load summernote CSS #}
     <link href='http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css' rel='stylesheet'>
 {% endblock %}
+
+
 
 {% block content_before %}
 
@@ -28,6 +32,8 @@
     </div>
 
 {% endblock %}
+
+
 
 {% block content %}
 
@@ -59,6 +65,8 @@
     <div id='summernote'></div>
 
 {% endblock %}
+
+
 
 {% block js %}
     {{ super() }}
