@@ -13,26 +13,30 @@
             <table class="table table-white table-striped table-bordered table-hover">
                   <thead>
                         <tr>
-                            <th scope="col">Title</th>
-                            <th scope="col">Semester</th>
-                            <th scope="col">Link</th>
+                            <th scope="col">Revision #</th>
+                            <th scope="col">Mistakes</th>
+                            <th scope="col">View</th>
+                            <th scope="col">Review</th>
                         </tr>
                   </thead>
                   <tbody>
                         <tr>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td><a href="{{ url_for('submissions.revision', sub_id=id, rev_id=1) }}" class="btn btn-primary" role="button" aria-disabled="true">Link</a></td>
+                            <td>1</td>
+                            <td>7</td>
+                            <td><a href="{{ url_for('submissions.revision', sub_id=id, rev_id=1) }}" class="btn btn-primary" role="button" aria-disabled="true">View</a></td>
+                            <td>Reviewed</td>
                         </tr>
                         <tr>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                            <td><a href="{{ url_for('submissions.revision', sub_id=id, rev_id=2) }}" class="btn btn-primary" role="button" aria-disabled="true">Link</a></td>
+                            <td>2</td>
+                            <td>5</td>
+                            <td><a href="{{ url_for('submissions.revision', sub_id=id, rev_id=2) }}" class="btn btn-primary" role="button" aria-disabled="true">View</a></td>
+                            <td>Reviewed</td>
                         </tr>
                         <tr>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                            <td><a href="{{ url_for('submissions.revision', sub_id=id, rev_id=3) }}" class="btn btn-primary" role="button" aria-disabled="true">Link</a></td>
+                            <td>3</td>
+                            <td>2</td>
+                            <td><a href="{{ url_for('submissions.revision', sub_id=id, rev_id=3) }}" class="btn btn-primary" role="button" aria-disabled="true">View</a></td>
+                            <td><a href="{{ url_for('submissions.review', sub_id=id, rev_id=1) }}" class="btn btn-primary" role="button" aria-disabled="true">Review</a></td>
                         </tr>
                 </tbody>
             </table>

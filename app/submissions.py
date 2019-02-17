@@ -33,3 +33,11 @@ def revision(sub_id, rev_id):
     View single revision of a submission
     """
     return render_template('submissions/revision.jinja2', sub_id=sub_id, rev_id=rev_id)
+
+
+@submissions_blueprint.route('/review/<sub_id>/revision/<rev_id>')
+def review(sub_id, rev_id):
+    """Revision Page
+    View single revision of a submission
+    """
+    return render_template('submissions/review.jinja2', sub_id=sub_id, rev_id=rev_id)
