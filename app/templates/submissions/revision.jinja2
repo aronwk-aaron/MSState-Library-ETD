@@ -1,0 +1,19 @@
+{% extends 'base.jinja2' %}
+
+{% block title %}Revision {{ rev_id }}{% endblock %}
+
+{% block content_before %}
+
+    <div class="jumbotron shadow-sm">
+        <div class="container">
+            Submission {{ sub_id }}<br>
+            Revision {{ rev_id }}<br><br>
+
+            Displays revision information<br>
+            Status of revision, and feedback once given<br>
+
+
+        </div>
+    </div>
+
+{% endblock %}

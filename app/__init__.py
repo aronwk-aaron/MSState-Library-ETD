@@ -41,3 +41,5 @@ def register_blueprints(app):
     """
     from .main import main_blueprint
     app.register_blueprint(main_blueprint)
+    from .submissions import submissions_blueprint
+    app.register_blueprint(submissions_blueprint, url_prefix='/submissions')

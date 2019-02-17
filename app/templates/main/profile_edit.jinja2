@@ -1,10 +1,10 @@
 {% extends 'base.jinja2' %}
 
 {% set navbar_shadow = True %}
-{% block title %}User Profile{% endblock %}
+{% block title %}Edit Profile{% endblock %}
 
 {% block content %}
-
+    <h1>Editing profile</h1>
     {# Profile Card #}
     <div class='card mx-auto mt-5 col-lg-6 col-12 shadow-sm'>
         <div class='card-body'>
@@ -35,12 +35,15 @@
                 <br/><br/>
                 <b>Degree:</b><br/>
                 Master of Arts
+                <br/><br/>
+                <b>User ID:</b><br/>
+                {{ id }}
             </p>
             <hr/>
 
             {# edit profile button #}
             <div class='col text-center'>
-                <a href='{{ url_for('main.profile_edit', id=1) }}' class='btn btn-primary px-5'>Edit profile</a>
+                <a href='{{ url_for('main.profile_edit', id=1) }}' class='btn btn-primary px-5'>Save profile</a>
             </div>
         </div>
     </div>

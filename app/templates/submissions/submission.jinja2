@@ -1,0 +1,43 @@
+{% extends 'base.jinja2' %}
+
+{% block title %}Submission{% endblock %}
+
+{% block content_before %}
+
+    <div class="jumbotron shadow-sm">
+        <div class="container">
+            Submission {{ id }}<br><br>
+
+            Displays submission information<br>
+            Displays all revisions of submission<br>
+            <table class="table table-white table-striped table-bordered table-hover">
+                  <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Semester</th>
+                            <th scope="col">Link</th>
+                        </tr>
+                  </thead>
+                  <tbody>
+                        <tr>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            <td><a href="{{ url_for('submissions.revision', sub_id=id, rev_id=1) }}" class="btn btn-primary" role="button" aria-disabled="true">Link</a></td>
+                        </tr>
+                        <tr>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                            <td><a href="{{ url_for('submissions.revision', sub_id=id, rev_id=2) }}" class="btn btn-primary" role="button" aria-disabled="true">Link</a></td>
+                        </tr>
+                        <tr>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                            <td><a href="{{ url_for('submissions.revision', sub_id=id, rev_id=3) }}" class="btn btn-primary" role="button" aria-disabled="true">Link</a></td>
+                        </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+{% endblock %}

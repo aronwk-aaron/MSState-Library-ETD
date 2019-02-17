@@ -33,7 +33,7 @@
         </div>
 
         <div class='card-footer'>
-            <a href='{{ url_for('main.profile') }}' class='btn btn-outline-primary'>
+            <a href='{{ url_for('main.profile', id=1) }}' class='btn btn-outline-primary'>
                 View my profile
             </a>
         </div>
@@ -52,7 +52,7 @@
             </div>
 
             <div class='card-footer'>
-                <a href='' class='btn btn-outline-primary'>
+                <a href='{{ url_for('submissions.new') }}' class='btn btn-outline-primary'>
                     Create a submission
                 </a>
             </div>
