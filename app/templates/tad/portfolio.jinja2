@@ -1,0 +1,53 @@
+{% extends 'base.jinja2' %}
+
+{% block title %}Submissions{% endblock %}
+
+{% block content_before %}
+
+    <div class="jumbotron shadow-sm">
+        <div class="container">
+            <a href="{{ url_for('tad.new') }}" class="btn btn-primary" role="button" aria-disabled="true">New Submission</a><br><br>
+
+            Display All Submissions with search and filtering.<br>
+            Probably some sort of pagination on the backend to reduce and optimize load times.<br>
+            Possibly use datatable to do all of this.<br>
+            Restrict to role:<br>
+            <ul>
+                <li>Only students can see their own.</li>
+                <li>Only professors can see those by students who have them listed as their "Director"</li>
+            </ul>
+            <table class="table table-white table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Author</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Semester</th>
+                    <th scope="col">Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Kendrick, Katelyn</td>
+                    <td>I've run out of funny titles.</td>
+                    <td>Spring 2019</td>
+                    <td><a href="{{ url_for('tad.view', tad_id=1) }}" class="btn btn-primary" role="button" aria-disabled="true">Link</a></td>
+                </tr>
+                <tr>
+                    <td>Streamming, Jordan</td>
+                    <td>Banging your head against the keyboard can produce valid code.</td>
+                    <td>Spring 2019</td>
+                    <td><a href="{{ url_for('tad.view', tad_id=2) }}" class="btn btn-primary" role="button" aria-disabled="true">Link</a></td>
+                </tr>
+                <tr>
+                    <td>Kimbrell, Aaron</td>
+                    <td>What even is psychology?</td>
+                    <td>Spring 2019</td>
+                    <td><a href="{{ url_for('tad.view', tad_id=3) }}" class="btn btn-primary" role="button" aria-disabled="true">Link</a></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+{% endblock %}

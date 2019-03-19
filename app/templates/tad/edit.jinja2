@@ -55,11 +55,42 @@
     </button>
     <hr/>
 
-    {# title / description #}
-    <input type='text' id='tad-title' class='form-control form-control-lg font-weight-bold' placeholder='Title'
-           autofocus value='{{ title }}'/>
-    <input type='text' id='tad-desc' class='form-control mt-3' placeholder='Description' autofocus value='{{ description }}'/>
+    {# properties #}
+    <div class="form-group">
+        <input type='text' id='tad-title' class='form-control form-control-lg font-weight-bold' placeholder='Title'
+               autofocus value='{{ title }}'/>
+    </div>
+    <div class="form-group">
+        <input type='text' id='tad-desc' class='form-control' placeholder='Description' autofocus
+               value='{{ description }}'/>
+    </div>
     <hr/>
+
+    <div class="form-group">
+        <label for="tad-doctype" class="text-muted">Document type</label>
+        <select class="form-control" id="tad-doctype">
+            <option value="masters-thesis">
+                Master's Thesis
+            </option>
+            <option value="educational-specialists-thesis">
+                Educational Specialist's Thesis
+            </option>
+            <option value="doctoral-disseration">
+                Doctoral Disseration
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label class="text-muted">Attach files</label>
+        <form action="/" class="dropzone" id="tad-files-dropzone">
+
+            {# in case dropzone fails to load #}
+            <div class="fallback">
+                <input type="file" class="form-control-file" id="tad-files" multiple accept=".doc, .docx, .txt, .pdf, .jpg, .jpeg, .png">
+            </div>
+        </form>
+    </div>
 
     {# user input #}
     <div id='summernote'></div>

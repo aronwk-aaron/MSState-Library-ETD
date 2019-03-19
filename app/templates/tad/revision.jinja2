@@ -1,0 +1,39 @@
+{% extends 'base.jinja2' %}
+
+{% block title %}
+    View Revision
+{% endblock %}
+
+
+{% block content_before %}
+
+    {# title jumbotron #}
+    <div class='jumbotron shadow-sm py-5'>
+        <div class='container'>
+            <h1>Submission Name</h1>
+            <span class="lead">
+                revision {{ rev_id }}:<br/>
+                <i>summary of what was revised</i>
+            </span>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+    {# button bar #}
+    <button id="tad-rev-back" class='btn btn-dark px-4 mr-auto'>
+        Back
+    </button>
+    <hr/>
+
+    <p>
+        <b>Revised by</b> <u>Professor Minerva McGonagall</u> <b>at</b> 4:20 PM 4/20/69
+    </p>
+    <p>
+        document view or something cool like that goes here
+    </p>
+{% endblock %}

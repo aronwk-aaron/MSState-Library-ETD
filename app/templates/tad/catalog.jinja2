@@ -1,0 +1,67 @@
+{% extends 'base.jinja2' %}
+
+{% block title %}Submission Catalog{% endblock %}
+
+
+
+{% block content_before %}
+
+    {# title jumbotron #}
+    <div class='jumbotron shadow-sm py-5'>
+        <div class='container'>
+            <h1>Submission Catalog</h1>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+{% block content %}
+    <form>
+        <div class="input-group py-3">
+            <input type="text" class="form-control" placeholder="Search for submission...">
+            <span class="input-group-btn">
+                <button class="btn btn-secondary ml-1" type="submit">
+                    <i class="fas fa-search mr-2"></i>Search
+                </button>
+            </span>
+        </div>
+    </form>
+    <hr/>
+
+    <table class="table table-white table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Author</th>
+            <th scope="col">Title</th>
+            <th scope="col">Semester</th>
+            <th scope="col">Link</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Kendrick, Katelyn</td>
+            <td>I've run out of funny titles.</td>
+            <td>Spring 2019</td>
+            <td><a href="{{ url_for('tad.view', tad_id=1) }}" class="btn btn-primary" role="button"
+                   aria-disabled="true">Link</a></td>
+        </tr>
+        <tr>
+            <td>Streamming, Jordan</td>
+            <td>Banging your head against the keyboard can produce valid code.</td>
+            <td>Spring 2019</td>
+            <td><a href="{{ url_for('tad.view', tad_id=2) }}" class="btn btn-primary" role="button"
+                   aria-disabled="true">Link</a></td>
+        </tr>
+        <tr>
+            <td>Kimbrell, Aaron</td>
+            <td>What even is psychology?</td>
+            <td>Spring 2019</td>
+            <td><a href="{{ url_for('tad.view', tad_id=3) }}" class="btn btn-primary" role="button"
+                   aria-disabled="true">Link</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+{% endblock %}
