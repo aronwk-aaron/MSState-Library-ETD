@@ -36,6 +36,7 @@ def portfolio():
     return render_template('tad/portfolio.jinja2')
 
 
+@tad_blueprint.route('/tad/')
 @tad_blueprint.route('/tad/catalog')
 def catalog():
     """Catalog of TADs"""
