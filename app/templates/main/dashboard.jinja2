@@ -4,59 +4,59 @@
 
 {% block content_before %}
 
-    <div class='jumbotron shadow-sm'>
-        <div class='container'>
-            <h1 class="display-4">Dashboard</h1>
-        </div>
+  <div class='jumbotron shadow-sm'>
+    <div class='container'>
+      <h1 class="display-4">Dashboard</h1>
     </div>
+  </div>
 {% endblock %}
 
 {% block content %}
 
-    {# Profile Card #}
-    <div class='card shadow'>
-        <div class='card-body'>
-            <h3 class='card-title'>Profile</h3>
-            <hr/>
-            <p class="mb-1">
-                <b>First name:</b><br/>
-                Bully
-            </p>
-            <p class="mb-1">
-                <b>Last name:</b><br/>
-                Bulldog
-            </p>
-            <p class="mb-1">
-                <b>netID:</b><br/>
-                bb123
-            </p>
-        </div>
-
-        <div class='card-footer'>
-            <a href='{{ url_for('main.profile') }}' class='btn btn-outline-primary'>
-                View my profile
-            </a>
-        </div>
+  {# Profile Card #}
+  <div class='card shadow'>
+    <div class='card-body'>
+      <h3 class='card-title'>Profile</h3>
+      <hr/>
+      <p class="mb-1">
+        <b>First name:</b><br/>
+        Bully
+      </p>
+      <p class="mb-1">
+        <b>Last name:</b><br/>
+        Bulldog
+      </p>
+      <p class="mb-1">
+        <b>netID:</b><br/>
+        bb123
+      </p>
     </div>
 
-    {# TODO: user type check #}
-    {# Submissions Card #}
-    {% if true %}
-        <div class='card shadow mt-4'>
-            <div class='card-body'>
-                <h3 class='card-title'>Submissions</h3>
-                <hr/>
-                <p class="mb-1">
-                    You don't have any submissions!
-                </p>
-            </div>
+    <div class='card-footer'>
+      <a href='{{ url_for('main.profile') }}' class='btn btn-outline-primary'>
+        View my profile
+      </a>
+    </div>
+  </div>
 
-            <div class='card-footer'>
-                <a href='' class='btn btn-outline-primary'>
-                    Create a submission
-                </a>
-            </div>
-        </div>
-    {% endif %}
+  {# TODO: user type check #}
+  {# Submissions Card #}
+  {% if true %}
+    <div class='card shadow mt-4'>
+      <div class='card-body'>
+        <h3 class='card-title'>Submissions</h3>
+        <hr/>
+        <p class="mb-1">
+          You don't have any submissions!
+        </p>
+      </div>
+
+      <div class='card-footer'>
+        <a href='' class='btn btn-outline-primary'>
+          Create a submission
+        </a>
+      </div>
+    </div>
+  {% endif %}
 
 {% endblock %}
