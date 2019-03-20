@@ -3,59 +3,59 @@
 
 <head>
 
-    {# Title #}
-    <title>{% block title %}{% endblock %} - MSState ETD</title>
+  {# Title #}
+  <title>{% block title %}{% endblock %} - MSState ETD</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% block css %}
-        {# CSS Styling #}
-        {% assets "scss_all" %}
-            <link rel=stylesheet type=text/css href="{{ ASSET_URL }}">
-        {% endassets %}
-        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.1/css/all.css'
-              integrity='sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr'
-              crossorigin='anonymous'>
-    {% endblock %}
+  {% block css %}
+    {# CSS Styling #}
+    {% assets "scss_all" %}
+      <link rel=stylesheet type=text/css href="{{ ASSET_URL }}">
+    {% endassets %}
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.1/css/all.css'
+          integrity='sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr'
+          crossorigin='anonymous'>
+  {% endblock %}
 
 </head>
 <body>
 
 
 {% block header %}
-    {# Header / Navigation #}
-    {% include 'header.jinja2' %}
+  {# Header / Navigation #}
+  {% include 'header.jinja2' %}
 {% endblock %}
 
 
 {# Content #}
 {% block content_before %}{% endblock %}
 <div class='container mt-4'>
-    {% block content %}{% endblock %}
+  {% block content %}{% endblock %}
 </div>
 {% block content_after %}{% endblock %}
 
 
 <footer>
-    {# Footer #}
-    {% block footer %}
-        <hr class="my-5"/>
+  {# Footer #}
+  {% block footer %}
+    <hr class="my-5"/>
 
-    {% endblock %}
+  {% endblock %}
 </footer>
 
 
 {% block js %}
-    {# JavaScript #}
-    <script src="{{ url_for('static', filename='bootstrap-4.2.1/js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bootstrap-4.2.1/js/bootstrap.bundle.min.js') }}"></script>
-    <script>
-        // set the active nav-link item
-        $(function () {
-            let target_nav = '#{{request.endpoint}}'.replace('\.', '-');
-            $(target_nav).addClass('active');
-        });
-    </script>
+  {# JavaScript #}
+  <script src="{{ url_for('static', filename='bootstrap-4.2.1/js/jquery-3.3.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap-4.2.1/js/bootstrap.bundle.min.js') }}"></script>
+  <script>
+    // set the active nav-link item
+    $(function () {
+      let target_nav = '#{{request.endpoint}}'.replace('\.', '-');
+      $(target_nav).addClass('active');
+    });
+  </script>
 {% endblock %}
 
 </body>

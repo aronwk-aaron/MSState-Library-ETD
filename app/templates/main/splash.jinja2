@@ -3,46 +3,46 @@
 {% block title %}Splash{% endblock %}
 {% block header %}{% endblock %}
 {% block css %}
-    {{ super() }}
-    {# override the body and html css to force center #}
-    <style>
-        html, body {
-            height: 100%;
-            background-color: #777777;
-        }
-    </style>
+  {{ super() }}
+  {# override the body and html css to force center #}
+  <style>
+    html, body {
+      height: 100%;
+      background-color: #777777;
+    }
+  </style>
 {% endblock %}
 
 {% block content_before %}
-    <div class="container-fluid h-100">
-        <div class="row h-100 justify-content-center align-items-center">
-            <div class="mx-auto" style="max-width: 30em;">
+  <div class="container-fluid h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="mx-auto" style="max-width: 30em;">
 
-                {# Splash card #}
-                <div class="card shadow rounded border-0 h-100">
-                    <div class="card-header bg-primary pt-4 text-center text-white mb-4">
-                        <img class="img-fluid mb-3" src="http://lib.msstate.edu/_assets/img/2015-header-logo-msstate.png"
-                             alt=""/>
-                        <h5>Electronic Thesis and Dissertation System</h5>
-                    </div>
+        {# Splash card #}
+        <div class="card shadow rounded border-0 h-100">
+          <div class="card-header bg-primary pt-4 text-center text-white mb-4">
+            <img class="img-fluid mb-3" src="http://lib.msstate.edu/_assets/img/2015-header-logo-msstate.png"
+                 alt=""/>
+            <h5>Electronic Thesis and Dissertation System</h5>
+          </div>
 
-                    <div class="card-body d-flex flex-column text-center mb-2">
-                        {# TODO: actually add content here #}
-                        <h3>
-                            Welcome!
-                        </h3>
-                        <p class="mb-5">
-                            Please sign in with CAS to access this system.
-                        </p>
+          <div class="card-body d-flex flex-column text-center mb-2">
+            {# TODO: actually add content here #}
+            <h3>
+              Welcome!
+            </h3>
+            <p class="mb-5">
+              Please sign in with CAS to access this system.
+            </p>
 
-                        {# TODO: link to CAS sign in #}
-                        <a href="{{ url_for("main.index") }}" class="btn btn-primary btn-lg mt-auto align-self-center px-4">
-                            Sign in with CAS
-                        </a>
-                    </div>
-                </div>
-
-            </div>
+            {# TODO: link to CAS sign in #}
+            <a href="{{ url_for("main.index") }}" class="btn btn-primary btn-lg mt-auto align-self-center px-4">
+              Sign in with CAS
+            </a>
+          </div>
         </div>
+
+      </div>
     </div>
+  </div>
 {% endblock %}

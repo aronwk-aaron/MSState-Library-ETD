@@ -1,41 +1,42 @@
-
 {# Navigation brand, nav toggle bar #}
 <nav class='navbar navbar-expand-sm navbar-dark bg-primary flex-row pb-3'>
-    <div class='container md-0 flex-nowrap'>
+  <div class='container md-0 flex-nowrap'>
 
-        <a class='navbar-brand' href='{{ url_for('main.index') }}'>
-            {# img only visible when expanded #}
-            <img class="collapse navbar-collapse" width="300" src='http://lib.msstate.edu/_assets/img/2015-header-logo-msstate.png' alt='Mississippi State University'/>
+    <a class='navbar-brand' href='{{ url_for('main.index') }}'>
+      {# img only visible when expanded #}
+      <img class="collapse navbar-collapse" width="300"
+           src='http://lib.msstate.edu/_assets/img/2015-header-logo-msstate.png' alt='Mississippi State University'/>
 
-            {# text only visible when small display #}
-            <span class="d-sm-none">MState ETD System</span>
-        </a>
+      {# text only visible when small display #}
+      <span class="d-sm-none">MState ETD System</span>
+    </a>
 
-        {# Visible only on large devices #}
-        <nav class='navbar-nav'>
-            <div class='collapse navbar-collapse'>
-                <a class='btn-nav-dashboard' href='{{ url_for('main.dashboard') }}'><i class='fas fa-book mr-1'></i>Dashboard</a>
-            </div>
-        </nav>
+    {# Visible only on large devices #}
+    <nav class='navbar-nav'>
+      <div class='collapse navbar-collapse'>
+        <a class='btn-nav-dashboard' href='{{ url_for('main.dashboard') }}'><i
+          class='fas fa-book mr-1'></i>Dashboard</a>
+      </div>
+    </nav>
 
-        <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent'
-                aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
-            <span class='navbar-toggler-icon'></span>
-        </button>
+    <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent'
+            aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
+      <span class='navbar-toggler-icon'></span>
+    </button>
 
-    </div>
+  </div>
 </nav>
 
 {# Navigation menu / links bar #}
 <nav class='navbar navbar-expand-sm navbar-dark bg-primary p-sm-0 py-0 {% if navbar_shadow %}shadow-sm{% endif %}'>
-    <div class='container mt-0 pt-0'>
-        <div class='collapse navbar-collapse' id='navbarSupportedContent' style='margin-top: -16px;'>
-            <nav class='navbar-nav mr-auto'>
-                <a class='nav-link d-sm-none' href='#'>Dashboard</a>
-                <a id='main-index' class='nav-link' href='{{ url_for('main.index') }}'>Home</a>
-                <a id='main-submissions' class='nav-link' href='#'>Submissions</a>
-                <a id='main-about' class='nav-link' href='#'>About</a>
-            </nav>
-        </div>
+  <div class='container mt-0 pt-0'>
+    <div class='collapse navbar-collapse' id='navbarSupportedContent' style='margin-top: -16px;'>
+      <nav class='navbar-nav mr-auto'>
+        <a class='nav-link d-sm-none' href='#'>Dashboard</a>
+        <a id='main-index' class='nav-link' href='{{ url_for('main.index') }}'>Home</a>
+        <a id='main-submissions' class='nav-link' href='#'>Submissions</a>
+        <a id='main-about' class='nav-link' href='#'>About</a>
+      </nav>
     </div>
+  </div>
 </nav>

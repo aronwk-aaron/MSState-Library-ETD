@@ -1,35 +1,35 @@
 {% extends 'base.jinja2' %}
 
 {% block title %}
-    {% if new %}
-        New Submission
-    {% else %}
-        Edit Submission
-    {% endif %}
+  {% if new %}
+    New Submission
+  {% else %}
+    Edit Submission
+  {% endif %}
 {% endblock %}
 
 
 
 {% block css %}
-    {{ super() }}
-    {# load summernote CSS #}
-    <link href='http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css' rel='stylesheet'>
+  {{ super() }}
+  {# load summernote CSS #}
+  <link href='http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css' rel='stylesheet'>
 {% endblock %}
 
 
 
 {% block content_before %}
 
-    {# title jumbotron #}
-    <div class='jumbotron shadow-sm py-5'>
-        <div class='container'>
-            {% if new %}
-                <h1>New Submission</h1>
-            {% else %}
-                <h1>Edit Submission</h1>
-            {% endif %}
-        </div>
+  {# title jumbotron #}
+  <div class='jumbotron shadow-sm py-5'>
+    <div class='container'>
+      {% if new %}
+        <h1>New Submission</h1>
+      {% else %}
+        <h1>Edit Submission</h1>
+      {% endif %}
     </div>
+  </div>
 
 {% endblock %}
 
@@ -37,114 +37,115 @@
 
 {% block content %}
 
-    {# button bar #}
-    <button id="tad-save" class='btn btn-secondary px-4'>
-        {% if new %}
-            Create
-        {% else %}
-            Save
-        {% endif %}
-    </button>
-    <button id='tad-save-quit' class='btn btn-dark ml-auto px-4'>
-        {% if new %}
-            Create
-        {% else %}
-            Save
-        {% endif %}
-        & Quit
-    </button>
-    <hr/>
+  {# button bar #}
+  <button id="tad-save" class='btn btn-secondary px-4'>
+    {% if new %}
+      Create
+    {% else %}
+      Save
+    {% endif %}
+  </button>
+  <button id='tad-save-quit' class='btn btn-dark ml-auto px-4'>
+    {% if new %}
+      Create
+    {% else %}
+      Save
+    {% endif %}
+    & Quit
+  </button>
+  <hr/>
 
-    {# properties #}
-    <div class="form-group">
-        <input type='text' id='tad-title' class='form-control form-control-lg font-weight-bold' placeholder='Title'
-               autofocus value='{{ title }}'/>
-    </div>
-    <div class="form-group">
-        <input type='text' id='tad-desc' class='form-control' placeholder='Description' autofocus
-               value='{{ description }}'/>
-    </div>
-    <hr/>
+  {# properties #}
+  <div class="form-group">
+    <input type='text' id='tad-title' class='form-control form-control-lg font-weight-bold' placeholder='Title'
+           autofocus value='{{ title }}'/>
+  </div>
+  <div class="form-group">
+    <input type='text' id='tad-desc' class='form-control' placeholder='Description' autofocus
+           value='{{ description }}'/>
+  </div>
+  <hr/>
 
-    <div class="form-group">
-        <label for="tad-doctype" class="text-muted">Document type</label>
-        <select class="form-control" id="tad-doctype">
-            <option value="masters-thesis">
-                Master's Thesis
-            </option>
-            <option value="educational-specialists-thesis">
-                Educational Specialist's Thesis
-            </option>
-            <option value="doctoral-disseration">
-                Doctoral Disseration
-            </option>
-        </select>
-    </div>
+  <div class="form-group">
+    <label for="tad-doctype" class="text-muted">Document type</label>
+    <select class="form-control" id="tad-doctype">
+      <option value="masters-thesis">
+        Master's Thesis
+      </option>
+      <option value="educational-specialists-thesis">
+        Educational Specialist's Thesis
+      </option>
+      <option value="doctoral-disseration">
+        Doctoral Disseration
+      </option>
+    </select>
+  </div>
 
-    <div class="form-group">
-        <label class="text-muted">Attach files</label>
-        <form action="/" class="dropzone" id="tad-files-dropzone">
+  <div class="form-group">
+    <label class="text-muted">Attach files</label>
+    <form action="/" class="dropzone" id="tad-files-dropzone">
 
-            {# in case dropzone fails to load #}
-            <div class="fallback">
-                <input type="file" class="form-control-file" id="tad-files" multiple accept=".doc, .docx, .txt, .pdf, .jpg, .jpeg, .png">
-            </div>
-        </form>
-    </div>
+      {# in case dropzone fails to load #}
+      <div class="fallback">
+        <input type="file" class="form-control-file" id="tad-files" multiple
+               accept=".doc, .docx, .txt, .pdf, .jpg, .jpeg, .png">
+      </div>
+    </form>
+  </div>
 
-    {# user input #}
-    <div id='summernote'></div>
+  {# user input #}
+  <div id='summernote'></div>
 
 {% endblock %}
 
 
 
 {% block js %}
-    {{ super() }}
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js'></script>
-    <script>
-        $(function () {
-            $('#summernote').summernote({
-                placeholder: 'Let\'s get creative...',
-                tabsize: 2,
-                minHeight: 500
-            });
+  {{ super() }}
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js'></script>
+  <script>
+    $(function () {
+      $('#summernote').summernote({
+        placeholder: 'Let\'s get creative...',
+        tabsize: 2,
+        minHeight: 500
+      });
 
-            // "SAVE" button
-            $('#tad-save').click(function () {
-                let data = $('#summernote').serializeArray();
-                data.push({
-                    'action': 'save',
-                    'new': '{{ new }}'
-                });
-                $.ajax({
-                    url: '{{ url_for('tad.edit') }}',
-                    type: 'POST',
-                    data: data,
-                    success: function (data) {
-                    },
-                    error: function (request, error) {
-                    }
-                });
-            });
-
-            // "SAVE & QUIT" button
-            $('#tad-save-quit').click(function () {
-                let data = $('#summernote').serializeArray();
-                data.push({
-                    'action': 'save',
-                    'new': '{{ new }}'
-                });
-                $.ajax({
-                    url: '{{ url_for('tad.edit') }}',
-                    type: 'POST',
-                    data: data,
-                    success: function (data) {
-                    },
-                    error: function (request, error) {
-                    }
-                });
-            });
+      // "SAVE" button
+      $('#tad-save').click(function () {
+        let data = $('#summernote').serializeArray();
+        data.push({
+          'action': 'save',
+          'new': '{{ new }}'
         });
-    </script>
+        $.ajax({
+          url: '{{ url_for('tad.edit') }}',
+          type: 'POST',
+          data: data,
+          success: function (data) {
+          },
+          error: function (request, error) {
+          }
+        });
+      });
+
+      // "SAVE & QUIT" button
+      $('#tad-save-quit').click(function () {
+        let data = $('#summernote').serializeArray();
+        data.push({
+          'action': 'save',
+          'new': '{{ new }}'
+        });
+        $.ajax({
+          url: '{{ url_for('tad.edit') }}',
+          type: 'POST',
+          data: data,
+          success: function (data) {
+          },
+          error: function (request, error) {
+          }
+        });
+      });
+    });
+  </script>
 {% endblock %}

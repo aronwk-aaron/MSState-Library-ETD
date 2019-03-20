@@ -5,93 +5,93 @@
 
 
 {% block css %}
-    {{ super() }}
-    <style>
-        .table > tbody > tr > td, .table > tbody > tr > th {
-            vertical-align: middle;
-        }
-    </style>
+  {{ super() }}
+  <style>
+    .table > tbody > tr > td, .table > tbody > tr > th {
+      vertical-align: middle;
+    }
+  </style>
 {% endblock %}
 
 
 {% block content_before %}
-    <div class='jumbotron shadow-sm'>
-        <div class='container'>
-            <h1 class='font-weight-bolder'>The Grand Analysis of Your Life</h1>
-            <span class='lead'>
+  <div class='jumbotron shadow-sm'>
+    <div class='container'>
+      <h1 class='font-weight-bolder'>The Grand Analysis of Your Life</h1>
+      <span class='lead'>
                 Jowanda W. Smiff<br/><i>Senior Chicken Engineer</i>
             </span>
-        </div>
     </div>
+  </div>
 {% endblock %}
 
 {% block content %}
 
-    <div class='card shadow-sm mb-4'>
-        <div class='card-body'>
-            <h3 class='card-title'>Abstract</h3>
-            <hr/>
-            <p>
-                I'm going to be a real boy someday!
-            </p>
-        </div>
+  <div class='card shadow-sm mb-4'>
+    <div class='card-body'>
+      <h3 class='card-title'>Abstract</h3>
+      <hr/>
+      <p>
+        I'm going to be a real boy someday!
+      </p>
     </div>
+  </div>
 
-    <div class='card shadow-sm mb-4'>
-        <div class='card-body'>
-            <p>
-                <br/>
-                document view or something cool like that goes here
-            </p>
-        </div>
+  <div class='card shadow-sm mb-4'>
+    <div class='card-body'>
+      <p>
+        <br/>
+        document view or something cool like that goes here
+      </p>
     </div>
+  </div>
 
-    <div class='card shadow-sm mb-4'>
-        <div class='card-body'>
-            <h3 class='card-title'>Revisions</h3>
-            <hr/>
+  <div class='card shadow-sm mb-4'>
+    <div class='card-body'>
+      <h3 class='card-title'>Revisions</h3>
+      <hr/>
 
-            <table class='table table-borderless table-striped'>
-                <thead>
-                <tr>
-                    <th scope='col'>#</th>
-                    <th scope='col'>Revisor Name</th>
-                    <th scope='col'>Summary</th>
-                    <th scope='col'>Time</th>
-                    <th scope='col'></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope='row'>3</th>
-                    <td>Kendrick, Katelyn</td>
-                    <td>I've run out of funny titles.</td>
-                    <td>02/19/2019 4:20PM</td>
-                    <td><a href='{{ url_for('tad.view', tad_id=1) }}' class='btn btn-primary' role='button'
-                           aria-disabled='true'>View</a></td>
-                </tr>
-                <tr>
-                    <th scope='row'>2</th>
-                    <td>Streamming, Jordan</td>
-                    <td>Banging your head against the keyboard can produce valid code.</td>
-                    <td>02/01/2019 6:09AM</td>
-                    <td><a href='{{ url_for('tad.view', tad_id=2) }}' class='btn btn-primary' role='button'
-                           aria-disabled='true'>View</a></td>
-                </tr>
-                <tr>
-                    <th scope='row'>1</th>
-                    <td>Kimbrell, Aaron</td>
-                    <td>What even is psychology?</td>
-                    <td>01/25/2019 1:37PM</td>
-                    <td><a href='{{ url_for('tad.view', tad_id=3) }}' class='btn btn-primary' role='button'
-                           aria-disabled='true'>View</a></td>
-                </tr>
-                </tbody>
-            </table>
-            <button id='tad-revise' class='btn btn-dark px-4'>
-                Create revision
-            </button>
-        </div>
+      <table class='table table-borderless table-striped'>
+        <thead>
+        <tr>
+          <th scope='col'>#</th>
+          <th scope='col'>Revisor Name</th>
+          <th scope='col'>Summary</th>
+          <th scope='col'>Time</th>
+          <th scope='col'></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope='row'>3</th>
+          <td>Kendrick, Katelyn</td>
+          <td>I've run out of funny titles.</td>
+          <td>02/19/2019 4:20PM</td>
+          <td><a href='{{ url_for('tad.view', tad_id=1) }}' class='btn btn-primary' role='button'
+                 aria-disabled='true'>View</a></td>
+        </tr>
+        <tr>
+          <th scope='row'>2</th>
+          <td>Streamming, Jordan</td>
+          <td>Banging your head against the keyboard can produce valid code.</td>
+          <td>02/01/2019 6:09AM</td>
+          <td><a href='{{ url_for('tad.view', tad_id=2) }}' class='btn btn-primary' role='button'
+                 aria-disabled='true'>View</a></td>
+        </tr>
+        <tr>
+          <th scope='row'>1</th>
+          <td>Kimbrell, Aaron</td>
+          <td>What even is psychology?</td>
+          <td>01/25/2019 1:37PM</td>
+          <td><a href='{{ url_for('tad.view', tad_id=3) }}' class='btn btn-primary' role='button'
+                 aria-disabled='true'>View</a></td>
+        </tr>
+        </tbody>
+      </table>
+      <button id='tad-revise' class='btn btn-dark px-4'>
+        Create revision
+      </button>
     </div>
+  </div>
 
 {% endblock %}
