@@ -1,5 +1,5 @@
 from flask_marshmallow import Marshmallow
-from .models import User, Notifications, Submission, Revision, Review
+from .models import User, Notification, Submission, Revision, Review
 
 ma = Marshmallow()
 
@@ -11,7 +11,7 @@ class UserSchema(ma.ModelSchema):
 
 class NotificationsSchema(ma.ModelSchema):
     class Meta:
-        model = Notifications
+        model = Notification
 
 
 class SubmissionSchema(ma.ModelSchema):
