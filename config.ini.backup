@@ -1,0 +1,14 @@
+[CONFIG]
+version = 1.0
+
+[DATABASE]
+host = localhost
+name = msstate_etd
+user = msstate_etd
+pass = password
+type = postgresql
+
+[FLASK]
+mode = default
+secret_key = SECRET_KEY_NOT_SET
+
