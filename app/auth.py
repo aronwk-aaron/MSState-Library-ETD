@@ -23,7 +23,7 @@ def login():
         flash('Username or Password is invalid', 'error')
         return redirect(url_for('auth.login'))
 
-    if check_password_hash(password, registered_user.password):
+    if not check_password_hash(password, registered_user.password):
         flash('Username or Password is invalid', 'error')
         return redirect(url_for('auth.login'))
 
