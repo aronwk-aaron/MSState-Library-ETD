@@ -220,6 +220,7 @@ dmypy.json
 config\.py
 
 config\.ini
+config\.ini\.backup
 
 app/static/site\.css
 app.wsgi
