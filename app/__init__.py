@@ -41,8 +41,6 @@ def create_app():
 
     app.jinja_env.globals['bootstrap_is_hidden_field'] = is_hidden_field_filter
 
-
-
     return app
 
 
