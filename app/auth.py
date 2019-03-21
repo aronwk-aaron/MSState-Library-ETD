@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint, request, flash, redirect, url_for
-from flask_login import login_user
+from flask_login import login_user, login_required, logout_user
 from werkzeug.security import check_password_hash
 
 from app.models import User, db
@@ -33,9 +33,11 @@ def login():
 
 
 @auth_blueprint.route('/auth/logout')
+@login_required
 def logout():
     """Auth: Logout Page"""
-    return render_template('auth/logout.jinja2')
+    logout_user()
+    return redirect(url_for('auth.logout'))
 
 
 @auth_blueprint.route('/auth/register')
