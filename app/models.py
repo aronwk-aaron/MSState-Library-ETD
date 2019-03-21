@@ -3,7 +3,6 @@ from flask_migrate import Migrate
 import enum
 
 from sqlalchemy_utils import ArrowType
-from sqlalchemy.sql.expression import func
 
 import arrow
 import random
@@ -11,12 +10,6 @@ import random
 
 db = SQLAlchemy()
 migrate = Migrate()
-
-
-class SubmissionType(enum.Enum):
-    worldwide = 1
-    restricted = 2
-    embargoed = 3
 
 
 class User(db.Model):
@@ -27,7 +20,7 @@ class User(db.Model):
     department = db.Column(db.Text, nullable=False)
     professor = db.Column(db.Text, nullable=False)
 
-    role = db.Column(,nullable=False)
+    role = db.Column(db.Text, nullable=False)
 
     first_name = db.Column(db.Text, nullable=False)
     middle_name = db.Column(db.Text, nullable=False)
@@ -72,7 +65,7 @@ class Submission(db.Model):
     title = db.Column(db.Text)
     abstract = db.Column(db.Text)
     type = db.Column(db.Text)
-    release_type = db.Column(Enum(SubmissionType))
+    release_type = db.Column(db.Integer)
     ww_length = db.Column(db.Text)
     signature_file = db.Column(db.Text)
 
