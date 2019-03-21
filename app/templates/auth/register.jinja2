@@ -28,12 +28,25 @@
             <h5>Electronic Thesis and Dissertation System</h5>
           </div>
           <div class="card-body d-flex flex-column m-2">
-            <form>
+            <form action="{{ url_for('auth.register') }}" method="post" role="form">
+
+              {# CSRF Token #}
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
               <h3>
                 Register
               </h3>
 
               <hr class="mb-4"/>
+
+              {# Show any errors #}
+              {% with messages = get_flashed_messages() %}
+                {% for message in messages %}
+                  <div class="alert alert-warning" role="alert">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endwith %}
 
               <div class="form-group">
                 <label class="font-weight-bold">First name</label>
