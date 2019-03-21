@@ -6,7 +6,7 @@ from distutils.version import LooseVersion
 class AppConfiguration(object):
 
     """Configuration Version"""
-    CONFIG_VERSION = '1.0'
+    CONFIG_VERSION = '2.0'
 
     def __init__(self):
         """Creates/Parses the config.ini"""
@@ -21,6 +21,9 @@ class AppConfiguration(object):
         self.flask_config = self.__FLASK_CONFIGS.get(self.mode, self.__DefaultFlaskConfig)
         self.flask_config.SECRET_KEY = self.__FLASK_CONFIGS.get('secret_key', 'SECRET_KEY_NOT_SET')
 
+        # setup postgres
+        self.flask_config.SQLALCHEMY_DATABASE_URI = self.config_parser.get('SQLALCHEMY', 'sqlalchemy_database_uri')
+
     def _create_config(self):
         """Creates a default configuration (*.ini) file
 
@@ -33,16 +36,26 @@ class AppConfiguration(object):
         config['CONFIG'] = {
             'version': self.CONFIG_VERSION
         }
-        config['DATABASE'] = {
-            'host': 'localhost',
-            'name': 'msstate_etd',
-            'user': 'msstate_etd',
-            'pass': 'password',
-            'type': 'postgresql'
+        config['SQLALCHEMY'] = {
+            'SQLALCHEMY_DATABASE_URI': 'postgresql://user:password@host:port/database',
+            'SQLALCHEMY_TRACK_MODIFICATIONS': 'False',
         }
         config['FLASK'] = {
             'mode': 'default',
             'secret_key': 'SECRET_KEY_NOT_SET'
+        }
+        config['FLASK-MAIL'] = {
+            'MAIL_SERVER': 'smtp.gmail.com',
+            'MAIL_PORT': '587',
+            'MAIL_USE_SSL': 'False',
+            'MAIL_USE_TLS': 'True',
+            'MAIL_USERNAME': 'yourname@gmail.com',
+            'MAIL_PASSWORD': 'password',
+        }
+        config['FLASK-USER'] = {
+            'USER_APP_NAME': 'MSState Library ETD',
+            'USER_EMAIL_SENDER_NAME': 'MSState',
+            'USER_EMAIL_SENDER_EMAIL': 'yourname@gmail.com',
         }
 
         # write the config.
