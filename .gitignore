@@ -224,3 +224,5 @@ config\.ini\.backup
 
 app/static/site\.css
 app.wsgi
+
+config\.ini\.backup
