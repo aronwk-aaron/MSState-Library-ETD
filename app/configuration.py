@@ -21,6 +21,9 @@ class AppConfiguration(object):
         self.flask_config = self.__FLASK_CONFIGS.get(self.mode, self.__DefaultFlaskConfig)
         self.flask_config.SECRET_KEY = self.__FLASK_CONFIGS.get('secret_key', 'SECRET_KEY_NOT_SET')
 
+        # setup postgres
+        self.flask_config.SQLALCHEMY_DATABASE_URI = self.config_parser.get('SQLALCHEMY', 'sqlalchemy_database_uri')
+
     def _create_config(self):
         """Creates a default configuration (*.ini) file
 
