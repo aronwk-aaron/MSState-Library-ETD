@@ -41,3 +41,6 @@ def register_blueprints(app):
     """
     from .main import main_blueprint
     app.register_blueprint(main_blueprint)
+
+    from .auth import auth_blueprint
+    app.register_blueprint(auth_blueprint)

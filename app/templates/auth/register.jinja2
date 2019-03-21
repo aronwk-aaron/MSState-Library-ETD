@@ -1,8 +1,98 @@
-
 {% extends 'base.jinja2' %}
 
 {% set navbar_shadow = True %}
 {% block title %}Register{% endblock %}
+{% block header %}{% endblock %}
 
-{% block content %}
+{% block css %}
+  {{ super() }}
+  {# override the body and html css to force center #}
+  <style>
+    html, body {
+      height: 100%;
+      background-color: #777777;
+    }
+  </style>
+{% endblock %}
+
+{% block content_before %}
+  <div class="container-fluid h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+      <div class="mx-auto" style="max-width: 30em;">
+
+        {# Splash card #}
+        <div class="card shadow rounded border-0 h-100">
+          <div class="card-header bg-primary pt-4 text-center text-white">
+            <img class="img-fluid mb-3" src="http://lib.msstate.edu/_assets/img/2015-header-logo-msstate.png"
+                 alt=""/>
+            <h5>Electronic Thesis and Dissertation System</h5>
+          </div>
+          <div class="card-body d-flex flex-column m-2">
+            {# TODO: actually add content here #}
+            <form>
+              <h3>
+                Register
+              </h3>
+
+              <hr class="mb-4"/>
+
+              <div class="form-group">
+                <label class="font-weight-bold">First name</label>
+                <input class="form-control" id="inputFirstName" placeholder="Enter first name">
+              </div>
+
+              <div class="form-group">
+                <label class="font-weight-bold">Last name</label>
+                <input class="form-control" id="inputFirstName" placeholder="Enter last name">
+              </div>
+
+              <hr/>
+
+              <div class="form-group">
+                <label class="font-weight-bold">MSU ID (9-digit, no dashes)</label>
+                <input class="form-control" id="inputNetID" placeholder="Enter MSU ID">
+              </div>
+
+              <div class="form-group">
+                <label class="font-weight-bold">NetID</label>
+                <input class="form-control" id="inputNetID" placeholder="Enter NetID">
+              </div>
+
+              <div class="form-group">
+                <label class="font-weight-bold">Classification</label>
+                <select id="inputClass" class="form-control">
+                  <option>Undergraduate, Freshman</option>
+                  <option>Undergraduate, Sophomore</option>
+                  <option>Undergraduate, Junior</option>
+                  <option selected>Undergraduate, Senior</option>
+                  <option>Graduate</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="font-weight-bold">Major</label>
+                <input class="form-control" id="inputNetID" placeholder="Enter Major">
+              </div>
+
+              <hr/>
+
+              <div class="form-group">
+                <label class="font-weight-bold">Password</label>
+                <input class="form-control" id="inputPassword" type="password" placeholder="Enter password">
+              </div>
+
+              <div class="form-group">
+                <label class="font-weight-bold">Password (again)</label>
+                <input class="form-control" id="inputPasswordConfirm" type="password" placeholder="Confirm password">
+              </div>
+
+              <button type="submit" class="btn btn-primary">Create account</button>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
