@@ -3,7 +3,7 @@ from flask import render_template, Blueprint
 auth_blueprint = Blueprint('auth', __name__)
 
 
-@auth_blueprint.route('/auth/login')
+@auth_blueprint.route('/auth/login', methods=['GET', 'POST'])
 def login():
     """Auth: Login Page"""
     return render_template('auth/login.jinja2')
