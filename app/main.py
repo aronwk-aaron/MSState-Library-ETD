@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, url_for, redirect
 
 main_blueprint = Blueprint('main', __name__)
 
@@ -6,7 +6,8 @@ main_blueprint = Blueprint('main', __name__)
 @main_blueprint.route('/')
 def splash():
     """Splash Page"""
-    return render_template('main/splash.jinja2')
+    return redirect(url_for('user.login'))
+    # return render_template('main/splash.jinja2')
 
 
 @main_blueprint.route('/home')
