@@ -24,6 +24,7 @@ USER_ENABLE_EMAIL = True  # Register with Email
 USER_ENABLE_REGISTRATION = True  # Allow new users to register
 USER_REQUIRE_RETYPE_PASSWORD = True  # Prompt for `retype password` in:
 USER_ENABLE_USERNAME = False  # Register and Login with username
+USER_PASSLIB_CRYPTCONTEXT_SCHEMES = ['argon2']  # argon2 for hashing
 
 USER_AFTER_LOGIN_ENDPOINT = "main.index"
 USER_AFTER_LOGOUT_ENDPOINT = "main.signed_out"
