@@ -35,9 +35,6 @@ USER_APP_NAME = 'Flask-User starter app'
 USER_EMAIL_SENDER_NAME = 'Your name'
 USER_EMAIL_SENDER_EMAIL = 'yourname@gmail.com'
 
-USER_AFTER_LOGIN_ENDPOINT = "main.index"
-USER_AFTER_LOGOUT_ENDPOINT = "main.signed-out"
-
 ADMINS = [
     '"Admin One" <admin1@gmail.com>',
     ]
