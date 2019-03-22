@@ -12,8 +12,6 @@
     </style>
 {% endblock %}
 
-
-
 {% block content_before %}
     <div class="container-fluid h-100">
         <div class="row h-100 justify-content-center align-items-center">
@@ -27,7 +25,6 @@
                     </div>
 
                     <div class="card-body d-flex flex-column m-2">
-
                         {% with messages = get_flashed_messages() %}
 
                             <h3 {% if not messages %}class="mb-4"{% endif %}>
@@ -35,11 +32,13 @@
                             </h3>
 
                             {# Show any errors #}
-                            {% for message in messages %}
-                                <div class="alert alert-warning" role="alert">
-                                    {{ message }}
-                                </div>
-                            {% endfor %}
+                            {% if not disable_messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-warning" role="alert">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
 
                         {% endwith %}
 

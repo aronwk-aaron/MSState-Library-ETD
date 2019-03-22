@@ -27,7 +27,7 @@ def profile():
     return render_template('main/profile.jinja2')
 
 
-@main_blueprint.route('/signed-out')
+@main_blueprint.route('/user/signed-out')
 def signed_out():
     """Sign out landing page"""
-    return render_template('main/signed_out.jinja2')
+    return render_template('flask_user/signed_out.html')
