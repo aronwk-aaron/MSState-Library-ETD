@@ -25,3 +25,9 @@ def dashboard():
 def profile():
     """Profile Page"""
     return render_template('main/profile.jinja2')
+
+
+@main_blueprint.route('/signed-out')
+def signed_out():
+    """Sign out landing page"""
+    return render_template('main/signed_out.jinja2')
