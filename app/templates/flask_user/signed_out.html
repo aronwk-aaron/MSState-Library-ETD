@@ -1,0 +1,17 @@
+{% extends 'flask_user/_common_base.html' %}
+
+{% block title %}Signed out{% endblock %}
+{% block form_title %}{% endblock %}
+
+{% set disable_messages = True %}
+
+{% block form %}
+  <div class="text-center">
+    <h3>
+      You are now signed out
+    </h3>
+    <p class="mb-5">
+      Please close your browser.
+    </p>
+  </div>
+{% endblock %}

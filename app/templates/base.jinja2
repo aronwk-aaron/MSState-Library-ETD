@@ -34,9 +34,11 @@
 
 {# Content #}
 {% block content_before %}{% endblock %}
-<div class='container mt-4'>
-  {% block content %}{% endblock %}
-</div>
+{% block content_override %}
+  <div class='container mt-4'>
+    {% block content %}{% endblock %}
+  </div>
+{% endblock %}
 {% block content_after %}{% endblock %}
 
 

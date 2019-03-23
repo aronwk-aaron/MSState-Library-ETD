@@ -1,0 +1,47 @@
+{% extends 'flask_user/_public_base.html' %}
+{% from "flask_user/_macros.html" import render_field, render_submit_field %}
+
+{% block title %}Register{% endblock %}
+{% block form_title %}Register{% endblock %}
+
+{% block form %}
+
+    <form action="" method="POST" novalidate class="form" role="form">
+        {{ form.hidden_tag() }}
+
+        {# Username or Email #}
+        {% set field = form.username if user_manager.USER_ENABLE_USERNAME else form.email %}
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
+            {{ form.hidden_tag() }}
+
+            <h5>Personal Info</h5>
+            {{ render_field(form.first_name, tabindex=10) }}
+            {{ render_field(form.middle_name, tabindex=20) }}
+            {{ render_field(form.last_name, tabindex=30) }}
+            {{ render_field(form.birth_date, tabindex=40) }}
+
+            <hr/>
+
+            <h5>MSU Info</h5>
+            {{ render_field(form.netid, tabindex=50) }}
+            {{ render_field(form.msuid, tabindex=60) }}
+            {{ render_field(form.department, tabindex=70) }}
+
+            <hr/>
+
+            <h5>Contact Info</h5>
+            {{ render_field(form.email, tabindex=80) }}
+            {{ render_field(form.sec_email, tabindex=90) }}
+            {{ render_field(form.prim_phone, tabindex=100) }}
+            {{ render_field(form.sec_phone, tabindex=110) }}
+
+            <h5>Login Info</h5>
+            {{ render_field(form.password, tabindex=120) }}
+            {{ render_field(form.retype_password, tabindex=130) }}
+
+            {# Submit button #}
+            {{ render_submit_field(form.submit, tabindex=180) }}
+        </div>
+    </form>
+
+{% endblock %}

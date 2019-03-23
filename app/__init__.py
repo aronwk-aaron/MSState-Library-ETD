@@ -1,10 +1,11 @@
 from flask import Flask
 from flask_assets import Environment
 from webassets import Bundle
+
+from app.forms import CustomUserManager
 from app.models import db, migrate, User
 from app.schemas import ma
 from flask_mail import Mail
-from flask_user import UserManager
 from flask_wtf.csrf import CSRFProtect
 
 # Instantiate Flask extensions
@@ -41,8 +42,6 @@ def create_app():
 
     app.jinja_env.globals['bootstrap_is_hidden_field'] = is_hidden_field_filter
 
-
-
     return app
 
 
@@ -57,7 +56,7 @@ def register_extensions(app):
     ma.init_app(app)
     mail.init_app(app)
     csrf_protect.init_app(app)
-    user_manager = UserManager(app, db, User)
+    user_manager = CustomUserManager(app, db, User)
     @app.context_processor
     def context_processor():
         return dict(user_manager=user_manager)
@@ -80,8 +79,8 @@ def register_blueprints(app):
     from .tad import tad_blueprint
     app.register_blueprint(tad_blueprint)
 
-    from .auth import auth_blueprint
-    app.register_blueprint(auth_blueprint)
+    # from .auth import auth_blueprint
+    # app.register_blueprint(auth_blueprint)
 
 
 def init_email_error_handler(app):

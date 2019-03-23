@@ -14,6 +14,10 @@ $theme-colors: (
   background-color: map_get($theme-colors, "primary") !important;
 }
 
+a {
+  @extend .text-primary
+}
+
 // responsive font
 @include media-breakpoint-down(sm) {
   html{font-size: 14px;}
