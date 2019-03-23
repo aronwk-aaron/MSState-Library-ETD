@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-6 text-right">
                     {% if user_manager.USER_ENABLE_REGISTER and not user_manager.USER_REQUIRE_INVITATION %}
-                        <a href="{{ url_for('user.register') }}" tabindex='190'>
+                        <a class="link-maroon" href="{{ url_for('user.register') }}" tabindex='190'>
                             {% trans %}New here? Register.{% endtrans %}</a>
                     {% endif %}
                 </div>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-6 text-right">
                     {% if user_manager.USER_ENABLE_FORGOT_PASSWORD %}
-                        <a href="{{ url_for('user.forgot_password') }}" tabindex='195'>
+                        <a class="link-maroon" href="{{ url_for('user.forgot_password') }}" tabindex='195'>
                             {% trans %}Forgot your Password?{% endtrans %}</a>
                     {% endif %}
                 </div>
