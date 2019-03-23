@@ -14,7 +14,7 @@ $theme-colors: (
   background-color: map_get($theme-colors, "primary") !important;
 }
 
-a {
+.link-maroon {
   @extend .text-primary
 }
 
