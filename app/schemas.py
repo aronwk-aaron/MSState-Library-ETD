@@ -1,29 +1,31 @@
 from flask_marshmallow import Marshmallow
-from .models import User, Notifications, Submission, Revision, Review
+from flask_marshmallow.sqla import ModelSchema
+
+from .models import User, Notification, Submission, Revision, Review
 
 ma = Marshmallow()
 
 
-class UserSchema(ma.ModelSchema):
+class UserSchema(ModelSchema):
     class Meta:
         model = User
 
 
-class NotificationsSchema(ma.ModelSchema):
+class NotificationsSchema(ModelSchema):
     class Meta:
-        model = Notifications
+        model = Notification
 
 
-class SubmissionSchema(ma.ModelSchema):
+class SubmissionSchema(ModelSchema):
     class Meta:
         model = Submission
 
 
-class RevisionSchema(ma.ModelSchema):
+class RevisionSchema(ModelSchema):
     class Meta:
         model = Revision
 
 
-class ReviewSchema(ma.ModelSchema):
+class ReviewSchema(ModelSchema):
     class Meta:
         model = Review
