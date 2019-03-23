@@ -5,6 +5,8 @@ $theme-colors: (
         "white": #FFFFFF
 );
 
+$link-color: #660000;
+
 @import "../bootswatch-master/sandstone/variables";
 @import "../bootstrap-4.2.1/scss/bootstrap";
 @import "../bootswatch-master/sandstone/bootswatch";
@@ -16,7 +18,9 @@ $theme-colors: (
 
 // responsive font
 @include media-breakpoint-down(sm) {
-  html{font-size: 14px;}
+  html {
+    font-size: 14px;
+  }
 }
 
 // theming
