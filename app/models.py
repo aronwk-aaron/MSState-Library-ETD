@@ -1,3 +1,4 @@
+from sqlalchemy.sql import func
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_user import UserMixin
@@ -19,39 +20,34 @@ class User(db.Model, UserMixin):
     active = db.Column(db.Boolean(), nullable=False, server_default='0')
 
     # User information
-    active = db.Column('is_active', db.Boolean(), nullable=False, server_default='0')
     first_name = db.Column(db.Unicode(50), nullable=False, server_default=u'')
     middle_name = db.Column(db.Unicode(50), nullable=False, server_default=u'')
     last_name = db.Column(db.Unicode(50), nullable=False, server_default=u'')
 
+    msu_id = db.Column(db.Unicode(9), unique=True)
+    net_id = db.Column(db.Unicode(8), unique=True)
+    department = db.Column(db.Unicode(50), server_default=u'')
+
+    prim_phone = db.Column(db.Unicode(50), nullable=False, server_default=u'')
+    sec_phone = db.Column(db.Unicode(50), server_default=u'')
+
+    country = db.Column(db.Unicode(50), nullable=False, server_default=u'')
+    administrative_area = db.Column(db.Unicode(50), nullable=False, server_default=u'')
+    locality = db.Column(db.Unicode(50), nullable=False, server_default=u'')
+    postal_code = db.Column(db.Unicode(50), nullable=False, server_default=u'')
+    thoroughfare = db.Column(db.Unicode(50), nullable=False, server_default=u'')
+    premise = db.Column(db.Unicode(50), nullable=False, server_default=u'')
+
+    pref_first_name = db.Column(db.Unicode(50), server_default=u'')
+    pref_middle_name = db.Column(db.Unicode(50), server_default=u'')
+    pref_last_name = db.Column(db.Unicode(50), server_default=u'')
+
+    maiden_name = db.Column(db.Unicode(50), server_default=u'')
+    birth_date = db.Column(db.Unicode(50), nullable=False, server_default=u'')
+
     # Relationships
     roles = db.relationship('Role', secondary='users_roles',
                             backref=db.backref('users', lazy='dynamic'))
-
-    msuid = db.Column(db.Text, nullable=False, unique=True)
-    netid = db.Column(db.Text, nullable=False)
-    department = db.Column(db.Text, nullable=False)
-    professor = db.Column(db.Text, nullable=False)
-
-    sec_email = db.Column(db.Text, nullable=False)
-
-    prim_phone = db.Column(db.Text, nullable=False)
-    sec_phone = db.Column(db.Text, nullable=False)
-
-    country = db.Column(db.Text, nullable=False)
-    administrative_area = db.Column(db.Text, nullable=False)
-    locality = db.Column(db.Text, nullable=False)
-    postal_code = db.Column(db.Text, nullable=False)
-    thoroughfare = db.Column(db.Text, nullable=False)
-    premise = db.Column(db.Text, nullable=False)
-
-    pref_first_name = db.Column(db.Text)
-    pref_middle_name = db.Column(db.Text)
-    preflast_name = db.Column(db.Text)
-
-    maiden_name = db.Column(db.Text, nullable=False)
-
-    birth_date = db.Column(db.Text, nullable=False)
 
 
 # Define the Role data model
@@ -70,6 +66,13 @@ class UsersRoles(db.Model):
     role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))
 
 
+class UsersProfessors(db.Model):
+    __tablename__ = 'users_professors'
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
+    Professor_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
+
+
 class Notification(db.Model):
     __tablename__ = 'notifications'
 
@@ -84,15 +87,19 @@ class Submission(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
-    title = db.Column(db.Text)
-    abstract = db.Column(db.Text)
-    type = db.Column(db.Text)
-    release_type = db.Column(db.Integer)
-    ww_length = db.Column(db.Text)
+    title = db.Column(db.Unicode(), nullable=False, server_default=u'')
+    abstract = db.Column(db.Unicode(), nullable=False, server_default=u'')
+    # TODO: Make Enum type for this
+    type = db.Column(db.Integer, nullable=False)
+    # TODO: Make Enum type for this
+    release_type = db.Column(db.Integer, nullable=False)
+    ww_length = db.Column(db.Integer, nullable=False)
+    # TODO: figure out files for this
     signature_file = db.Column(db.Text)
+    started = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
 
-    state = db.Column(db.Boolean, default=False)
-    approved_date = db.Column(db.Text)
+    state = db.Column(db.Boolean, default=False, nullable=False)
+    approved_date = db.Column(db.DateTime(timezone=True))
 
 
 class Revision(db.Model):
@@ -100,15 +107,52 @@ class Revision(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     sub_id = db.Column(db.Integer(), db.ForeignKey('submissions.id', ondelete='CASCADE'))
+    submitted = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    # TODO: figure out files for this
     file = db.Column(db.Text)
-    rev_num = db.Column(db.Text)
-    state = db.Column(db.Boolean, default=False)
 
 
 class Review(db.Model):
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key=True)
+    reviewed = db.Column(db.DateTime(timezone=True), server_default=func.now())
     review_ID = db.Column(db.Integer(), db.ForeignKey('reviews.id', ondelete='CASCADE'))
     reviewer_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
-    # put the checklist for it and figure out how to store checklist in a not dumb way
+    # 32 check boxes + comment box
+    # check boxes will refer to the ones in the review form
+    # new check boxes must be added at the end
+    comments = db.Column(db.Unicode(), server_default=u'')
+    check_1 = db.Column(db.Boolean, default=False, nullable=False)
+    check_2 = db.Column(db.Boolean, default=False, nullable=False)
+    check_3 = db.Column(db.Boolean, default=False, nullable=False)
+    check_4 = db.Column(db.Boolean, default=False, nullable=False)
+    check_5 = db.Column(db.Boolean, default=False, nullable=False)
+    check_6 = db.Column(db.Boolean, default=False, nullable=False)
+    check_7 = db.Column(db.Boolean, default=False, nullable=False)
+    check_8 = db.Column(db.Boolean, default=False, nullable=False)
+    check_9 = db.Column(db.Boolean, default=False, nullable=False)
+    check_10 = db.Column(db.Boolean, default=False, nullable=False)
+    check_11 = db.Column(db.Boolean, default=False, nullable=False)
+    check_12 = db.Column(db.Boolean, default=False, nullable=False)
+    check_13 = db.Column(db.Boolean, default=False, nullable=False)
+    check_14 = db.Column(db.Boolean, default=False, nullable=False)
+    check_15 = db.Column(db.Boolean, default=False, nullable=False)
+    check_16 = db.Column(db.Boolean, default=False, nullable=False)
+    check_17 = db.Column(db.Boolean, default=False, nullable=False)
+    check_18 = db.Column(db.Boolean, default=False, nullable=False)
+    check_19 = db.Column(db.Boolean, default=False, nullable=False)
+    check_20 = db.Column(db.Boolean, default=False, nullable=False)
+    check_21 = db.Column(db.Boolean, default=False, nullable=False)
+    check_22 = db.Column(db.Boolean, default=False, nullable=False)
+    check_23 = db.Column(db.Boolean, default=False, nullable=False)
+    check_24 = db.Column(db.Boolean, default=False, nullable=False)
+    check_25 = db.Column(db.Boolean, default=False, nullable=False)
+    check_26 = db.Column(db.Boolean, default=False, nullable=False)
+    check_27 = db.Column(db.Boolean, default=False, nullable=False)
+    check_28 = db.Column(db.Boolean, default=False, nullable=False)
+    check_29 = db.Column(db.Boolean, default=False, nullable=False)
+    check_30 = db.Column(db.Boolean, default=False, nullable=False)
+    check_31 = db.Column(db.Boolean, default=False, nullable=False)
+    check_32 = db.Column(db.Boolean, default=False, nullable=False)
+
