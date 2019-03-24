@@ -9,8 +9,8 @@
     <form action="" method="POST" class="form" role="form">
         {{ form.hidden_tag() }}
 
-        {# NetID field #}
-        {% set field = form.netid %}
+        {# email field #}
+        {% set field = form.email %}
         <div class="form-group {% if field.errors %}has-error{% endif %}">
             {# Label on left, "New here? Register." on right #}
             <div class="row">

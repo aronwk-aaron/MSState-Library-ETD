@@ -24,26 +24,24 @@ class User(db.Model, UserMixin):
     middle_name = db.Column(db.Unicode(50), nullable=False, server_default=u'')
     last_name = db.Column(db.Unicode(50), nullable=False, server_default=u'')
 
-    msu_id = db.Column(db.Unicode(9), unique=True)
+    msu_id = db.Column(db.Unicode(11), unique=True)
     net_id = db.Column(db.Unicode(8), unique=True)
     department = db.Column(db.Unicode(50), server_default=u'')
 
     prim_phone = db.Column(db.Unicode(50), nullable=False, server_default=u'')
     sec_phone = db.Column(db.Unicode(50), server_default=u'')
 
-    country = db.Column(db.Unicode(50), nullable=False, server_default=u'')
-    administrative_area = db.Column(db.Unicode(50), nullable=False, server_default=u'')
-    locality = db.Column(db.Unicode(50), nullable=False, server_default=u'')
-    postal_code = db.Column(db.Unicode(50), nullable=False, server_default=u'')
-    thoroughfare = db.Column(db.Unicode(50), nullable=False, server_default=u'')
-    premise = db.Column(db.Unicode(50), nullable=False, server_default=u'')
+    country = db.Column(db.Unicode(2), nullable=False, server_default=u'')
+    administrative_area = db.Column(db.Unicode(50), nullable=False, server_default=u'')     # state/provinence
+    locality = db.Column(db.Unicode(50), nullable=False, server_default=u'')                # city
+    postal_code = db.Column(db.Unicode(50), nullable=False, server_default=u'')             # zip
+    thoroughfare = db.Column(db.Unicode(50), nullable=False, server_default=u'')            # Street
+    premise = db.Column(db.Unicode(50), nullable=False, server_default=u'')                 # Apartment/box/etc
 
-    pref_first_name = db.Column(db.Unicode(50), server_default=u'')
-    pref_middle_name = db.Column(db.Unicode(50), server_default=u'')
-    pref_last_name = db.Column(db.Unicode(50), server_default=u'')
+    pref_name = db.Column(db.Unicode(50), server_default=u'')
 
     maiden_name = db.Column(db.Unicode(50), server_default=u'')
-    birth_date = db.Column(db.Unicode(50), nullable=False, server_default=u'')
+    birth_date = db.Column(db.Date(), nullable=False)
 
     # Relationships
     roles = db.relationship('Role', secondary='users_roles',
@@ -96,10 +94,10 @@ class Submission(db.Model):
     ww_length = db.Column(db.Integer, nullable=False)
     # TODO: figure out files for this
     signature_file = db.Column(db.Text)
-    started = db.Column(db.DateTime(timezone=True), server_default=func.now(), nullable=False)
+    started = db.Column(db.DateTime(), server_default=func.now(), nullable=False)
 
     state = db.Column(db.Boolean, default=False, nullable=False)
-    approved_date = db.Column(db.DateTime(timezone=True))
+    approved_date = db.Column(db.DateTime())
 
 
 class Revision(db.Model):
@@ -107,7 +105,7 @@ class Revision(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     sub_id = db.Column(db.Integer(), db.ForeignKey('submissions.id', ondelete='CASCADE'))
-    submitted = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    submitted = db.Column(db.DateTime(), server_default=func.now())
     # TODO: figure out files for this
     file = db.Column(db.Text)
 
@@ -116,7 +114,7 @@ class Review(db.Model):
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key=True)
-    reviewed = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    reviewed = db.Column(db.DateTime(), server_default=func.now())
     review_ID = db.Column(db.Integer(), db.ForeignKey('reviews.id', ondelete='CASCADE'))
     reviewer_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
     # 32 check boxes + comment box
@@ -155,4 +153,3 @@ class Review(db.Model):
     check_30 = db.Column(db.Boolean, default=False, nullable=False)
     check_31 = db.Column(db.Boolean, default=False, nullable=False)
     check_32 = db.Column(db.Boolean, default=False, nullable=False)
-

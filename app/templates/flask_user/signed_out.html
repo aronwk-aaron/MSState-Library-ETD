@@ -11,7 +11,10 @@
       You are now signed out
     </h3>
     <p class="mb-5">
-      Please close your browser.
+      <a href="{{ url_for("user.login") }}" class="btn btn-primary btn-lg mt-auto align-self-center px-4">
+       Sign back in.
+      </a>
+
     </p>
   </div>
 {% endblock %}
