@@ -26,3 +26,4 @@ USER_PASSLIB_CRYPTCONTEXT_SCHEMES = ['argon2']  # argon2 for hashing
 
 USER_AFTER_LOGIN_ENDPOINT = "main.index"
 USER_AFTER_LOGOUT_ENDPOINT = "main.signed_out"
+USER_AFTER_EDIT_USER_PROFILE_ENDPOINT = 'main.profile'
