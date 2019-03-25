@@ -2,7 +2,7 @@ from flask import current_app, flash
 from flask_user import UserManager
 from flask_user.forms import unique_email_validator, password_validator
 from flask_wtf import FlaskForm
-from wtforms import StringField, HiddenField, PasswordField, BooleanField, SubmitField, validators
+from wtforms import StringField, HiddenField, PasswordField, BooleanField, SubmitField, validators, FormField
 from wtforms.fields.html5 import DateField
 from wtforms.validators import required, optional
 
@@ -19,6 +19,27 @@ class CustomUserManager(UserManager):
         self.RegisterFormClass = CustomRegisterForm
         self.EditUserProfileFormClass = CustomEditUserProfileForm
 
+class CompleteAddressForm(FlaskForm):
+    """Reusable form for addresses"""
+    thoroughfare = StringField('Street address', validators=[
+        required,
+    ])
+    premise = StringField('Apt/Suite/Box number', validators=[
+        optional,
+    ])
+    locality = StringField('City / Town', validators=[
+        required,
+    ])
+    administrative_area = StringField('State / Province / Region', validators=[
+        required,
+        validate_subdivision
+    ])
+    postal_code = StringField('ZIP / Postal code', validators=[
+        required,
+    ])
+    country = CountrySelectField('Country', validators=[
+        required,
+    ])
 
 class CustomLoginForm(FlaskForm):
     """Login form"""
@@ -54,7 +75,7 @@ class CustomLoginForm(FlaskForm):
             return True
 
         # unsuccessful authentication
-        flash('Invalid E-Mail or Password', 'error')
+        flash('Invalid email or password', 'error')
         return False
 
 
@@ -99,19 +120,19 @@ class CustomRegisterForm(FlaskForm):
     last_name = StringField('Last name', validators=[
         required
     ])
-    birth_date = DateField('Birth date', format='%Y-%m-%d', validators=[
+    birth_date = DateField('Date of Birth', format='%Y-%m-%d', validators=[
         required
     ])
-    pref_name = StringField('Prefered name (If different from first name)', validators=[
+    pref_name = StringField('Prefered name (if different from first name)', validators=[
         optional
     ])
-    maiden_name = StringField('Maiden name (If Applicable)', validators=[
+    maiden_name = StringField('Maiden name (if applicable)', validators=[
         optional
     ])
 
     # Contact Info
 
-    sec_email = StringField('Personal E-Mail (optional)', validators=[
+    sec_email = StringField('Personal email (optional)', validators=[
         optional,
         validators.Email('Invalid email address'),
         unique_email_validator
@@ -124,25 +145,7 @@ class CustomRegisterForm(FlaskForm):
         optional,
         validate_phone
     ])
-    country = CountrySelectField('Country', validators=[
-        required,
-    ])
-    administrative_area = StringField('State / Province / Region', validators=[
-        required,
-        validate_subdivision
-    ])
-    locality = StringField('City / Town', validators=[
-        required,
-    ])
-    postal_code = StringField('Postal code / ZIP Code', validators=[
-        required,
-    ])
-    thoroughfare = StringField('Street address', validators=[
-        required,
-    ])
-    premise = StringField('Apartment, Suite, Box number, etc.', validators=[
-        optional,
-    ])
+    address = FormField(CompleteAddressForm)
 
     invite_token = HiddenField('Token')
 
@@ -173,19 +176,19 @@ class CustomEditUserProfileForm(FlaskForm):
     last_name = StringField('Last name', validators=[
         required
     ])
-    birth_date = DateField('Birth date', format='%Y-%m-%d', validators=[
+    birth_date = DateField('Date of birth', format='%Y-%m-%d', validators=[
         required
     ])
-    pref_name = StringField('Prefered name (If different from first name)', validators=[
+    pref_name = StringField('Prefered name (if different from first name)', validators=[
         optional
     ])
-    maiden_name = StringField('Maiden name (If Applicable)', validators=[
+    maiden_name = StringField('Maiden name (if applicable)', validators=[
         optional
     ])
 
     # Contact Info
 
-    sec_email = StringField('Personal E-Mail (optional)', validators=[
+    sec_email = StringField('Personal email (optional)', validators=[
         optional,
         validators.Email('Invalid email address'),
     ])
@@ -197,24 +200,6 @@ class CustomEditUserProfileForm(FlaskForm):
         optional,
         validate_phone
     ])
-    country = CountrySelectField('Country', validators=[
-        required,
-    ])
-    administrative_area = StringField('State / Province / Region', validators=[
-        required,
-        validate_subdivision
-    ])
-    locality = StringField('City / Town', validators=[
-        required,
-    ])
-    postal_code = StringField('Postal code / ZIP Code', validators=[
-        required,
-    ])
-    thoroughfare = StringField('Street address', validators=[
-        required,
-    ])
-    premise = StringField('Apartment, Suite, Box number, etc.', validators=[
-        optional,
-    ])
+    address = FormField(CompleteAddressForm)
 
     submit = SubmitField('Update')
