@@ -2,7 +2,7 @@ from flask import Flask
 from flask_assets import Environment
 from webassets import Bundle
 
-from app.forms import CustomUserManager
+from app.forms.forms import CustomUserManager
 from app.models import db, migrate, User
 from app.schemas import ma
 from flask_mail import Mail
