@@ -8,33 +8,74 @@
   {# Profile Card #}
   <div class='card mx-auto mt-5 col-lg-6 col-12 shadow-sm'>
     <div class='card-body'>
-      <div class='row justify-content-center mb-3'>
-        <i class='display-1 mx-auto text-muted fas fa-user-circle'></i>
-      </div>
 
       {# user name / classification #}
       <div class='row justify-content-center'>
-        <span class='h3'>Bully Bulldog</span>
+        <span class='h3'>{{ data.name }}</span>
       </div>
       <div class='row justify-content-center'>
-        <span class='h5'>Student</span>
+        <span class='h5'>{{ data.department }}</span>
       </div>
       <hr/>
 
-      {# TODO: dynamic data #}
       {# user data #}
       <p class='text-lg-left'>
-        <b>Email:</b><br/>
-        bb123@msstate.edu
+        <h5>MSU Info</h5>
+        <b>E-Mail:</b><br/>
+        {{ data.email }}
         <br/><br/>
-        <b>Phone:</b><br/>
-        662-325-5555
-      </p>
+
+        <b>Net ID:</b><br/>
+        {{ data.net_id }}
+        <br/><br/>
+
+        <b>MSU ID:</b><br/>
+        {{ data.msu_id }}
+        <br/><br/>
+
+        <hr>
+
+        <h5>Personal Info</h5>
+
+        {% if data.maiden_name %}
+        <b>Maiden Name:</b><br/>
+        {{ data.maiden_name }}
+        <br/><br/>
+        {% endif %}
+
+        <b>Birth Date:</b><br/>
+        {{ data.birth_date }}
+        <br/><br/>
+
+        {% if data.sec_email %}
+        <b>Personal E-Mail:</b><br/>
+        {{ data.sec_email }}
+        <br/><br/>
+        {% endif %}
+
+        <b>Primary Phone:</b><br/>
+        {{ data.prim_phone }}
+        <br/><br/>
+
+        {% if data.sec_phone %}
+        <b>Secondary Phone:</b><br/>
+        {{ data.sec_phone }}
+        <br/><br/>
+        {% endif %}
+
+        <hr>
+
+        <h5>Address</h5>
+        {{ data.thoroughfare }}<br>
+        {{ data.locality }}, {{ data.administrative_area }} {{ data.postal_code }}<br>
+        {{ data.country }}
+        <br/><br/>
+       </p>
       <hr/>
 
       {# edit profile button #}
       <div class='col text-center'>
-        <a href='' class='btn btn-primary px-5'>Edit profile</a>
+        <a href='{{ url_for('user.edit_user_profile') }}'class='btn btn-primary px-5'>Edit profile</a>
       </div>
     </div>
   </div>

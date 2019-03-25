@@ -28,6 +28,7 @@ class User(db.Model, UserMixin):
     net_id = db.Column(db.Unicode(8), unique=True)
     department = db.Column(db.Unicode(50), server_default=u'')
 
+    sec_email = db.Column(db.Unicode(255), server_default=u'')
     prim_phone = db.Column(db.Unicode(50), nullable=False, server_default=u'')
     sec_phone = db.Column(db.Unicode(50), server_default=u'')
 
