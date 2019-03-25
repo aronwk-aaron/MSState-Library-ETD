@@ -14,13 +14,6 @@
         <div class="form-group {% if field.errors %}has-error{% endif %}">
             {{ form.hidden_tag() }}
 
-            <h5>Login Info</h5>
-            {{ render_field(form.email, tabindex=10) }}
-            {{ render_field(form.password, tabindex=20) }}
-            {{ render_field(form.retype_password, tabindex=30) }}
-
-            <hr/>
-
             <h5>MSU Info</h5>
             {{ render_field(form.net_id, tabindex=40) }}
             {{ render_field(form.msu_id, tabindex=50) }}
@@ -48,6 +41,13 @@
             {{ render_field(form.postal_code, tabindex=170) }}
             {{ render_field(form.thoroughfare, tabindex=180) }}
             {{ render_field(form.premise, tabindex=190) }}
+
+            <hr/>
+
+            <h5>Login Info</h5>
+            {{ render_field(form.email, tabindex=10) }}
+            {{ render_field(form.password, tabindex=20) }}
+            {{ render_field(form.retype_password, tabindex=30) }}
 
 
             {# Submit button #}
