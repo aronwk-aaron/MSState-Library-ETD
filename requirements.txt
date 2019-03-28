@@ -1,6 +1,5 @@
-pycountry
-phonenumbers
 alembic==1.0.8
+argon2-cffi==19.1.0
 arrow==0.13.1
 asn1crypto==0.24.0
 bcrypt==3.1.6
@@ -26,8 +25,10 @@ MarkupSafe==1.1.0
 marshmallow==2.19.1
 marshmallow-sqlalchemy==0.16.1
 passlib==1.7.1
+phonenumbers==8.10.8
 psycopg2==2.7.7
 psycopg2-binary==2.7.7
+pycountry==18.12.8
 pycparser==2.19
 python-dateutil==2.8.0
 python-editor==1.0.4
