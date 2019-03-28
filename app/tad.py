@@ -1,5 +1,7 @@
 from flask import render_template, Blueprint
 
+from app.models import Submission, User
+
 tad_blueprint = Blueprint('tad', __name__)
 
 
@@ -40,4 +42,11 @@ def portfolio():
 @tad_blueprint.route('/tad/catalog')
 def catalog():
     """Catalog of TADs"""
-    return render_template('tad/catalog.jinja2')
+
+    tads = Submission.query \
+        .join(User, User.id == Submission.user_id) \
+        .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.title, Submission.started) \
+        .filter(User.id == Submission.user_id) \
+        .filter(Submission.user_id == User.id)
+
+    return render_template('tad/catalog.jinja2', tads=tads)

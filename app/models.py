@@ -1,3 +1,4 @@
+from sqlalchemy import Column
 from sqlalchemy.sql import func
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -85,7 +86,7 @@ class Submission(db.Model):
     __tablename__ = 'submissions'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
+    user_id: Column = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
     title = db.Column(db.Unicode(), nullable=False, server_default=u'')
     abstract = db.Column(db.Unicode(), nullable=False, server_default=u'')
     # TODO: Make Enum type for this

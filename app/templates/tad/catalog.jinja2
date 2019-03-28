@@ -40,27 +40,19 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>Kendrick, Katelyn</td>
-      <td>I've run out of funny titles.</td>
-      <td>Spring 2019</td>
-      <td><a href="{{ url_for('tad.view', tad_id=1) }}" class="btn btn-primary" role="button"
-             aria-disabled="true">Link</a></td>
-    </tr>
-    <tr>
-      <td>Streamming, Jordan</td>
-      <td>Banging your head against the keyboard can produce valid code.</td>
-      <td>Spring 2019</td>
-      <td><a href="{{ url_for('tad.view', tad_id=2) }}" class="btn btn-primary" role="button"
-             aria-disabled="true">Link</a></td>
-    </tr>
-    <tr>
-      <td>Kimbrell, Aaron</td>
-      <td>What even is psychology?</td>
-      <td>Spring 2019</td>
-      <td><a href="{{ url_for('tad.view', tad_id=3) }}" class="btn btn-primary" role="button"
-             aria-disabled="true">Link</a></td>
-    </tr>
+
+    {% if tads %}
+      {% for tad in tads %}
+        <tr>
+          <td>{{ tad.last_name }}, {{ tad.first_name }}</td>
+          <td>{{ tad.title }}</td>
+          <td>{{ tad.started }}</td>
+          <td><a href="{{ url_for('tad.view', tad_id=tad.id) }}" class="btn btn-primary" role="button"
+                 aria-disabled="true">Link</a></td>
+        </tr>
+      {% endfor %}
+    {% endif %}
+
     </tbody>
   </table>
 

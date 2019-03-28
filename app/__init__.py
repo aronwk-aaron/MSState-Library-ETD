@@ -41,7 +41,6 @@ def create_app():
         return isinstance(field, HiddenField)
 
     app.jinja_env.globals['bootstrap_is_hidden_field'] = is_hidden_field_filter
-
     return app
 
 
@@ -65,6 +64,8 @@ def register_extensions(app):
     assets.url = app.static_url_path
     scss = Bundle('scss/site.scss', filters='libsass', output='site.css')
     assets.register('scss_all', scss)
+
+    db.create_all(app=app)
 
 
 def register_blueprints(app):
