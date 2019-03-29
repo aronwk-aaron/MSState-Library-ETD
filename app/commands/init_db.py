@@ -13,7 +13,6 @@ def init_db():
     db.drop_all()
     print('Creating all.')
     db.create_all()
-    print('Creating Admin User.')
     create_users()
 
 
@@ -21,7 +20,7 @@ class InitDbCommand(Command):
     """ Initialize the database."""
 
     def run(self):
-        print('Initializeing Database.')
+        print('Initializing Database.')
         init_db()
         print('Database has been initialized.')
 
@@ -33,6 +32,7 @@ def create_users():
     db.create_all()
 
     # Adding roles
+    print('Creating Roles.')
     admin_role = find_or_create_role('admin', u'Admin')
     user_role = find_or_create_role('user', u'User')
     reviewer = find_or_create_role('reviewer', u'Reviewer')
@@ -41,7 +41,8 @@ def create_users():
 
 
     # Add users
-    admin_user = find_or_create_user(u'Admin', u'Admin', u'Admin', u'admin@library.msstate.edu', 'Password1', u'CSE', u'net001', u'000-000-000', 1970, 1, 1, u'16623257668', u'US', u'Mississippi', u'Mississippi State', u'39762', u'395 Hardy Rd', None, admin_role)
+    print('Creating Admin User.')
+    admin_user = find_or_create_user(u'Admin', u'Admin', u'Admin', u'admin@library.notmsstate.edu', 'Password1', u'CSE', u'net001', u'000-000-000', 1970, 1, 1, u'16623257668', u'US', u'Mississippi', u'Mississippi State', u'39762', u'395 Hardy Rd', None, admin_role)
 
     # Save to DB
     db.session.commit()

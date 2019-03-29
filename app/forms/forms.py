@@ -4,7 +4,7 @@ from flask_user.forms import unique_email_validator, password_validator
 from flask_wtf import FlaskForm
 from wtforms import StringField, HiddenField, PasswordField, BooleanField, SubmitField, validators, FormField
 from wtforms.fields.html5 import DateField
-from wtforms.validators import required, optional
+from wtforms.validators import DataRequired, Optional
 
 from app import models
 from app.forms.fields import DepartmentSelectField, CountrySelectField
@@ -19,27 +19,29 @@ class CustomUserManager(UserManager):
         self.RegisterFormClass = CustomRegisterForm
         self.EditUserProfileFormClass = CustomEditUserProfileForm
 
+
 class CompleteAddressForm(FlaskForm):
     """Reusable form for addresses"""
     thoroughfare = StringField('Street address', validators=[
-        required,
+        DataRequired(),
     ])
     premise = StringField('Apt/Suite/Box number', validators=[
-        optional,
+        Optional(),
     ])
-    locality = StringField('City / Town', validators=[
-        required,
+    locality = StringField('City/Town', validators=[
+        DataRequired(),
     ])
-    administrative_area = StringField('State / Province / Region', validators=[
-        required,
+    administrative_area = StringField('State/Province/Region', validators=[
+        DataRequired(),
         validate_subdivision
     ])
-    postal_code = StringField('ZIP / Postal code', validators=[
-        required,
+    postal_code = StringField('ZIP/Postal code', validators=[
+        DataRequired(),
     ])
     country = CountrySelectField('Country', validators=[
-        required,
+        DataRequired(),
     ])
+
 
 class CustomLoginForm(FlaskForm):
     """Login form"""
@@ -47,10 +49,10 @@ class CustomLoginForm(FlaskForm):
     reg_next = HiddenField()
 
     email = StringField('MSU E-Mail', validators=[
-        required('MSU E-Mail is required'),
+        DataRequired('MSU E-Mail is Required'),
     ])
     password = PasswordField('Password', validators=[
-        required('Password is required'),
+        DataRequired('Password is Required'),
     ])
     remember_me = BooleanField('Remember me')
 
@@ -86,12 +88,12 @@ class CustomRegisterForm(FlaskForm):
 
     # Login Info
     email = StringField('MSU E-Mail', validators=[
-        required,
+        DataRequired(),
         validators.Email('Invalid email address'),
         unique_email_validator,
     ])
     password = PasswordField('Password', validators=[
-        required,
+        DataRequired(),
         password_validator
     ])
     retype_password = PasswordField('Retype Password', validators=[
@@ -100,53 +102,71 @@ class CustomRegisterForm(FlaskForm):
 
     # MSU Info
     net_id = StringField('NetID', validators=[
-        required
+        DataRequired()
     ])
     msu_id = StringField('MSU ID (9-digit WITH dashes)', validators=[
-        required,
+        DataRequired(),
         validators.Regexp(r'^\d{3}-\d{3}-\d{3}$', message='Invalid 9-digit MSU ID, be sure to include dashes!')
     ])
     department = DepartmentSelectField('Department', validators=[
-        required
+        DataRequired()
     ])
 
     # Personal Info
     first_name = StringField('First name', validators=[
-        required
+        DataRequired()
     ])
     middle_name = StringField('Middle name', validators=[
-        required
+        DataRequired()
     ])
     last_name = StringField('Last name', validators=[
-        required
+        DataRequired()
     ])
     birth_date = DateField('Date of Birth', format='%Y-%m-%d', validators=[
-        required
+        DataRequired()
     ])
     pref_name = StringField('Prefered name (if different from first name)', validators=[
-        optional
+        Optional()
     ])
     maiden_name = StringField('Maiden name (if applicable)', validators=[
-        optional
+        Optional()
     ])
 
     # Contact Info
 
-    sec_email = StringField('Personal email (optional)', validators=[
-        optional,
+    sec_email = StringField('Personal email (Optional)', validators=[
+        Optional(),
         validators.Email('Invalid email address'),
         unique_email_validator
     ])
     prim_phone = StringField('Primary phone', validators=[
-        required,
+        DataRequired(),
         validate_phone
     ])
-    sec_phone = StringField('Secondary phone (optional)', validators=[
-        optional,
+    sec_phone = StringField('Secondary phone (Optional)', validators=[
+        Optional(),
         validate_phone
     ])
-    address = FormField(CompleteAddressForm)
-
+    # address = FormField(CompleteAddressForm)
+    thoroughfare = StringField('Street address', validators=[
+        DataRequired(),
+    ])
+    premise = StringField('Apt/Suite/Box number', validators=[
+        Optional(),
+    ])
+    locality = StringField('City/Town', validators=[
+        DataRequired(),
+    ])
+    administrative_area = StringField('State/Province/Region', validators=[
+        DataRequired(),
+        validate_subdivision
+    ])
+    postal_code = StringField('ZIP/Postal code', validators=[
+        DataRequired(),
+    ])
+    country = CountrySelectField('Country', validators=[
+        DataRequired(),
+    ])
     invite_token = HiddenField('Token')
 
     submit = SubmitField('Register')
@@ -156,50 +176,70 @@ class CustomEditUserProfileForm(FlaskForm):
     """Edit Profile Form form"""
     # MSU Info
     net_id = StringField('NetID', validators=[
-        required
+        DataRequired()
     ])
     msu_id = StringField('MSU ID (9-digit WITH dashes)', validators=[
-        required,
+        DataRequired(),
         validators.Regexp(r'^\d{3}-\d{3}-\d{3}$', message='Invalid 9-digit MSU ID, be sure to include dashes!')
     ])
     department = DepartmentSelectField('Department', validators=[
-        required
+        DataRequired()
     ])
 
     # Personal Info
     first_name = StringField('First name', validators=[
-        required
+        DataRequired()
     ])
     middle_name = StringField('Middle name', validators=[
-        required
+        DataRequired()
     ])
     last_name = StringField('Last name', validators=[
-        required
+        DataRequired()
     ])
     birth_date = DateField('Date of birth', format='%Y-%m-%d', validators=[
-        required
+        DataRequired()
     ])
     pref_name = StringField('Prefered name (if different from first name)', validators=[
-        optional
+        Optional()
     ])
     maiden_name = StringField('Maiden name (if applicable)', validators=[
-        optional
+        Optional()
     ])
 
     # Contact Info
 
-    sec_email = StringField('Personal email (optional)', validators=[
-        optional,
+    sec_email = StringField('Personal email (Optional)', validators=[
+        Optional(),
         validators.Email('Invalid email address'),
     ])
     prim_phone = StringField('Primary phone', validators=[
-        required,
+        DataRequired(),
         validate_phone
     ])
-    sec_phone = StringField('Secondary phone (optional)', validators=[
-        optional,
+    sec_phone = StringField('Secondary phone (Optional)', validators=[
+        Optional(),
         validate_phone
     ])
-    address = FormField(CompleteAddressForm)
+    # address = FormField(CompleteAddressForm)
+
+    thoroughfare = StringField('Street address', validators=[
+        DataRequired(),
+    ])
+    premise = StringField('Apt/Suite/Box number', validators=[
+        Optional(),
+    ])
+    locality = StringField('City/Town', validators=[
+        DataRequired(),
+    ])
+    administrative_area = StringField('State/Province/Region', validators=[
+        DataRequired(),
+        validate_subdivision
+    ])
+    postal_code = StringField('ZIP/Postal code', validators=[
+        DataRequired(),
+    ])
+    country = CountrySelectField('Country', validators=[
+        DataRequired(),
+    ])
 
     submit = SubmitField('Update')
