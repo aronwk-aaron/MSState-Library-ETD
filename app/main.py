@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint, url_for, redirect, session
-from flask_user import current_user
+from flask_user import current_user, login_required
 import pycountry
 
 main_blueprint = Blueprint('main', __name__)
@@ -29,7 +29,7 @@ def profile():
     """Profile Page"""
 
     if current_user.pref_name == "":
-        full_name=current_user.first_name + ' ' + current_user.middle_name + ' ' + current_user.last_name
+        full_name = current_user.first_name + ' ' + current_user.middle_name + ' ' + current_user.last_name
     else:
         full_name = current_user.first_name + ' "' + current_user.pref_name + '" ' + current_user.middle_name + ' ' + current_user.last_name
 
@@ -49,7 +49,6 @@ def profile():
                 postal_code=current_user.postal_code,
                 thoroughfare=current_user.thoroughfare,
                 premise=current_user.premise)
-    print(info)
     return render_template('main/profile.jinja2', data=info)
 
 

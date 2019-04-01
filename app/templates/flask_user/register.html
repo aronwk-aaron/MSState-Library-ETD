@@ -14,44 +14,47 @@
         <div class="form-group {% if field.errors %}has-error{% endif %}">
             {{ form.hidden_tag() }}
 
-            <h5>Login Info</h5>
-            {{ render_field(form.email, tabindex=10) }}
-            {{ render_field(form.password, tabindex=20) }}
-            {{ render_field(form.retype_password, tabindex=30) }}
-
-            <hr/>
-
             <h5>MSU Info</h5>
-            {{ render_field(form.net_id, tabindex=40) }}
-            {{ render_field(form.msu_id, tabindex=50) }}
-            {{ render_field(form.department, tabindex=60) }}
+            {{ render_field(form.net_id, tabindex=10) }}
+            {{ render_field(form.msu_id, tabindex=20) }}
+            {{ render_field(form.department, tabindex=30) }}
 
             <hr/>
 
             <h5>Personal Info</h5>
-            {{ render_field(form.first_name, tabindex=70) }}
-            {{ render_field(form.middle_name, tabindex=80) }}
-            {{ render_field(form.last_name, tabindex=90) }}
-            {{ render_field(form.birth_date, tabindex=100) }}
-            {{ render_field(form.pref_name, tabindex=101) }}
-            {{ render_field(form.maiden_name, tabindex=102) }}
+            {{ render_field(form.first_name, tabindex=40) }}
+            {{ render_field(form.middle_name, tabindex=50) }}
+            {{ render_field(form.last_name, tabindex=60) }}
+            {{ render_field(form.birth_date, tabindex=70) }}
+            {{ render_field(form.pref_name, tabindex=80) }}
+            {{ render_field(form.maiden_name, tabindex=90) }}
 
             <hr/>
 
             <h5>Contact Info</h5>
-            {{ render_field(form.sec_email, tabindex=110) }}
-            {{ render_field(form.prim_phone, tabindex=120) }}
-            {{ render_field(form.sec_phone, tabindex=130) }}
-            {{ render_field(form.country, tabindex=140) }}
-            {{ render_field(form.administrative_area, tabindex=150) }}
-            {{ render_field(form.locality, tabindex=160) }}
+            {{ render_field(form.sec_email, tabindex=100) }}
+            {{ render_field(form.prim_phone, tabindex=110) }}
+            {{ render_field(form.sec_phone, tabindex=120) }}
+
+            <hr/>
+
+            {{ render_field(form.thoroughfare, tabindex=130) }}
+            {{ render_field(form.premise, tabindex=140) }}
+            {{ render_field(form.locality, tabindex=150) }}
+            {{ render_field(form.administrative_area, tabindex=160) }}
             {{ render_field(form.postal_code, tabindex=170) }}
-            {{ render_field(form.thoroughfare, tabindex=180) }}
-            {{ render_field(form.premise, tabindex=190) }}
+            {{ render_field(form.country, tabindex=180) }}
+
+            <hr/>
+
+            <h5>Login Info</h5>
+            {{ render_field(form.email, tabindex=190) }}
+            {{ render_field(form.password, tabindex=200) }}
+            {{ render_field(form.retype_password, tabindex=210) }}
 
 
             {# Submit button #}
-            {{ render_submit_field(form.submit, tabindex=200) }}
+            {{ render_submit_field(form.submit, tabindex=220) }}
         </div>
     </form>
 
