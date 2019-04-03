@@ -20,29 +20,6 @@ class CustomUserManager(UserManager):
         self.EditUserProfileFormClass = CustomEditUserProfileForm
 
 
-class CompleteAddressForm(FlaskForm):
-    """Reusable form for addresses"""
-    thoroughfare = StringField('Street address', validators=[
-        DataRequired(),
-    ])
-    premise = StringField('Apt/Suite/Box number', validators=[
-        Optional(),
-    ])
-    locality = StringField('City/Town', validators=[
-        DataRequired(),
-    ])
-    administrative_area = StringField('State/Province/Region', validators=[
-        DataRequired(),
-        validate_subdivision
-    ])
-    postal_code = StringField('ZIP/Postal code', validators=[
-        DataRequired(),
-    ])
-    country = CountrySelectField('Country', validators=[
-        DataRequired(),
-    ])
-
-
 class CustomLoginForm(FlaskForm):
     """Login form"""
     next = HiddenField()
