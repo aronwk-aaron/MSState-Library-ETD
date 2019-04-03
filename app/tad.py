@@ -1,20 +1,32 @@
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, redirect, url_for
 
+from app.forms.forms import CreateSubmissionForm
 from app.models import Submission, User
 
 tad_blueprint = Blueprint('tad', __name__)
 
 
-@tad_blueprint.route('/tad/new')
+@tad_blueprint.route('/tad/new', methods=['GET', 'POST'])
 def new():
     """Create submission page"""
-    return render_template('tad/edit.jinja2', new=True)
+
+    form = CreateSubmissionForm()
+    if form.validate_on_submit():
+
+        return redirect(url_for('tad.edit', form.id))
+
+    return render_template('tad/edit.jinja2',
+                           new=True,
+                           form=CreateSubmissionForm())
 
 
-@tad_blueprint.route('/tad/edit')
-def edit():
+@tad_blueprint.route('/tad/<tad_id>/edit', methods=['GET', 'POST'])
+def edit(tad_id):
     """Edit submission page"""
-    return render_template('tad/edit.jinja2', new=False)
+    return render_template('tad/edit.jinja2',
+                           new=False,
+                           tad_id=tad_id,
+                           form=CreateSubmissionForm())
 
 
 @tad_blueprint.route('/tad/<tad_id>/rev/<rev_id>')

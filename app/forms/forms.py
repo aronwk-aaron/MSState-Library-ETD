@@ -2,7 +2,8 @@ from flask import current_app, flash
 from flask_user import UserManager
 from flask_user.forms import unique_email_validator, password_validator
 from flask_wtf import FlaskForm
-from wtforms import StringField, HiddenField, PasswordField, BooleanField, SubmitField, validators, FormField
+from wtforms import StringField, HiddenField, PasswordField, BooleanField, SubmitField, validators, FormField, \
+    SelectField, FileField
 from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, Optional
 
@@ -243,3 +244,24 @@ class CustomEditUserProfileForm(FlaskForm):
     ])
 
     submit = SubmitField('Update')
+
+
+class CreateSubmissionForm(FlaskForm):
+    id = HiddenField()
+    user_id = HiddenField()
+    title = StringField('Title', validators=[
+        DataRequired()
+    ])
+    abstract = StringField('Abstract', validators=[
+        DataRequired()
+    ])
+
+    type = SelectField('Submission type', validators=[
+        DataRequired()
+    ], choices=[
+        ('0', 'Master\'s Thesis'),
+        ('1', 'Educational Specialist\'s Thesis'),
+        ('2', 'Doctoral Disseration'),
+    ])
+
+    signature = FileField('Signature file')
