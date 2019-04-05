@@ -1,5 +1,5 @@
-from flask import render_template, Blueprint, url_for, redirect, session
-from flask_user import current_user, login_required
+from flask import render_template, Blueprint, url_for, redirect, send_from_directory
+from flask_user import current_user, login_required, current_app
 import pycountry
 
 main_blueprint = Blueprint('main', __name__)
@@ -12,18 +12,21 @@ def splash():
     # return render_template('main/splash.jinja2')
 
 
+@login_required
 @main_blueprint.route('/home')
 def index():
     """Home/Index Page"""
     return render_template('main/index.jinja2')
 
 
+@login_required
 @main_blueprint.route('/dashboard')
 def dashboard():
     """Dashboard Page"""
     return render_template('main/dashboard.jinja2')
 
 
+@login_required
 @main_blueprint.route('/profile')
 def profile():
     """Profile Page"""
@@ -50,6 +53,12 @@ def profile():
                 thoroughfare=current_user.thoroughfare,
                 premise=current_user.premise)
     return render_template('main/profile.jinja2', data=info)
+
+
+@login_required
+@main_blueprint.route('/uploads/<filename>')
+def uploads(filename):
+    return send_from_directory(current_app.instance_path, filename)
 
 
 @main_blueprint.route('/user/signed-out')

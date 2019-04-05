@@ -39,6 +39,8 @@ def create_app():
 
     register_extensions(app)
     register_blueprints(app)
+    # add the init_db command to flask cli
+    app.cli.add_command(init_db)
 
     # Signal for giving users who register the 'user' role
     @user_registered.connect_via(app)
@@ -65,7 +67,6 @@ def create_app():
         return isinstance(field, HiddenField)
 
     app.jinja_env.globals['bootstrap_is_hidden_field'] = is_hidden_field_filter
-    app.cli.add_command(init_db)
 
     return app
 
@@ -104,8 +105,8 @@ def register_blueprints(app):
     from .main import main_blueprint
     app.register_blueprint(main_blueprint)
 
-    from .tad import tad_blueprint
-    app.register_blueprint(tad_blueprint)
+    from .submissions import submissions_blueprint
+    app.register_blueprint(submissions_blueprint, url_prefix='/submissions')
 
     # from .auth import auth_blueprint
     # app.register_blueprint(auth_blueprint)

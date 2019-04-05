@@ -3,7 +3,8 @@ from flask_user import UserManager
 from flask_user.forms import unique_email_validator, password_validator
 from flask_wtf import FlaskForm
 from wtforms import StringField, HiddenField, PasswordField, BooleanField, SubmitField, validators, FormField, \
-    SelectField, FileField
+    SelectField, TextAreaField
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, Optional
 
@@ -229,11 +230,11 @@ class CreateSubmissionForm(FlaskForm):
     title = StringField('Title', validators=[
         DataRequired()
     ])
-    abstract = StringField('Abstract', validators=[
+    abstract = TextAreaField('Abstract', validators=[
         DataRequired()
     ])
 
-    type = SelectField('Submission type', validators=[
+    type = SelectField('Document type', validators=[
         DataRequired()
     ], choices=[
         ('0', 'Master\'s Thesis'),
@@ -241,4 +242,30 @@ class CreateSubmissionForm(FlaskForm):
         ('2', 'Doctoral Disseration'),
     ])
 
-    signature = FileField('Signature file')
+    release = SelectField('Release type', validators=[
+        DataRequired()
+    ], choices=[
+        ('0', 'Worldwide'),
+        ('1', 'Restricted'),
+        ('2', 'Embargo'),
+    ])
+
+    professor = StringField('Major Professor\'s NetID', validators=[
+        Optional()
+    ])
+
+    years = SelectField('Restict time (if Restricted is selected)', validators=[
+        DataRequired()
+    ], choices=[
+        ('0', ''),
+        ('1', '1 year'),
+        ('2', '2 years'),
+        ('3', '3 years'),
+    ])
+
+    signature = FileField('Signature file', validators=[
+        FileRequired(),
+        FileAllowed(['pdf'], "PDF's only!")
+    ])
+
+    submit = SubmitField('Create Submission')

@@ -94,6 +94,7 @@ class Submission(db.Model):
     # TODO: Make Enum type for this
     release_type = db.Column(db.Integer, nullable=False)
     ww_length = db.Column(db.Integer, nullable=False)
+    professor = db.Column(db.Unicode(8))
     # TODO: figure out files for this
     signature_file = db.Column(db.Text)
     started = db.Column(db.DateTime(), server_default=func.now(), nullable=False)
