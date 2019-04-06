@@ -35,7 +35,179 @@
       <h3 class='card-title'>Review</h3>
       <hr/>
       <p>
-        Show review info if exists
+        {% if review %}
+          <h4>Feedback</h4>
+          <ul>
+          {% if review.check_1 %}
+            <li>
+              The Pages in Study needs to be updated on the abstract page.
+            </li>
+          {% endif %}
+          {% if review.check_2 %}
+            <li>
+              Chapter numbers should appear in Roman Numerals.
+            </li>
+          {% endif %}
+          {% if review.check_3 %}
+            <li>
+              The page after the copyright page is blank and should be removed
+            </li>
+          {% endif %}
+          {% if review.check_4 %}
+            <li>
+              Remove any signature lines that do not specify a committee member\'s name on the approval page.
+            </li>
+          {% endif %}
+          {% if review.check_5 %}
+            <li>
+              The student name on your dissertation and your ETD account should match.
+            </li>
+          {% endif %}
+          {% if review.check_6 %}
+            <li>
+              On the abstract page, there is a drop-down to “Select Appropriate Title”for your professor. Please choose the title for your professor from the drop-down.
+            </li>
+          {% endif %}
+          {% if review.check_7 %}
+            <li>
+              The title needs to be in sentence case, meaning only the first word is capitalized and any proper nouns. Please correct this throughout the paper and in your ETD account.
+            </li>
+          {% endif %}
+          {% if review.check_8 %}
+            <li>
+              Chapter 1 should start at page 1. To correct this go to the footer at Chapter 1 and go to Page Number, Format Page Number, and “Start at 1”. The update the table of contents, list of tables and figures and Pages in Study on the abstract.
+            </li>
+          {% endif %}
+          {% if review.check_9 %}
+            <li>
+              References need to be single spaced with a space in between.
+            </li>
+          {% endif %}
+          {% if review.check_10 %}
+            <li>
+              Figures/Tables need to be resized to fit in the margins. Review all figures/tables to make sure they fit in the margins. It is helpful to have the rulers and gridlines on in the View pane when resizing.
+            </li>
+          {% endif %}
+          {% if review.check_11 %}
+            <li>
+              Table needs to be resized to fit in margins.
+            </li>
+          {% endif %}
+          {% if review.check_12 %}
+            <li>
+              Chapter title pages should have a 2” top margin
+            </li>
+          {% endif %}
+          {% if review.check_13 %}
+            <li>
+              Third level headings in APA style should be contained “in the paragraph”. To correct this in the document, do the following:<ul><li>Type title of third (fourth or fifth) level heading. Start paragraph on same line as heading.</li><li>Place cursor on space before first letter of paragraph and choose “Heading in Paragraph” style.</li><li>Highlight title of heading and choose “3rd level heading” (or forth or fifth).</li></ul>
+            </li>
+          {% endif %}
+          {% if review.check_14 %}
+            <li>
+              The Appendix document should be on a separate page from the Appendix number and title page.
+            </li>
+          {% endif %}
+          {% if review.check_15 %}
+            <li>
+              The sublevel headings are not connected to the styles, so the sub-level heading are not appearing as they should. Please open the style pane and click on the sublevel headings and appropriate style. The update the table of contents.
+            </li>
+          {% endif %}
+          {% if review.check_16 %}
+            <li>
+              The word CHAPTER 16is missing from the table of contents. To be able to see the code that populates that word, go to File, Options, Display, and click on hidden texts. Then pull up the template and copy and paste the code (it appears after the word CHAPTER I) into your document. The update the Table of contents and the word Chapter should appear.
+            </li>
+          {% endif %}
+          {% if review.check_17 %}
+            <li>
+              There need to be 1” left and right margins on the landscape pages.
+            </li>
+          {% endif %}
+          {% if review.check_18 %}
+            <li>
+              The titles need to be on the same page as the table or image.
+            </li>
+          {% endif %}
+          {% if review.check_19 %}
+            <li>
+              The tables/figures are not connected to the styles, so the List of Tables/List of Figures is not populating correcting. To connect them just click the table/figure title and in the style pane, click table title/figure title. You will know they are connected when a blue rectangular box appears around the correct style in the style pane. The update your List of Tables/List of Figures and they should appear.
+            </li>
+          {% endif %}
+          {% if review.check_20 %}
+            <li>
+              Need to separate figure titles, from figure notes.
+            </li>
+          {% endif %}
+          {% if review.check_21 %}
+            <li>
+              Need to separate table titles, from table notes.
+            </li>
+          {% endif %}
+          {% if review.check_22 %}
+            <li>
+              Some paragraphs are indented and others aren’t. This needs to be consistent throughout the document.
+            </li>
+          {% endif %}
+          {% if review.check_23 %}
+            <li>
+              If a table is continued on another page, it needs to say “Table ____ (continued)” above the table on the subsequent pages.
+            </li>
+          {% endif %}
+          {% if review.check_24 %}
+            <li>
+              There is an extra page at the end on the document that need to be removed.
+            </li>
+          {% endif %}
+          {% if review.check_25 %}
+            <li>
+              Reduce Abstract to 150 words for Thesis or 350 for Dissertation.
+            </li>
+          {% endif %}
+          {% if review.check_26 %}
+            <li>
+              Removed signed signature page. This page should has no signatures
+            </li>
+          {% endif %}
+          {% if review.check_27 %}
+            <li>
+              Begin chapter on “Chapter” page.
+            </li>
+          {% endif %}
+          {% if review.check_28 %}
+            <li>
+              Center Appendix A title page vertically and horizontally on the page.
+            </li>
+          {% endif %}
+          {% if review.check_29 %}
+            <li>
+              Chapter titles need to be all capitalized.
+            </li>
+          {% endif %}
+          {% if review.check_30 %}
+            <li>
+              Removed unused committee signature lines.
+            </li>
+          {% endif %}
+          {% if review.check_31 %}
+            <li>
+              Check Graduation Date in Abstract
+            </li>
+          {% endif %}
+          {% if review.check_32 %}
+            Missing “Chapter” page __.'
+          {% endif %}
+          </ul>
+
+          {% if review.comments %}
+            <h4>Comments</h4>
+            <p class="px-3 py-2">
+              {{ review.comments }}
+            </p>
+          {% endif %}
+
+        {% else %}
+          Revision has not been reviewed
+        {% endif %}
       </p>
     </div>
   </div>

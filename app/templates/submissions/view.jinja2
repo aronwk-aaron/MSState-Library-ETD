@@ -91,20 +91,12 @@
       <hr/>
 
       <table class='table table-borderless table-striped'>
-        <thead>
-        <tr>
-          <th scope='col'>#</th>
-          <th scope='col'>Date Submitted</th>
-          <th scope='col'>Feedback Status</th>
-          <th scope='col'>View</th>
-        </tr>
-        </thead>
         <tbody>
         {% if revisions %}
           {% for revision in revisions %}
             <tr>
-              <td>{{ revision.id }}</td>
-              <td>{{ revision.submitted.humanize() }}</td>
+              <td>Revision ID: {{ revision.id }}</td>
+              <td>Submitted {{ revision.submitted.humanize() }}</td>
               <td></td>
               <td><a href="{{ url_for('revisions.view', submission_id=submission.id, revision_id=revision.id) }}"
                      class="btn btn-primary"

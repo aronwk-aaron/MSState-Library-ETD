@@ -1,0 +1,57 @@
+{% extends 'base.jinja2' %}
+{% from "flask_user/_macros.html" import render_submit_field, render_field %}4
+
+{% block title %}Review Revision{% endblock %}
+
+
+{% block content_before %}
+  <div class='jumbotron shadow-sm py-3'>
+    <div class='container'>
+      <h1 class='font-weight-bolder'>{{ submission.title }}</h1>
+      <span class='lead'>
+        By {{ user.first_name }} {{ user.last_name }}
+        <br>
+        <br>
+        <a class="btn btn-primary" href="{{ url_for('submissions.view', submission_id=submission.id) }}">View Submission</a>
+        <a class="btn btn-primary ml-1" href="{{ url_for('revisions.view', revision_id=revision.id) }}">View Revision</a>
+      </span>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class='card shadow-sm mb-4'>
+    <div class='card-body'>
+      <h3 class='card-title'>Download</h3>
+      <hr/>
+      <p>
+        <a class="btn btn-primary" href="{{ url_for('main.uploads_submissions', filename=revision.file) }}">View submitted file</a>
+      </p>
+    </div>
+  </div>
+  <div class='card shadow-sm mb-4'>
+    <div class='card-body'>
+      <h3 class='card-title'>Review</h3>
+      <hr/>
+      <form method="POST">
+
+        {# CSRF token #}
+        {{ form.csrf_token }}
+        {% for field in form %}
+          {% if 'check_' in field.id %}
+            <div class="custom-control custom-checkbox my-1 mr-sm-2">
+              {{ field(class='custom-control-input') }}
+             <label class="custom-control-label" for="{{ field.id }}">{{ field.label.text }}</label>
+            </div>
+            <br>
+          {% endif %}
+        {% endfor %}
+        <div class="form-group">
+          <label for="{{ form.comments.id }}">{{ form.comments.label.text }}</label>
+          {{ form.comments(class='form-control', rows='10') }}
+        </div>
+        {{ render_submit_field(form.submit) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

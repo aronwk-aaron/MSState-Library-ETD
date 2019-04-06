@@ -12,7 +12,6 @@
         {# Username or Email #}
         {% set field = form.username if user_manager.USER_ENABLE_USERNAME else form.email %}
         <div class="form-group {% if field.errors %}has-error{% endif %}">
-            {{ form.hidden_tag() }}
 
             <h5>MSU Info</h5>
             {{ render_field(form.net_id, tabindex=10) }}
