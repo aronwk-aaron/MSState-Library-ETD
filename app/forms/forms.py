@@ -6,7 +6,7 @@ from wtforms import StringField, HiddenField, PasswordField, BooleanField, Submi
     SelectField, TextAreaField
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms.fields.html5 import DateField
-from wtforms.validators import DataRequired, Optional
+from wtforms.validators import DataRequired, Optional, Length
 
 from app import models
 from app.forms.fields import DepartmentSelectField, CountrySelectField
@@ -251,7 +251,8 @@ class CreateSubmissionForm(FlaskForm):
     ])
 
     professor = StringField('Major Professor\'s NetID', validators=[
-        Optional()
+        DataRequired(),
+        Length(max=8)
     ])
 
     years = SelectField('Restict time (if Restricted is selected)', validators=[
@@ -269,3 +270,15 @@ class CreateSubmissionForm(FlaskForm):
     ])
 
     submit = SubmitField('Create Submission')
+
+
+class CreateRevisionForm(FlaskForm):
+    id = HiddenField()
+    sub_id = HiddenField()
+
+    file = FileField('Thesis or Dissertation file', validators=[
+        FileRequired(),
+        FileAllowed(['pdf', 'doc', 'docx'], ".pdf, .doc, or .docx only!")
+    ])
+
+    submit = SubmitField('Create Revision')

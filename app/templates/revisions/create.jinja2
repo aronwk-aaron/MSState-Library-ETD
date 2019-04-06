@@ -1,0 +1,49 @@
+{% extends 'base.jinja2' %}
+{% from "flask_user/_macros.html" import render_submit_field, render_field %}
+
+{% block title %}
+  New Revivsion
+{% endblock %}
+
+
+{% block content_before %}
+
+  {# title jumbotron #}
+  <div class='jumbotron shadow-sm py-3'>
+    <div class='container'>
+      <h1>New Revision</h1>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block content %}
+
+  <form method="POST" enctype="multipart/form-data">
+    <p class="px-3">
+      <h3>For Microsoft Word Documents:</h3>
+      Please submit a <code>.doc</code> or a <code>.docx</code> file.
+      <br>
+      <br>
+      <h3>For <span class="latex">L<sup>a</sup>T<sub>e</sub>X</span></h3>
+      Please export it as a <code>.pdf</code> and submit the <code>.pdf</code> file.
+
+    </p>
+    {# CSRF token #}
+    {{ form.csrf_token }}
+    <div class="form-group">
+      <label for="{{ form.file.id }}" class="text-muted">{{ form.file.label.text }}</label><br/>
+      {{ form.file }}
+      {% if form.file.errors %}
+        {% for e in form.file.errors %}
+            <p class="help-block text-danger">{{ e }}</p>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <hr>
+    {{ render_submit_field(form.submit) }}
+  </form>
+
+{% endblock %}
+

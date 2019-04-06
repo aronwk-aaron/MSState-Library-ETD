@@ -1,0 +1,126 @@
+{% extends 'base.jinja2' %}
+
+{% block title %}View Submission{% endblock %}
+
+
+
+{% block css %}
+  {{ super() }}
+  <style>
+    .table > tbody > tr > td, .table > tbody > tr > th {
+      vertical-align: middle;
+    }
+  </style>
+{% endblock %}
+
+
+{% block content_before %}
+  <div class='jumbotron shadow-sm py-3'>
+    <div class='container'>
+      <h1 class='font-weight-bolder'>{{ submission.title }}</h1>
+      <span class='lead'>
+        By {{ user.first_name }} {{ user.last_name }}
+      </span>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+  <div class='card shadow-sm mb-4'>
+    <div class='card-body'>
+      <h3 class='card-title'>Abstract</h3>
+      <hr/>
+      <p>
+        {{ submission.abstract }}
+      </p>
+    </div>
+  </div>
+
+  <div class='card shadow-sm mb-4'>
+    <div class='card-body'>
+      <h3 class='card-title'>Details</h3>
+      <hr/>
+      <p>
+        <span class="font-weight-bold">Paper Type:</span>
+        {% if submission.type == 0 %}
+          Master's Thesis'
+        {% elif submission.type == 1 %}
+          Educational Specialist's Thesis
+        {% elif submission.type == 2 %}
+          Doctoral Disseration
+        {% endif %}
+        <br>
+        <br>
+
+        <span class="font-weight-bold">Release type:</span>
+        {% if submission.release_type == 0 %}
+          Worldwide
+        {% elif submission.release_type == 1 %}
+          Restricted
+        {% elif submission.release_type == 2 %}
+          Embargo
+        {% endif %}
+        <br>
+        <br>
+
+        {% if submission.release_type == 1 %}
+          <span class="font-weight-bold">Restricted Time Length:</span>
+          {% if submission.ww_length == 1 %}
+            1 year
+          {% elif submission.ww_length == 2 %}
+            2 years
+          {% elif submission.ww_length == 3 %}
+            3 years
+          {% endif %}
+          <br>
+          <br>
+        {% endif %}
+        <span class="font-weight-bold">Major Professor's NetID:</span> {{ submission.professor }}
+        <br>
+        <br>
+
+        <a class="btn btn-primary" href="{{ url_for('main.uploads_signatures', filename=submission.signature_file) }}">View Signature file</a>
+      </p>
+    </div>
+  </div>
+
+  <div class='card shadow-sm mb-4'>
+    <div class='card-body'>
+      <h3 class='card-title'>Revisions</h3>
+      <hr/>
+
+      <table class='table table-borderless table-striped'>
+        <thead>
+        <tr>
+          <th scope='col'>#</th>
+          <th scope='col'>Date Submitted</th>
+          <th scope='col'>Feedback Status</th>
+          <th scope='col'>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if revisions %}
+          {% for revision in revisions %}
+            <tr>
+              <td>{{ revision.id }}</td>
+              <td>{{ revision.submitted.humanize() }}</td>
+              <td></td>
+              <td><a href="{{ url_for('revisions.view', submission_id=submission.id, revision_id=revision.id) }}"
+                     class="btn btn-primary"
+                     role="button"
+                     aria-disabled="true">View Revision</a>
+              </td>
+            </tr>
+          {% endfor %}
+        {% endif %}
+        </tbody>
+      </table>
+      {# TODO: Only show if none exist or feedback has been received #}
+      <a id='tad-revise' href="{{ url_for('revisions.create', submission_id=submission.id) }}" class='btn btn-primary px-4'>
+        Create revision
+      </a>
+    </div>
+  </div>
+
+{% endblock %}

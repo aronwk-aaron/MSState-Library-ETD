@@ -19,6 +19,11 @@
         <label>
             {{ field(type='checkbox', **kwargs) }} {{ label }}
         </label>
+        {% if field.errors %}
+            {% for e in field.errors %}
+                <p class="help-block text-danger">{{ e }}</p>
+            {% endfor %}
+        {% endif %}
     </div>
 {%- endmacro %}
  
@@ -31,6 +36,11 @@
             </label>
         </div>
     {% endfor %}
+    {% if field.errors %}
+        {% for e in field.errors %}
+            <p class="help-block text-danger">{{ e }}</p>
+        {% endfor %}
+    {% endif %}
 {%- endmacro %}
 
 {% macro render_submit_field(field, label=None, tabindex=None) -%}

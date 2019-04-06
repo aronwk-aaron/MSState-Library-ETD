@@ -1,11 +1,8 @@
 {% extends 'base.jinja2' %}
+{% from "flask_user/_macros.html" import render_submit_field, render_field %}
 
 {% block title %}
-  {% if new %}
-    New Submission
-  {% else %}
-    Edit Submission
-  {% endif %}
+  New Submission
 {% endblock %}
 
 
@@ -23,16 +20,9 @@
   {# title jumbotron #}
   <div class='jumbotron shadow-sm py-3'>
     <div class='container'>
-      {% if new %}
-        <h1>New Submission</h1>
-      {% else %}
-        <h1>Edit Submission</h1>
-      {% endif %}
+      <h1>New Submission</h1>
     </div>
   </div>
-  {% if form.errors %}
-    {{ form.errors }}
-  {% endif %}
 {% endblock %}
 
 
@@ -40,23 +30,6 @@
 {% block content %}
 
   <form method="POST" enctype="multipart/form-data">
-    {# button bar #}
-    <button id="tad-save" class='btn btn-secondary px-4'>
-      {% if new %}
-        Create
-      {% else %}
-        Save
-      {% endif %}
-    </button>
-    <button id='tad-save-quit' class='btn btn-dark ml-auto px-4'>
-      {% if new %}
-        Create
-      {% else %}
-        Save
-      {% endif %}
-      & Quit
-    </button>
-    <hr/>
 
     {# CSRF token #}
     {{ form.csrf_token }}
@@ -148,10 +121,8 @@
       By submitting signatures here, I certify that I have read and acknowledge this requirement.
     </p>
 
-    <div class="form-group">
-      <label for="{{ form.professor.id }}" class="text-muted">{{ form.professor.label.text }}</label><br/>
-      {{ form.professor(class='form-control', placeholder=form.professor.label.text) }}
-    </div>
+    {{ render_field(form.professor) }}
+
     <p class="px-3">
       My attached signature indicates that I have counseled the student regarding the appropriate access level for the
       electronic thesis/dissertation named above.
@@ -163,8 +134,17 @@
     <div class="form-group">
       <label for="{{ form.signature.id }}" class="text-muted">{{ form.signature.label.text }}</label><br/>
       {{ form.signature }}
+      {% if form.signature.errors %}
+        {% for e in form.signature.errors %}
+            <p class="help-block text-danger">{{ e }}</p>
+        {% endfor %}
+      {% endif %}
     </div>
-    {{ form.submit }}
+    <hr>
+    <p class="px-3">
+      You will submit your paper on the next page.
+    </p>
+    {{ render_submit_field(form.submit) }}
   </form>
 
 {% endblock %}
@@ -200,7 +180,7 @@
         });
         console.log(data)
         $.ajax({
-          url: '{{ url_for('submissions.edit', tad_id=tad_id) }}',
+          url: '{{ url_for('submissions.create', submission_id=submission_id) }}',
           type: 'POST',
           data: data,
           success: function (data) {
@@ -218,7 +198,7 @@
           'new': '{{ new }}'
         });
         $.ajax({
-          url: '{{ url_for('submissions.edit', tad_id=tad_id) }}',
+          url: '{{ url_for('submissions.create', submission_id=submission_id) }}',
           type: 'POST',
           data: data,
           success: function (data) {

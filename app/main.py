@@ -1,5 +1,6 @@
 from flask import render_template, Blueprint, url_for, redirect, send_from_directory
 from flask_user import current_user, login_required, current_app
+from app.models import Submission, Revision
 import pycountry
 
 main_blueprint = Blueprint('main', __name__)
@@ -23,7 +24,13 @@ def index():
 @main_blueprint.route('/dashboard')
 def dashboard():
     """Dashboard Page"""
-    return render_template('main/dashboard.jinja2')
+    user = 'user'
+    if current_user.has_roles('admin'):
+        user = 'admin'
+    else:
+        if current_user.has_roles('reviewer'):
+            user = 'reviewer'
+    return render_template('main/dashboard.jinja2', user=user)
 
 
 @login_required
@@ -56,9 +63,29 @@ def profile():
 
 
 @login_required
-@main_blueprint.route('/uploads/<filename>')
-def uploads(filename):
-    return send_from_directory(current_app.instance_path, filename)
+@main_blueprint.route('/uploads/signatures/<filename>')
+def uploads_signatures(filename):
+    query = Submission.get_submission_by_signature(signature_filename=filename)
+    if current_user.has_roles(['admin', 'viewer', 'reviewer', 'helper']) or query.id == query.user_id:
+        return send_from_directory(current_app.config['SIGNATURE_FOLDER'], query.signature_file)
+    else:
+        return redirect(url_for('main.index'))
+
+
+@login_required
+@main_blueprint.route('/uploads/submissions/<filename>')
+def uploads_submissions(filename):
+    query = Revision.get_revision_by_filename(filename=filename)
+    if current_user.has_roles(['admin', 'viewer', 'reviewer', 'helper']) or query.id == query.user_id:
+        return send_from_directory(current_app.config['SUBMISSION_FOLDER'], query.file)
+    else:
+        return redirect(url_for('main.index'))
+
+
+@login_required
+@main_blueprint.route('/documents/<filename>')
+def serve_documents(filename):
+    return send_from_directory(current_app.config['DOCUMENT_FOLDER'], filename)
 
 
 @main_blueprint.route('/user/signed-out')

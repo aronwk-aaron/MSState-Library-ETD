@@ -1,8 +1,9 @@
 from sqlalchemy import Column
-from sqlalchemy.sql import func
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_user import UserMixin
+from sqlalchemy_utils import ArrowType
+import arrow
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -49,6 +50,10 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary='users_roles',
                             backref=db.backref('users', lazy='dynamic'))
 
+    @staticmethod
+    def get_user_by_id(*, user_id=None):
+        return User.query.filter(user_id == User.id).first()
+
 
 # Define the Role data model
 class Role(db.Model):
@@ -64,13 +69,6 @@ class UsersRoles(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
     role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))
-
-
-class UsersProfessors(db.Model):
-    __tablename__ = 'users_professors'
-    id = db.Column(db.Integer(), primary_key=True)
-    user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
-    Professor_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
 
 
 class Notification(db.Model):
@@ -95,30 +93,79 @@ class Submission(db.Model):
     release_type = db.Column(db.Integer, nullable=False)
     ww_length = db.Column(db.Integer, nullable=False)
     professor = db.Column(db.Unicode(8))
-    # TODO: figure out files for this
     signature_file = db.Column(db.Text)
-    started = db.Column(db.DateTime(), server_default=func.now(), nullable=False)
+    started = db.Column(ArrowType, default=arrow.utcnow())
 
     state = db.Column(db.Boolean, default=False, nullable=False)
     approved_date = db.Column(db.DateTime())
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @staticmethod
+    def create_submission(*, params=None):
+
+        submission = Submission(
+            user_id=params['form_data']['user_id'],
+            title=params['form_data']['title'],
+            abstract=params['form_data']['abstract'],
+            type=params['form_data']['type'],
+            release_type=params['form_data']['release'],
+            ww_length=params['form_data']['years'],
+            professor=params['form_data']['professor'],
+            signature_file=params['filename'],
+        )
+
+        submission.save()
+        return submission.id
+
+    @staticmethod
+    def get_submission_by_id(*, submission_id=None):
+        return Submission.query.filter(submission_id == Submission.id).first()
+
+    @staticmethod
+    def get_submission_by_signature(*, signature_filename=None):
+        return Submission.query.filter(signature_filename == Submission.signature_file).first()
 
 
 class Revision(db.Model):
     __tablename__ = 'revisions'
 
     id = db.Column(db.Integer, primary_key=True)
-    sub_id = db.Column(db.Integer(), db.ForeignKey('submissions.id', ondelete='CASCADE'))
-    submitted = db.Column(db.DateTime(), server_default=func.now())
-    # TODO: figure out files for this
+    submission_id = db.Column(db.Integer(), db.ForeignKey('submissions.id', ondelete='CASCADE'))
+    submitted = db.Column(ArrowType, default=arrow.utcnow())
     file = db.Column(db.Text)
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @staticmethod
+    def create_revision(*, params=None):
+        revision = Revision(submission_id=params['submission_id'],
+                            file=params['filename'])
+        revision.save()
+        return revision.id
+
+    @staticmethod
+    def get_all_revisions_by_submission_id(*, submission_id=None):
+        return Revision.query.filter(Revision.submission_id == submission_id).all()
+
+    @staticmethod
+    def get_revision_by_id(*, revision_id=None):
+        return Revision.query.filter(Revision.id == revision_id).first()
+
+    @staticmethod
+    def get_revision_by_filename(*, filename=None):
+        return Revision.query.filter(Revision.file == filename).first()
 
 
 class Review(db.Model):
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key=True)
-    reviewed = db.Column(db.DateTime(), server_default=func.now())
-    review_ID = db.Column(db.Integer(), db.ForeignKey('reviews.id', ondelete='CASCADE'))
+    reviewed = db.Column(ArrowType, default=arrow.utcnow())
     reviewer_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
     # 32 check boxes + comment box
     # check boxes will refer to the ones in the review form

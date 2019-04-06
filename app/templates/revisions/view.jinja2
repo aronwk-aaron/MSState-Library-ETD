@@ -1,0 +1,42 @@
+{% extends 'base.jinja2' %}
+
+{% block title %}View Submission{% endblock %}
+
+
+{% block content_before %}
+  <div class='jumbotron shadow-sm py-3'>
+    <div class='container'>
+      <h1 class='font-weight-bolder'>{{ submission.title }}</h1>
+      <span class='lead'>
+        By {{ user.first_name }} {{ user.last_name }}
+        <br>
+        <br>
+        <a class="btn btn-primary" href="{{ url_for('submissions.view', submission_id=submission.id) }}">View Submission</a>
+      </span>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class='card shadow-sm mb-4'>
+    <div class='card-body'>
+      <h3 class='card-title'>Details</h3>
+      <hr/>
+      <p>
+        Submitted {{ revision.submitted.humanize() }}
+        <br>
+        <br>
+        <a class="btn btn-primary" href="{{ url_for('main.uploads_submissions', filename=revision.file) }}">View submitted file</a>
+      </p>
+    </div>
+  </div>
+  <div class='card shadow-sm mb-4'>
+    <div class='card-body'>
+      <h3 class='card-title'>Review</h3>
+      <hr/>
+      <p>
+        Show review info if exists
+      </p>
+    </div>
+  </div>
+{% endblock %}

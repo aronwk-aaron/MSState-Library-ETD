@@ -4,7 +4,7 @@ from webassets import Bundle
 
 from app.forms.forms import CustomUserManager
 from app.models import db, migrate, User
-from app.schemas import ma
+from flask_marshmallow import Marshmallow
 from flask_mail import Mail
 from flask_wtf.csrf import CSRFProtect
 
@@ -18,6 +18,7 @@ from flask_user import current_app
 
 
 # Instantiate Flask extensions
+ma = Marshmallow()
 mail = Mail()
 csrf_protect = CSRFProtect()
 # db and migrate is instantiated in models.py
@@ -107,6 +108,8 @@ def register_blueprints(app):
 
     from .submissions import submissions_blueprint
     app.register_blueprint(submissions_blueprint, url_prefix='/submissions')
+    from .revisions import revisions_blueprint
+    app.register_blueprint(revisions_blueprint, url_prefix='/revisions')
 
     # from .auth import auth_blueprint
     # app.register_blueprint(auth_blueprint)
@@ -147,6 +150,8 @@ def init_email_error_handler(app):
     app.logger.addHandler(mail_handler)
 
     # Log errors using: app.logger.error('Some error message')
+
+# TODO: separate out into a commands file
 
 
 @click.command("init_db")

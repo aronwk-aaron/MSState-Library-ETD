@@ -34,10 +34,11 @@
   <div class='container mt-0 pt-0'>
     <div class='collapse navbar-collapse' id='navbarSupportedContent' style='margin-top: -16px;'>
       <nav class='navbar-nav mr-auto'>
-        <a class='nav-link d-sm-none' href='#'>Dashboard</a>
         <a id='main-index' class='nav-link' href='{{ url_for('main.index') }}'>Home</a>
         <a id='main-submissions' class='nav-link' href='{{ url_for('submissions.index') }}'>Submissions</a>
         <a id='main-about' class='nav-link' href='#'>About</a>
+        <a class='nav-link d-sm-none' href='{{ url_for('main.dashboard') }}'>Dashboard</a>
+        <a class='nav-link d-sm-none' href='{{ url_for('user.logout') }}'>Logout</a>
       </nav>
     </div>
   </div>
