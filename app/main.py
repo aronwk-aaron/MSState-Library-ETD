@@ -13,15 +13,15 @@ def splash():
     # return render_template('main/splash.jinja2')
 
 
-@login_required
 @main_blueprint.route('/home')
+@login_required
 def index():
     """Home/Index Page"""
     return render_template('main/index.jinja2')
 
 
-@login_required
 @main_blueprint.route('/dashboard')
+@login_required
 def dashboard():
     """Dashboard Page"""
     user = 'user'
@@ -33,8 +33,8 @@ def dashboard():
     return render_template('main/dashboard.jinja2', user=user)
 
 
-@login_required
 @main_blueprint.route('/profile')
+@login_required
 def profile():
     """Profile Page"""
 
@@ -62,8 +62,8 @@ def profile():
     return render_template('main/profile.jinja2', data=info)
 
 
-@login_required
 @main_blueprint.route('/uploads/signatures/<filename>')
+@login_required
 def uploads_signatures(filename):
     query = Submission.get_submission_by_signature(signature_filename=filename)
     if current_user.has_roles(['admin', 'viewer', 'reviewer', 'helper']) or query.id == query.user_id:
@@ -72,8 +72,8 @@ def uploads_signatures(filename):
         return redirect(url_for('main.index'))
 
 
-@login_required
 @main_blueprint.route('/uploads/submissions/<filename>')
+@login_required
 def uploads_submissions(filename):
     query = Revision.get_revision_by_filename(filename=filename)
     if current_user.has_roles(['admin', 'viewer', 'reviewer', 'helper']) or query.id == query.user_id:
@@ -82,8 +82,8 @@ def uploads_submissions(filename):
         return redirect(url_for('main.index'))
 
 
-@login_required
 @main_blueprint.route('/documents/<filename>')
+@login_required
 def serve_documents(filename):
     return send_from_directory(current_app.config['DOCUMENT_FOLDER'], filename)
 

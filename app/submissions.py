@@ -9,8 +9,8 @@ from werkzeug.utils import secure_filename
 submissions_blueprint = Blueprint('submissions', __name__)
 
 
-@login_required
 @submissions_blueprint.route('/')
+@login_required
 def index():
     """Catalog of Submissions"""
 
@@ -23,8 +23,8 @@ def index():
     return render_template('submissions/index.jinja2', submissions=result)
 
 
-@login_required
 @submissions_blueprint.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
     """Create submission page"""
 
@@ -45,8 +45,8 @@ def create():
     return render_template('submissions/create.jinja2', form=form)
 
 
-@login_required
 @submissions_blueprint.route('/view/<submission_id>')
+@login_required
 def view(submission_id):
     """Submission revision view page"""
     submission = Submission.get_submission_by_id(submission_id=submission_id)

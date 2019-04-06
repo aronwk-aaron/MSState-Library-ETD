@@ -10,15 +10,15 @@ import datetime
 revisions_blueprint = Blueprint('revisions', __name__)
 
 
-@login_required
 @revisions_blueprint.route('/')
+@login_required
 def index():
     """nothing here"""
     return redirect(url_for('submissions.index'))
 
 
-@login_required
 @revisions_blueprint.route('/create/<submission_id>', methods=['GET', 'POST'])
+@login_required
 def create(submission_id):
     """Create revision page"""
     form = CreateRevisionForm()
@@ -54,8 +54,8 @@ def create(submission_id):
                                submission_id=submission_id)
 
 
-@login_required
 @revisions_blueprint.route('/view/<revision_id>')
+@login_required
 def view(revision_id):
     """Revision view page"""
     revision = Revision.get_revision_by_id(revision_id=revision_id)
@@ -69,8 +69,8 @@ def view(revision_id):
                            review=review_data)
 
 
-@login_required
 @revisions_blueprint.route('/review/<revision_id>', methods=['GET', 'POST'])
+@login_required
 def review(revision_id):
     """Revision view page"""
 
