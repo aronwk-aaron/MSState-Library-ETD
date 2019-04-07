@@ -17,7 +17,7 @@
 
 
 {% block content %}
-  {% if current_user.has_roles('users') %}
+  {% if current_user.has_roles('user') %}
     <a href="{{ url_for('submissions.create') }}"
                    class="btn btn-primary"
                    role="button"
