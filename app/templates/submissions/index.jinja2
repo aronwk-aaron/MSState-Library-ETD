@@ -17,14 +17,17 @@
 
 
 {% block content %}
-  <a href="{{ url_for('submissions.create') }}"
-                 class="btn btn-primary"
-                 role="button"
-                 aria-disabled="true">
-    Create Submission
-  </a>
+  {% if current_user.has_roles('users') %}
+    <a href="{{ url_for('submissions.create') }}"
+                   class="btn btn-primary"
+                   role="button"
+                   aria-disabled="true">
+      Create Submission
+    </a>
+    {% endif %}
   <hr/>
   {# TODO datatables for all the saerch and pagination functionality #}
+  {% if submissions %}
   <table class="table table-white table-striped table-bordered table-hover">
     <thead>
     <tr>
@@ -35,8 +38,6 @@
     </tr>
     </thead>
     <tbody>
-
-    {% if submissions %}
       {% for submission in submissions %}
         <tr>
           <td>{{ submission.last_name }}, {{ submission.first_name }}</td>
@@ -51,9 +52,10 @@
           </td>
         </tr>
       {% endfor %}
-    {% endif %}
-
     </tbody>
   </table>
+  {% else %}
+    No submissions to show
+  {% endif %}
 
 {% endblock %}

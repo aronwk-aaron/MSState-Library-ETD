@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask_user import UserMixin
 from sqlalchemy_utils import ArrowType
 import arrow
+from flask_user import current_user
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -87,17 +88,15 @@ class Submission(db.Model):
     user_id: Column = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
     title = db.Column(db.Unicode(), nullable=False, server_default=u'')
     abstract = db.Column(db.Unicode(), nullable=False, server_default=u'')
-    # TODO: Make Enum type for this
     type = db.Column(db.Integer, nullable=False)
-    # TODO: Make Enum type for this
     release_type = db.Column(db.Integer, nullable=False)
     ww_length = db.Column(db.Integer, nullable=False)
-    professor = db.Column(db.Unicode(8))
-    signature_file = db.Column(db.Text)
-    started = db.Column(ArrowType, default=arrow.utcnow())
+    professor = db.Column(db.Unicode(8), nullable=False)
+    signature_file = db.Column(db.Text, nullable=False)
+    started = db.Column(ArrowType, default=arrow.utcnow(), nullable=False)
 
     state = db.Column(db.Boolean, default=False, nullable=False)
-    approved_date = db.Column(db.DateTime())
+    approved_date = db.Column(ArrowType)
 
     def save(self):
         db.session.add(self)
@@ -120,8 +119,51 @@ class Submission(db.Model):
         return submission.id
 
     @staticmethod
+    def complete_submission_by_id(*, submission_id=None):
+        submission = Submission.query.filter(submission_id == Submission.id).first()
+
+        submission.state = True
+        submission.approved_date = arrow.utcnow()
+
+        submission.save()
+        return
+
+    @staticmethod
     def get_submission_by_id(*, submission_id=None):
         return Submission.query.filter(submission_id == Submission.id).first()
+
+    @staticmethod
+    def get_submission_by_user_id(*, user_id=None):
+        return Submission.query.filter(user_id == Submission.user_id).first()
+
+    @staticmethod
+    def get_all_submissions_by_user_id(*, user_id=None):
+        # get ones that user owns
+        own = Submission.query \
+                .join(User, User.id == Submission.user_id) \
+                .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.title, Submission.started) \
+                .filter(User.id == Submission.user_id) \
+                .filter(Submission.user_id == User.id) \
+                .filter(Submission.user_id == user_id) \
+                .all()
+
+        # get ones that user is listed as professor
+        professors = Submission.query \
+            .join(User, User.id == Submission.user_id) \
+            .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.title, Submission.started) \
+            .filter(User.id == Submission.user_id) \
+            .filter(Submission.user_id == User.id) \
+            .filter(Submission.professor == current_user.net_id) \
+            .all()
+        return own + professors
+
+    @staticmethod
+    def get_all():
+        return Submission.query \
+                .join(User, User.id == Submission.user_id) \
+                .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.title, Submission.started) \
+                .filter(User.id == Submission.user_id) \
+                .filter(Submission.user_id == User.id).all()
 
     @staticmethod
     def get_submission_by_signature(*, signature_filename=None):
@@ -252,4 +294,8 @@ class Review(db.Model):
 
     @staticmethod
     def get_review_by_revision_id(*, revision_id=None):
+        return Review.query.filter(Review.revision_id == revision_id).first()
+
+    @staticmethod
+    def get_reviews_by_revision_id(*, revision_id=None):
         return Review.query.filter(Review.revision_id == revision_id).first()

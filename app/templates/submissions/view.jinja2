@@ -20,6 +20,12 @@
       <h1 class='font-weight-bolder'>{{ submission.title }}</h1>
       <span class='lead'>
         By {{ user.first_name }} {{ user.last_name }}
+        <br>
+        {% if submission.state %}
+          Submission has been Approved
+        {% else %}
+          Submission is in the review process
+        {% endif %}
       </span>
     </div>
   </div>
@@ -80,7 +86,9 @@
         <br>
         <br>
 
-        <a class="btn btn-primary" href="{{ url_for('main.uploads_signatures', filename=submission.signature_file) }}">View Signature file</a>
+        <a class="btn btn-primary" href="{{ url_for('main.uploads_signatures', filename=submission.signature_file) }}">
+          View Signature file
+        </a>
       </p>
     </div>
   </div>
@@ -89,29 +97,55 @@
     <div class='card-body'>
       <h3 class='card-title'>Revisions</h3>
       <hr/>
+      {% if revisions %}
+        <table class='table table-borderless table-striped'>
+          <tbody>
 
-      <table class='table table-borderless table-striped'>
-        <tbody>
-        {% if revisions %}
-          {% for revision in revisions %}
-            <tr>
-              <td>Revision ID: {{ revision.id }}</td>
-              <td>Submitted {{ revision.submitted.humanize() }}</td>
-              <td></td>
-              <td><a href="{{ url_for('revisions.view', submission_id=submission.id, revision_id=revision.id) }}"
-                     class="btn btn-primary"
-                     role="button"
-                     aria-disabled="true">View Revision</a>
-              </td>
-            </tr>
-          {% endfor %}
+            {% for revision in revisions %}
+              <tr>
+                {# this feels illegal, but it works
+                    gets the index of the revision in the list and then add one
+                     since array start at zero #}
+                <td>Revision {{ revisions.index(revision)+1 }}</td>
+                <td>Submitted {{ revision.submitted.humanize() }}</td>
+                <td>
+                  {% if revisions[-1].id == revision.id %}
+                    {% if not submission.state %}
+                      {% if review_last %}
+                        Reviewed
+                      {% else %}
+                        Not Reviewed
+                      {% endif %}
+                    {% else %}
+                      Approved
+                    {% endif %}
+                  {% else %}
+                      Reviewed
+                  {% endif %}
+                </td>
+                <td>
+                  <a href="{{ url_for('revisions.view',revision_id=revision.id) }}"
+                       class="btn btn-primary"
+                       role="button"
+                       aria-disabled="true">
+                    View Revision
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        No revisions exist.<br><br>
+      {% endif %}
+
+      {% if not submission.state and current_user.id == user.id %}
+        {% if review_last or not revisions %}
+          <a id='tad-revise' href="{{ url_for('revisions.create', submission_id=submission.id) }}" class='btn btn-primary px-4'>
+            Create revision
+          </a>
         {% endif %}
-        </tbody>
-      </table>
-      {# TODO: Only show if none exist or feedback has been received #}
-      <a id='tad-revise' href="{{ url_for('revisions.create', submission_id=submission.id) }}" class='btn btn-primary px-4'>
-        Create revision
-      </a>
+      {% endif %}
     </div>
   </div>
 

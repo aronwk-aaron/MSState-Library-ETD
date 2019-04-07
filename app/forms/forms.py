@@ -287,6 +287,7 @@ class CreateRevisionForm(FlaskForm):
 class CreateReviewForm(FlaskForm):
     id = HiddenField()
     revision_id = HiddenField()
+
     comments = TextAreaField('Comments', validators=[Optional()])
     check_1 = BooleanField('The Pages in Study needs to be updated on the abstract page.',
                            validators=[Optional()])
@@ -352,5 +353,5 @@ class CreateReviewForm(FlaskForm):
                             validators=[Optional()])
     check_32 = BooleanField('Missing “Chapter” page __.',
                             validators=[Optional()])
-
+    approve = SubmitField('Approve Submission')
     submit = SubmitField('Submit Review')

@@ -34,7 +34,9 @@
       <h3 class='card-title'>Review</h3>
       <hr/>
       <form method="POST">
-
+        {{ form.approve(class='btn btn-primary ml-1') }}
+        <br>
+        <br>
         {# CSRF token #}
         {{ form.csrf_token }}
         {% for field in form %}

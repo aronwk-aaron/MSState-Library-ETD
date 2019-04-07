@@ -10,6 +10,16 @@
       <span class='lead'>
         By {{ user.first_name }} {{ user.last_name }}
         <br>
+        {% if not review %}
+          {% if submission.state %}
+            Revision has been Approved
+          {% else %}
+            Revision is in the review process
+          {% endif %}
+        {% else %}
+          Revision was denied, check feedback
+        {% endif %}
+        <br>
         <br>
         <a class="btn btn-primary" href="{{ url_for('submissions.view', submission_id=submission.id) }}">View Submission</a>
       </span>
@@ -26,7 +36,9 @@
         Submitted {{ revision.submitted.humanize() }}
         <br>
         <br>
-        <a class="btn btn-primary" href="{{ url_for('main.uploads_submissions', filename=revision.file) }}">View submitted file</a>
+        <a class="btn btn-primary" href="{{ url_for('main.uploads_submissions', filename=revision.file) }}">
+          View submitted file
+        </a>
       </p>
     </div>
   </div>
@@ -205,8 +217,17 @@
             </p>
           {% endif %}
 
-        {% else %}
+        {% elif not submission.state %}
           Revision has not been reviewed
+          {% if current_user.has_roles('reviewer') %}
+            <br>
+            <a class="btn btn-primary" href="{{ url_for('revisions.review', revision_id=revision.id) }}">
+              Review
+            </a>
+          {% endif %}
+        {% else %}
+          Revision was approved.<br>
+          No changes needed
         {% endif %}
       </p>
     </div>

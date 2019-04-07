@@ -1,10 +1,9 @@
 import os
 from flask import render_template, Blueprint, redirect, url_for, current_app
-from flask_user import current_user, login_required
+from flask_user import current_user, login_required, roles_required
 from app.forms.forms import CreateSubmissionForm
-from app.models import Submission, User, Revision
+from app.models import Submission, User, Revision, Review
 from werkzeug.utils import secure_filename
-
 
 submissions_blueprint = Blueprint('submissions', __name__)
 
@@ -14,17 +13,17 @@ submissions_blueprint = Blueprint('submissions', __name__)
 def index():
     """Catalog of Submissions"""
 
-    result = Submission.query \
-        .join(User, User.id == Submission.user_id) \
-        .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.title, Submission.started) \
-        .filter(User.id == Submission.user_id) \
-        .filter(Submission.user_id == User.id)
+    if current_user.has_roles(['admin', 'viewer', 'reviewer', 'helper']):
+        results = Submission.get_all()
+    else:
+        results = Submission.get_all_submissions_by_user_id(user_id=current_user.id)
 
-    return render_template('submissions/index.jinja2', submissions=result)
+    return render_template('submissions/index.jinja2', submissions=results)
 
 
 @submissions_blueprint.route('/create', methods=['GET', 'POST'])
 @login_required
+@roles_required('user')
 def create():
     """Create submission page"""
 
@@ -51,12 +50,22 @@ def view(submission_id):
     """Submission revision view page"""
     submission = Submission.get_submission_by_id(submission_id=submission_id)
     revisions = Revision.get_all_revisions_by_submission_id(submission_id=submission_id)
+    review_last = False
+    if revisions:
+        # if latest revision has not been reviewed
+        if Review.get_review_by_revision_id(revision_id=revisions[-1].id):
+            review_last = True
     user = User.get_user_by_id(user_id=submission.user_id)
-    return render_template('submissions/view.jinja2',
-                           submission=submission,
-                           revisions=revisions,
-                           user=user)
 
-
-
-
+    # if elevated user or submission owner or major professor
+    if current_user.has_roles(['admin', 'viewer', 'reviewer', 'helper']) or \
+        current_user.id == submission.user_id or \
+        current_user.net_id == submission.professor:
+        return render_template('submissions/view.jinja2',
+                               submission=submission,
+                               revisions=revisions,
+                               user=user,
+                               review_last=review_last)
+    # else not supposed to view it
+    else:
+        return redirect(url_for('submissions.index'))
