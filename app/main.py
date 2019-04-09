@@ -12,13 +12,6 @@ def index():
     return render_template('main/index.jinja2')
 
 
-@main_blueprint.route('/dashboard')
-@login_required
-def dashboard():
-    """Dashboard Page"""
-    return render_template('main/dashboard.jinja2')
-
-
 @main_blueprint.route('/profile')
 @login_required
 def profile():
@@ -64,3 +57,10 @@ def serve_documents(filename):
 def signed_out():
     """Sign out landing page"""
     return render_template('flask_user/signed_out.html')
+
+
+@main_blueprint.route('/about')
+@login_required
+def about():
+    """About Page"""
+    return render_template('main/about.jinja2')

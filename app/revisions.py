@@ -39,17 +39,7 @@ def create(submission_id):
             else:
                 # if a post process it
                 if form.validate_on_submit():
-                    f = form.file.data
-                    fname = secure_filename(f.filename)
-                    fileext = fname.rsplit('.', 1)[1].lower()
-                    filename = current_user.last_name + '_' + current_user.first_name + '_revision_' + \
-                               datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S") + '.' + fileext
-                    f.save(os.path.join(current_app.config['SUBMISSION_FOLDER'], filename))
-
-                    params = {'filename': filename, 'submission_id': submission_id}
-                    revision_id = Revision.create_revision(params=params)
-
-                    return redirect(url_for('revisions.view', revision_id=revision_id))
+                    create_post(form, submission_id)
                 # else present the create page
                 else:
                     return render_template('revisions/create.jinja2',
@@ -59,22 +49,26 @@ def create(submission_id):
         else:
             # if a post process it
             if form.validate_on_submit():
-                f = form.file.data
-                fname = secure_filename(f.filename)
-                fileext = fname.rsplit('.', 1)[1].lower()
-                filename = current_user.last_name + '_' + current_user.first_name + '_revision_' + \
-                           datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S") + '.' + fileext
-                f.save(os.path.join(current_app.config['SUBMISSION_FOLDER'], filename))
-
-                params = {'filename': filename, 'submission_id': submission_id}
-                revision_id = Revision.create_revision(params=params)
-
-                return redirect(url_for('revisions.view', revision_id=revision_id))
+                create_post(form, submission_id)
             # else present the create page
             else:
                 return render_template('revisions/create.jinja2',
                                        form=form,
                                        submission_id=submission_id)
+
+
+def create_post(form, submission_id):
+    f = form.file.data
+    fname = secure_filename(f.filename)
+    fileext = fname.rsplit('.', 1)[1].lower()
+    filename = current_user.last_name + '_' + current_user.first_name + '_revision_' + \
+               datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S") + '.' + fileext
+    f.save(os.path.join(current_app.config['SUBMISSION_FOLDER'], filename))
+
+    params = {'filename': filename, 'submission_id': submission_id}
+    revision_id = Revision.create_revision(params=params)
+
+    return redirect(url_for('revisions.view', revision_id=revision_id))
 
 
 @revisions_blueprint.route('/view/<revision_id>')

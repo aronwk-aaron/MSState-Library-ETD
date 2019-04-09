@@ -23,51 +23,52 @@
         <span class='h5'> Major: {{ current_user.department }}</span>
       </div>
       <hr/>
+      <div class="row">
+        <div class="col">
+          <h5>MSU Info</h5>
+          <b>E-Mail:</b><br/>
+          {{ current_user.email }}
+          <br/><br/>
 
-      {# user current_user #}
-      <p class='text-lg-left'>
-        <h5>MSU Info</h5>
-        <b>E-Mail:</b><br/>
-        {{ current_user.email }}
-        <br/><br/>
+          <b>Net ID:</b><br/>
+          {{ current_user.net_id }}
+          <br/><br/>
 
-        <b>Net ID:</b><br/>
-        {{ current_user.net_id }}
-        <br/><br/>
+          <b>MSU ID:</b><br/>
+          {{ current_user.msu_id }}
+          <br/><br/>
+        </div>
 
-        <b>MSU ID:</b><br/>
-        {{ current_user.msu_id }}
-        <br/><br/>
+        <div class="col">
+          <h5>Personal Info</h5>
 
-        <hr>
+          {% if current_user.maiden_name %}
+          <b>Maiden Name:</b><br/>
+          {{ current_user.maiden_name }}
+          <br/><br/>
+          {% endif %}
 
-        <h5>Personal Info</h5>
+          <b>Birth Date:</b><br/>
+          {{ current_user.birth_date }}
+          <br/><br/>
 
-        {% if current_user.maiden_name %}
-        <b>Maiden Name:</b><br/>
-        {{ current_user.maiden_name }}
-        <br/><br/>
-        {% endif %}
+          {% if current_user.sec_email %}
+          <b>Personal E-Mail:</b><br/>
+          {{ current_user.sec_email }}
+          <br/><br/>
+          {% endif %}
 
-        <b>Birth Date:</b><br/>
-        {{ current_user.birth_date }}
-        <br/><br/>
+          <b>Primary Phone:</b><br/>
+          {{ current_user.prim_phone }}
+          <br/><br/>
 
-        {% if current_user.sec_email %}
-        <b>Personal E-Mail:</b><br/>
-        {{ current_user.sec_email }}
-        <br/><br/>
-        {% endif %}
-
-        <b>Primary Phone:</b><br/>
-        {{ current_user.prim_phone }}
-        <br/><br/>
-
-        {% if current_user.sec_phone %}
-        <b>Secondary Phone:</b><br/>
-        {{ current_user.sec_phone }}
-        <br/><br/>
-        {% endif %}
+          {% if current_user.sec_phone %}
+          <b>Secondary Phone:</b><br/>
+          {{ current_user.sec_phone }}
+          <br/><br/>
+          {% endif %}
+        </div>
+      </div>
 
         <hr>
 

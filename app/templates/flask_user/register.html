@@ -68,8 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
     <script>
         $('#msu_id').mask("999-999-999", {placeholder: "000-000-000"});
-        {#$('#prim_phone').mask('(000) 000-0000');#}
-        {#$('#sec_phone').mask('(000) 000-0000');#}
+        $('#prim_phone').mask('000-000-0000');
+        $('#sec_phone').mask('000-000-0000');
         $('#postal_code').mask('00000');
     </script>
 {% endblock %}

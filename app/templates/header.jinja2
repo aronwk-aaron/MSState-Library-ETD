@@ -14,8 +14,8 @@
     {# Visible only on large devices #}
     <nav class='navbar-nav'>
       <div class='collapse navbar-collapse'>
-        <a class='btn-nav-dashboard mr-2' href='{{ url_for('main.dashboard') }}'><i
-          class='fas fa-book mr-1'></i>Dashboard</a>
+        <a class='btn-nav-dashboard mr-2' href='{{ url_for('main.profile') }}'><i
+          class='fas fa-user mr-1'></i>Profile</a>
         <a class='btn-nav-dashboard' href='{{ url_for('user.logout') }}'><i
           class='fas fa-sign-out-alt mr-1'></i>Sign Out</a>
       </div>
@@ -36,8 +36,8 @@
       <nav class='navbar-nav mr-auto'>
         <a id='main-index' class='nav-link' href='{{ url_for('main.index') }}'>Home</a>
         <a id='main-submissions' class='nav-link' href='{{ url_for('submissions.index') }}'>Submissions</a>
-        <a id='main-about' class='nav-link' href='#'>About</a>
-        <a class='nav-link d-sm-none' href='{{ url_for('main.dashboard') }}'>Dashboard</a>
+        <a id='main-about' class='nav-link' href='{{ url_for('main.about') }}'>About</a>
+        <a class='nav-link d-sm-none' href='{{ url_for('main.profile') }}'>Profile</a>
         <a class='nav-link d-sm-none' href='{{ url_for('user.logout') }}'>Logout</a>
       </nav>
     </div>
