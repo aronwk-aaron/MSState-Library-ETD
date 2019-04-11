@@ -67,7 +67,11 @@ def upload_document():
         f = form.file.data
         fname = secure_filename(f.filename)
         fileext = fname.rsplit('.', 1)[1].lower()
-        filename = form.title.data + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S") + '.' + fileext
+        filename = "{title}_{time}.{ext}".format(
+            title=form.tite.data,
+            time=datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S"),
+            ext=fileext)
+
         f.save(os.path.join(current_app.config['DOCUMENTS_FOLDER'], filename))
 
         params = {'form_data': form.data, 'filename': filename}
