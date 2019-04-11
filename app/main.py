@@ -1,6 +1,10 @@
+import os
 from flask import render_template, Blueprint, url_for, redirect, send_from_directory
-from flask_user import current_user, login_required, current_app
-from app.models import Submission, Revision
+from flask_user import current_user, login_required, current_app, roles_required
+from app.models import Submission, Revision, Document
+from app.forms.forms import CreateDocumentForm
+from werkzeug.utils import secure_filename
+import datetime
 
 main_blueprint = Blueprint('main', __name__)
 
@@ -50,13 +54,50 @@ def uploads_submissions(filename):
 @main_blueprint.route('/documents/<filename>')
 @login_required
 def serve_documents(filename):
-    return send_from_directory(current_app.config['DOCUMENT_FOLDER'], filename)
+    return send_from_directory(current_app.config['DOCUMENTS_FOLDER'], filename)
+
+
+@main_blueprint.route('/document/upload', methods=['GET', 'POST'])
+@login_required
+@roles_required(['admin', 'reviewer'])
+def upload_document():
+    form = CreateDocumentForm()
+
+    if form.validate_on_submit():
+        f = form.file.data
+        fname = secure_filename(f.filename)
+        fileext = fname.rsplit('.', 1)[1].lower()
+        filename = form.title.data + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S") + '.' + fileext
+        f.save(os.path.join(current_app.config['DOCUMENTS_FOLDER'], filename))
+
+        params = {'form_data': form.data, 'filename': filename}
+        Document.create_document(params=params)
+
+        return redirect(url_for('main.documents'))
+
+    return render_template('main/upload.jinja2', form=form)
+
+
+@main_blueprint.route('/document/delete/<document_id>')
+@login_required
+@roles_required(['admin', 'reviewer'])
+def delete_document(document_id):
+    Document.delete_by_id(document_id=document_id)
+    return redirect(url_for('main.documents'))
 
 
 @main_blueprint.route('/user/signed-out')
 def signed_out():
     """Sign out landing page"""
     return render_template('flask_user/signed_out.html')
+
+
+@main_blueprint.route('/documents')
+@login_required
+def documents():
+    """documents Page"""
+    query = Document.get_all()
+    return render_template('main/documents.jinja2', documents=query)
 
 
 @main_blueprint.route('/about')

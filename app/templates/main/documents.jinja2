@@ -1,0 +1,85 @@
+{% extends 'base.jinja2' %}
+
+
+{% block title %}Documents{% endblock %}
+
+{% block content_before %}
+
+  <div class="jumbotron shadow-sm py-3">
+    <div class="container">
+        <h1>Supporting Documents</h1>
+      {% if current_user.has_roles(['admin', 'reviewer']) %}
+        <a href="{{ url_for('main.upload_document') }}"
+                 class="btn btn-primary"
+                 role="button"
+                 aria-disabled="true">
+                  Upload Document
+                </a>
+      {% endif %}
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-body">
+      {% if documents %}
+        <table class="table table-white table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>
+              Title
+            </th>
+            <th>
+              Description
+            </th>
+            <th>
+              File
+            </th>
+            {% if current_user.has_roles(['admin', 'reviewer']) %}
+              <th>
+                Delete
+              </th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for document in documents %}
+            <tr>
+              <td>
+                {{ document.title }}
+              </td>
+              <td>
+                {{ document.description }}
+              </td>
+              <td>
+                <a href="{{ url_for('main.serve_documents', filename=document.filename) }}"
+                 class="btn btn-primary"
+                 role="button"
+                 aria-disabled="true">
+                  View Document
+                </a>
+              </td>
+              {% if current_user.has_roles(['admin', 'reviewer']) %}
+                <td>
+                  <form>
+                    <a href="{{ url_for('main.delete_document', document_id = document.id) }}"
+                       class="btn btn-primary"
+                       role="button"
+                       aria-disabled="true">
+                        Delete
+                      </a>
+                  </form>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+        </table>
+      {% else %}
+      No documents
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

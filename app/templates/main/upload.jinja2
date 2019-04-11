@@ -1,0 +1,46 @@
+{% extends 'base.jinja2' %}
+{% from "flask_user/_macros.html" import render_submit_field %}
+
+{% block title %}Upload Document{% endblock %}
+
+{% block content_before %}
+
+  <div class="jumbotron shadow-sm py-3">
+    <div class="container">
+        <h1>Upload Document</h1>
+
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header">
+      Fill out all info
+    </div>
+    <div class="card-body">
+      <form method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        <div class="form-group">
+          <label for="{{ form.title.id }}" class="text-muted">{{ form.title.label.text }}</label>
+          {{ form.title(class='form-control', placeholder=form.title.label.text) }}
+        </div>
+        <div class="form-group">
+          <label for="{{ form.description.id }}" class="text-muted">{{ form.description.label.text }}</label>
+          {{ form.description(class='form-control', placeholder=form.description.label.text) }}
+        </div>
+        <div class="form-group">
+          <label for="{{ form.file.id }}" class="text-muted">{{ form.file.label.text }}</label><br/>
+          {{ form.file }}
+          {% if form.file.errors %}
+            {% for e in form.file.errors %}
+                <p class="help-block text-danger">{{ e }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+        {{ render_submit_field(form.submit) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

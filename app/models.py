@@ -77,8 +77,43 @@ class Notification(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
-    text = db.Column(db.Text, nullable=False)
+    text = db.Column(db.Unicode(50), nullable=False)
     state = db.Column(db.Boolean, default=False)
+
+
+class Document(db.Model):
+    __tablename__ = 'documents'
+
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.Unicode(), nullable=False)
+    title = db.Column(db.Unicode(), nullable=False)
+    description = db.Column(db.Unicode(), default=False)
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @staticmethod
+    def create_document(*, params=None):
+        document = Document(
+            filename=params['filename'],
+            title=params['form_data']['title'],
+            description=params['form_data']['description']
+        )
+
+        document.save()
+        return
+
+    @staticmethod
+    def delete_by_id(*, document_id=None):
+        document = Document.query.filter(document_id == Document.id).first()
+        db.session.delete(document)
+        db.session.commit()
+        return
+
+    @staticmethod
+    def get_all():
+        return Document.query.all()
 
 
 class Submission(db.Model):
@@ -93,7 +128,7 @@ class Submission(db.Model):
     ww_length = db.Column(db.Integer, nullable=False)
     professor = db.Column(db.Unicode(8), nullable=False)
     signature_file = db.Column(db.Text, nullable=False)
-    started = db.Column(ArrowType, default=arrow.utcnow(), nullable=False)
+    started = db.Column(ArrowType, default=arrow.now(), nullable=False)
 
     state = db.Column(db.Boolean, default=False, nullable=False)
     approved_date = db.Column(ArrowType)
@@ -123,7 +158,7 @@ class Submission(db.Model):
         submission = Submission.query.filter(submission_id == Submission.id).first()
 
         submission.state = True
-        submission.approved_date = arrow.utcnow()
+        submission.approved_date = arrow.now()
 
         submission.save()
         return
@@ -140,17 +175,17 @@ class Submission(db.Model):
     def get_all_submissions_by_user_id(*, user_id=None):
         # get ones that user owns
         own = Submission.query \
-                .join(User, User.id == Submission.user_id) \
-                .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.title, Submission.started) \
-                .filter(User.id == Submission.user_id) \
-                .filter(Submission.user_id == User.id) \
-                .filter(Submission.user_id == user_id) \
-                .all()
+            .join(User, User.id == Submission.user_id) \
+            .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.state, Submission.title, Submission.started) \
+            .filter(User.id == Submission.user_id) \
+            .filter(Submission.user_id == User.id) \
+            .filter(Submission.user_id == user_id) \
+            .all()
 
         # get ones that user is listed as professor
         professors = Submission.query \
             .join(User, User.id == Submission.user_id) \
-            .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.title, Submission.started) \
+            .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.state, Submission.title, Submission.started) \
             .filter(User.id == Submission.user_id) \
             .filter(Submission.user_id == User.id) \
             .filter(Submission.professor == current_user.net_id) \
@@ -161,7 +196,7 @@ class Submission(db.Model):
     def get_all():
         return Submission.query \
                 .join(User, User.id == Submission.user_id) \
-                .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.title, Submission.started) \
+                .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.state, Submission.title, Submission.started) \
                 .filter(User.id == Submission.user_id) \
                 .filter(Submission.user_id == User.id).all()
 
@@ -175,7 +210,7 @@ class Revision(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     submission_id = db.Column(db.Integer(), db.ForeignKey('submissions.id', ondelete='CASCADE'))
-    submitted = db.Column(ArrowType, default=arrow.utcnow())
+    submitted = db.Column(ArrowType, default=arrow.now())
     file = db.Column(db.Text)
 
     def save(self):
@@ -207,7 +242,7 @@ class Review(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     revision_id = db.Column(db.Integer(), db.ForeignKey('revisions.id', ondelete='CASCADE'), unique=True, nullable=False)
-    reviewed = db.Column(ArrowType, default=arrow.utcnow())
+    reviewed = db.Column(ArrowType, default=arrow.now())
     reviewer_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     # 32 check boxes + comment box
     # check boxes will refer to the ones in the review form

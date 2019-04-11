@@ -6,7 +6,7 @@
 {% block content_before %}
 
   {# title jumbotron #}
-  <div class='jumbotron shadow-sm'>
+  <div class='jumbotron shadow-sm py-3'>
     <div class='container'>
       <h1>Submissions</h1>
     </div>
@@ -26,27 +26,45 @@
     </a>
     {% endif %}
   <hr/>
-  {# TODO datatables for all the saerch and pagination functionality #}
+
   {% if submissions %}
-  <table class="table table-white table-striped table-bordered table-hover">
+  <table class="table table-white table-striped table-bordered table-hover"
+         id="table_id"
+         data-order='[[ 1, "asc" ]]'
+         data-page-length='25'>
     <thead>
     <tr>
       <th scope="col">Author</th>
       <th scope="col">Title</th>
       <th scope="col">Created</th>
+      <th scope="col">State</th>
       <th scope="col">Link</th>
     </tr>
     </thead>
     <tbody>
       {% for submission in submissions %}
         <tr>
-          <td>{{ submission.last_name }}, {{ submission.first_name }}</td>
-          <td>{{ submission.title }}</td>
-          <td>{{ submission.started.humanize() }}</td>
-          <td><a href="{{ url_for('submissions.view', submission_id=submission.id) }}"
-                 class="btn btn-primary"
-                 role="button"
-                 aria-disabled="true">
+          <td>
+            {{ submission.last_name }}, {{ submission.first_name }}
+          </td>
+          <td>
+            {{ submission.title }}
+          </td>
+          <td data-order="{{ submission.started }}">
+            {{ submission.started.humanize() }}
+          </td>
+          <td>
+            {% if submission.state %}
+              Approved
+            {% else %}
+              Not Approved
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('submissions.view', submission_id=submission.id) }}"
+               class="btn btn-primary"
+               role="button"
+               aria-disabled="true">
                 View Submission
               </a>
           </td>
@@ -58,4 +76,21 @@
     No submissions to show
   {% endif %}
 
+{% endblock %}
+
+{% block css %}
+  {{ super() }}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+{% endblock %}
+
+{% block js %}
+  {{ super() }}
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  <script>
+    $(document).ready( function () {
+      $('#table_id').DataTable({
+        "columnDefs": [{ "orderable": false, "targets": 4 }]
+      });
+    });
+  </script>
 {% endblock %}

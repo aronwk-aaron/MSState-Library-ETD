@@ -4,32 +4,38 @@
 
 {% block content_before %}
 
-  <div class="jumbotron shadow-sm">
+  <div class="jumbotron shadow-sm py-3">
     <div class="container">
 
       {# Text #}
-      <div class="text-center pb-4">
+      <div class="text-center">
         <span class="h4">Mississippi State University Libraries</span>
         <span class="h3"><br/>Electronic Thesis and Dissertation System</span>
       </div>
-
-      {# Search bar #}
-      <div class="row justify-content-center">
-        <div class="col-sm-8">
-          <form>
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="What would you like to search for?">
-              <span class="input-group-btn">
-                  <button class="btn btn-secondary ml-1" type="submit">
-                      <i class="fas fa-search mr-2"></i>Search
-                  </button>
-              </span>
-            </div>
-          </form>
-        </div>
-      </div>
-
     </div>
   </div>
 
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header text-center">
+      <h3>Welcome {{ current_user.first_name }}!</h3>
+    </div>
+    <div class="card-body">
+      <div class="row text-center">
+        <div class="col">
+          {{ lipsum() }}
+        </div>
+      </div>
+      <div class="row mx-2">
+        <div class="col">
+          {{ lipsum() }}
+        </div>
+        <div class="col">
+          {{ lipsum() }}
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

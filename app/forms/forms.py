@@ -355,3 +355,21 @@ class CreateReviewForm(FlaskForm):
                             validators=[Optional()])
     approve = SubmitField('Approve Submission')
     submit = SubmitField('Submit Review')
+
+
+class CreateDocumentForm(FlaskForm):
+    id = HiddenField()
+    title = StringField('Title', validators=[
+        DataRequired()
+    ])
+
+    description = TextAreaField('Description', validators=[
+        DataRequired()
+    ])
+
+    file = FileField('Document', validators=[
+        FileRequired(),
+        FileAllowed(['pdf'], "PDF's only!")
+    ])
+
+    submit = SubmitField('Upload File')
