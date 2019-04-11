@@ -32,7 +32,11 @@ def create():
         f = form.signature.data
         fname = secure_filename(f.filename)
         fileext = fname.rsplit('.', 1)[1].lower()
-        filename = current_user.last_name + '_' + current_user.first_name + '_' + form.title.data + '_signatures.' + fileext
+        filename = '{last_name}_{first_name}_{title}_signatures.{ext}'.format(
+            last_name=current_user.last_name,
+            first_name=current_user.first_name,
+            title=form.title.data,
+            ext=fileext)
         f.save(os.path.join(current_app.config['SIGNATURE_FOLDER'], filename))
 
         form.user_id.data = current_user.id
