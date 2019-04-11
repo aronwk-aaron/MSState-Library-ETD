@@ -83,8 +83,8 @@ def view(revision_id):
     submission = Submission.get_submission_by_id(submission_id=revision.submission_id)
     # if elevated user or submission owner or major professor
     if current_user.has_roles(['admin', 'viewer', 'reviewer', 'helper']) or \
-        current_user.id == submission.user_id or \
-        current_user.net_id == submission.professor:
+       current_user.id == submission.user_id or \
+       current_user.net_id == submission.professor:
         review_data = Review.get_review_by_revision_id(revision_id=revision_id)
         user = User.get_user_by_id(user_id=submission.user_id)
         return render_template('revisions/view.jinja2',

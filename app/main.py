@@ -30,8 +30,8 @@ def uploads_signatures(filename):
     query = Submission.get_submission_by_signature(signature_filename=filename)
     # if elevated user or submission owner or major professor
     if current_user.has_roles(['admin', 'viewer', 'reviewer', 'helper']) or \
-        current_user.id == query.user_id or \
-        current_user.net_id == query.professor:
+       current_user.id == query.user_id or \
+       current_user.net_id == query.professor:
         return send_from_directory(current_app.config['SIGNATURE_FOLDER'], query.signature_file)
     else:
         return redirect(url_for('main.index'))
@@ -44,8 +44,8 @@ def uploads_submissions(filename):
     submission = Submission.get_submission_by_id(submission_id=query.submission_id)
     # if elevated user or submission owner or major professor
     if current_user.has_roles(['admin', 'viewer', 'reviewer', 'helper']) or \
-        current_user.id == submission.user_id or \
-        current_user.net_id == submission.professor:
+       current_user.id == submission.user_id or \
+       current_user.net_id == submission.professor:
         return send_from_directory(current_app.config['SUBMISSION_FOLDER'], query.file)
     else:
         return redirect(url_for('main.index'))
