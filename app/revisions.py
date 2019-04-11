@@ -61,8 +61,12 @@ def create_post(form, submission_id):
     f = form.file.data
     fname = secure_filename(f.filename)
     fileext = fname.rsplit('.', 1)[1].lower()
-    filename = current_user.last_name + '_' + current_user.first_name + '_revision_' + \
-               datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S") + '.' + fileext
+    filename = '{last_name}_{first_name}_revision_{time}.{ext}'.format(
+        last_name=current_user.last_name,
+        first_name=current_user.first_name,
+        time=datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S"),
+        ext=fileext)
+
     f.save(os.path.join(current_app.config['SUBMISSION_FOLDER'], filename))
 
     params = {'filename': filename, 'submission_id': submission_id}
