@@ -39,7 +39,8 @@ def create(submission_id):
             else:
                 # if a post process it
                 if form.validate_on_submit():
-                    create_post(form, submission_id)
+                    revision_id = create_post(form, submission_id)
+                    return redirect(url_for('revisions.view', revision_id=revision_id))
                 # else present the create page
                 else:
                     return render_template('revisions/create.jinja2',
@@ -49,7 +50,8 @@ def create(submission_id):
         else:
             # if a post process it
             if form.validate_on_submit():
-                create_post(form, submission_id)
+                revision_id = create_post(form, submission_id)
+                return redirect(url_for('revisions.view', revision_id=revision_id))
             # else present the create page
             else:
                 return render_template('revisions/create.jinja2',
@@ -72,7 +74,7 @@ def create_post(form, submission_id):
     params = {'filename': filename, 'submission_id': submission_id}
     revision_id = Revision.create_revision(params=params)
 
-    return redirect(url_for('revisions.view', revision_id=revision_id))
+    return revision_id
 
 
 @revisions_blueprint.route('/view/<revision_id>')
