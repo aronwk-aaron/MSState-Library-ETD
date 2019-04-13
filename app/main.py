@@ -1,7 +1,7 @@
 import os
 from flask import render_template, Blueprint, url_for, redirect, send_from_directory
 from flask_user import current_user, login_required, current_app, roles_required
-from app.models import Submission, Revision, Document
+from app.models import Submission, Revision, Document, Notification
 from app.forms.forms import CreateDocumentForm
 from werkzeug.utils import secure_filename
 import datetime
@@ -13,7 +13,8 @@ main_blueprint = Blueprint('main', __name__)
 @login_required
 def index():
     """Home/Index Page"""
-    return render_template('main/index.jinja2')
+    notifs = Notification.get_by_user_id(user_id=current_user.id)
+    return render_template('main/index.jinja2', notifications=notifs)
 
 
 @main_blueprint.route('/profile')

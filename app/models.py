@@ -77,8 +77,13 @@ class Notification(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
-    text = db.Column(db.Unicode(50), nullable=False)
-    state = db.Column(db.Boolean, default=False)
+    title = db.Column(db.Unicode(), nullable=False)
+    data = db.Column(db.Unicode(50), nullable=False)
+    type = db.Column(db.Unicode(), default='warning')
+
+    @staticmethod
+    def get_by_user_id(*, user_id=None):
+        return Notification.query.filter(user_id == Notification.user_id).all()
 
 
 class Document(db.Model):
