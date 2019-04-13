@@ -43,9 +43,9 @@
           <h5>Personal Info</h5>
 
           {% if current_user.maiden_name %}
-          <b>Maiden Name:</b><br/>
-          {{ current_user.maiden_name }}
-          <br/><br/>
+            <b>Maiden Name:</b><br/>
+            {{ current_user.maiden_name }}
+            <br/><br/>
           {% endif %}
 
           <b>Birth Date:</b><br/>
@@ -53,9 +53,9 @@
           <br/><br/>
 
           {% if current_user.sec_email %}
-          <b>Personal E-Mail:</b><br/>
-          {{ current_user.sec_email }}
-          <br/><br/>
+            <b>Personal E-Mail:</b><br/>
+            {{ current_user.sec_email }}
+            <br/><br/>
           {% endif %}
 
           <b>Primary Phone:</b><br/>
@@ -63,29 +63,28 @@
           <br/><br/>
 
           {% if current_user.sec_phone %}
-          <b>Secondary Phone:</b><br/>
-          {{ current_user.sec_phone }}
-          <br/><br/>
+            <b>Secondary Phone:</b><br/>
+            {{ current_user.sec_phone }}
+            <br/><br/>
           {% endif %}
         </div>
       </div>
 
-        <hr>
+      <hr>
 
-        <h5>Address</h5>
-        {{ current_user.thoroughfare }}<br>
-        {% if current_user.premise %}
-          {{ current_user.premise }}<br>
-        {% endif %}
-        {{ current_user.locality }}, {{ current_user.administrative_area }} {{ current_user.postal_code }}<br>
-        {{ current_user.country }}
-        <br/><br/>
-       </p>
+      <h5>Address</h5>
+      {{ current_user.thoroughfare }}<br>
+      {% if current_user.premise %}
+        {{ current_user.premise }}<br>
+      {% endif %}
+      {{ current_user.locality }}, {{ current_user.administrative_area }} {{ current_user.postal_code }}<br>
+      {{ current_user.country }}
+      <br/><br/>
       <hr/>
 
       {# edit profile button #}
       <div class='col text-center'>
-        <a href='{{ url_for('user.edit_user_profile') }}'class='btn btn-primary px-5'>Edit profile</a>
+        <a href='{{ url_for('user.edit_user_profile') }}' class='btn btn-primary px-5'>Edit profile</a>
       </div>
     </div>
   </div>
