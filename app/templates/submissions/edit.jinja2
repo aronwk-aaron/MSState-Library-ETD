@@ -1,0 +1,189 @@
+{% extends 'base.jinja2' %}
+{% from "flask_user/_macros.html" import render_submit_field, render_field %}
+
+{% block title %}
+  Edit Submission
+{% endblock %}
+
+
+
+{% block css %}
+  {{ super() }}
+  {# load summernote CSS #}
+  <link href='http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css' rel='stylesheet'>
+{% endblock %}
+
+
+
+{% block content_before %}
+
+  {# title jumbotron #}
+  <div class='jumbotron shadow-sm py-4'>
+    <div class='container'>
+      <h1 class="m-0">Edit Submission</h1>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+{% block content %}
+
+  <form method="POST" enctype="multipart/form-data">
+
+    {# CSRF token #}
+    {{ form.csrf_token }}
+
+    {# properties #}
+
+    <div class="form-group">
+      <label for="{{ form.type.id }}" class="text-muted">{{ form.type.label.text }}</label>
+      {{ form.type(class='form-control', autofocus=true) }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.title.id }}" class="text-muted">{{ form.title.label.text }}</label>
+      {{ form.title(class='form-control', placeholder=form.title.label.text) }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.abstract.id }}" class="text-muted">{{ form.abstract.label.text }}</label>
+      {{ form.abstract(class='form-control ') }}
+    </div>
+    <hr/>
+
+    <h3>Student Agreement</h3>
+    <p class="px-3">
+      I hereby grant to Mississippi State University and it’s agents the non-exclusive license to archive and make
+      accessible, under the conditions specified below, my above-titled document, in part or while, in all forms of
+      media, now or hereafter known. I retain all ownership rights to the copyright of the thesis or dissertation and
+      the right to submit the same to publishers or other repositories.
+      <br>
+      <br>
+      In addition to the unrestricted display of bibliographic information and the abstract, I agree that the above
+      mentioned document may be placed in MSU’s ETD archive with the following status:
+      <br>
+      <ul>
+        <li>
+          <h4>Worldwide</h4>
+          Release the entire work immediately for access worldwide.
+          This option is strongly encouraged whenever appropriate. <br>
+          <b>However please note:</b> If you choose the Open Access option when submitting your document to ProQuest,
+          a $95 fee will be assessed.
+          <br>
+          <br>
+        </li>
+        <li>
+          <h4>Restricted</h4>
+          Restrict the entire work to Mississippi State University and patrons of it’s libraries, including interlibrary sharing period of:
+          <ul>
+            <li>1 year</li>
+            <li>2 years</li>
+            <li>3 years</li>
+           </ul>
+          During this restricted period, only those individuals with current MSU NetID’s or those using a computer with
+          an MSU IP address can access these documents online. After the selected time has passed,
+          the ETD will be released worldwide.
+          <br>
+          <br>
+        </li>
+        <li>
+         <h4>Embargo</h4>
+          Embargo the entire work for patent and/or proprietary purposes for a period of one year.
+          At the end of the one year period, either I or Mississippi State University may request in writing
+          an extension for one additional year by contacting the MSU Libraries Thesis and Dissertations Department
+          at <a href="mailto:etd@library.msstate.edu">etd@library.msstate.edu</a> or 662-325-2170. At the end of the one year secure period (or its extention,
+          if such is requested), the ETD will be release worldwide.
+          <br>
+          <br>
+        </li>
+      </ul>
+    </p>
+
+    <div class="form-group">
+      <label for="{{ form.release.id }}" class="text-muted">{{ form.release.label.text }}</label>
+      {{ form.release(class='form-control') }}
+    </div>
+
+    <div class="form-group" id="year-group">
+      <label for="{{ form.years.id }}" class="text-muted">{{ form.years.label.text }}</label>
+      {{ form.years(class='form-control') }}
+    </div>
+
+    <p class="px-3">
+      Any necessary co-authorship or copyright permissions must be secured. If you share authorship with anyone else
+      for any part of your dissertation or thesis, you need to acquire their permission to include that content. If any
+      content in your manuscript, including appendices, is already under another copyright (i.e., material previously
+      published by you), it may be necessary to acquire permission form the copyright holder to use that content.
+      All such permissions must accompany your submission.
+      <br>
+      <br>
+      By submitting signatures here, I certify that I have read and acknowledge this requirement.
+    </p>
+
+    {{ render_field(form.professor) }}
+
+    <p class="px-3">
+      My attached signature indicates that I have counseled the student regarding the appropriate access level for the
+      electronic thesis/dissertation named above.
+      <br>
+      <br>
+    <h4>You must attach both your's and your major professor's signature for this document</h4>
+    </p>
+
+    <div class="form-group">
+      <label for="{{ form.signature.id }}" class="text-muted">{{ form.signature.label.text }}</label><br/>
+      {{ form.signature }}
+      {% if form.signature.errors %}
+        {% for e in form.signature.errors %}
+            <p class="help-block text-danger">{{ e }}</p>
+        {% endfor %}
+      {% endif %}
+    </div>
+    <hr>
+    <p class="px-3">
+      You will submit your paper on the next page.
+    </p>
+    {{ render_submit_field(form.submit) }}
+  </form>
+
+{% endblock %}
+
+
+
+{% block js %}
+  {{ super() }}
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js'></script>
+  <script>
+    $("#year-group").hide()
+    $(function () {
+      $('#abstract').summernote({
+        placeholder: 'Abstract',
+        tabsize: 2,
+        minHeight: 200,
+        toolbar: [
+          // [groupName, [list of button]]
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['strikethrough', 'superscript', 'subscript']],
+          ['fontsize', ['fontsize']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['help']
+        ]
+      });
+    });
+
+    // show hide years form group depending uping the release type selected
+     $('#release').on('change',function(){
+      if( $(this).val()==="1"){
+        // show
+        $("#year-group").show();
+      }
+      else{
+        // hide and change value to none
+        $("#year-group").hide();
+        $("#years").val("0").change();
+      }
+  });
+  </script>
+
+{% endblock %}

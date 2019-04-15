@@ -1,7 +1,7 @@
 import os
 from flask import render_template, Blueprint, redirect, url_for, current_app
 from flask_user import current_user, login_required, roles_required
-from app.forms.forms import CreateSubmissionForm
+from app.forms.forms import CreateSubmissionForm, EditSubmissionForm
 from app.models import Submission, User, Revision, Review
 from werkzeug.utils import secure_filename
 
@@ -44,14 +44,56 @@ def create():
         submission_id = Submission.create_submission(params=params)
 
         return redirect(url_for('revisions.create', submission_id=submission_id))
+    else:
+        return render_template('submissions/create.jinja2', form=form)
 
-    return render_template('submissions/create.jinja2', form=form)
+
+@submissions_blueprint.route('/edit/<submission_id>', methods=['GET', 'POST'])
+@login_required
+@roles_required('user')
+def edit(submission_id):
+    """edit submission page"""
+
+    submission = Submission.get_submission_by_id(submission_id=submission_id)
+    if submission.state or submission.user_id != current_user.id:
+        return redirect(url_for('submissions.view', submission_id=submission_id))
+    else:
+        data = {'type': submission.type,
+                'title': submission.title,
+                'abstract': submission.abstract,
+                'release_type': submission.release_type,
+                'ww_length': submission.ww_length,
+                'professor': submission.professor}
+        form = EditSubmissionForm(data=data)
+        if form.validate_on_submit():
+            filename = submission.signature_file
+            if form.signature.data:
+                f = form.signature.data
+                fname = secure_filename(f.filename)
+                fileext = fname.rsplit('.', 1)[1].lower()
+                filename = '{last_name}_{first_name}_{title}_signatures.{ext}'.format(
+                    last_name=current_user.last_name,
+                    first_name=current_user.first_name,
+                    title=form.title.data,
+                    ext=fileext)
+                f.save(os.path.join(current_app.config['SIGNATURE_FOLDER'], filename))
+
+            if submission.title != form.title.data:
+                os.remove(os.path.join(current_app.config['SIGNATURE_FOLDER'], submission.signature_file))
+
+            form.user_id.data = current_user.id
+            params = {'form_data': form.data, 'filename': filename, 'submission_id': submission_id}
+            submission_id = Submission.update_submission(params=params)
+
+            return redirect(url_for('submissions.view', submission_id=submission_id))
+        else:
+            return render_template('submissions/edit.jinja2', form=form, submission=submission)
 
 
 @submissions_blueprint.route('/view/<submission_id>')
 @login_required
 def view(submission_id):
-    """Submission revision view page"""
+    """Submission view page"""
     submission = Submission.get_submission_by_id(submission_id=submission_id)
     revisions = Revision.get_all_revisions_by_submission_id(submission_id=submission_id)
     review_last = False

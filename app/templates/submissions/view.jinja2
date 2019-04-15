@@ -25,6 +25,9 @@
           Submission has been Approved
         {% else %}
           Submission is in the review process
+          <br>
+          <br>
+          <a class="btn btn-primary" href="{{ url_for('submissions.edit', submission_id=submission.id) }}">Edit Submission</a>
         {% endif %}
       </span>
     </div>

@@ -272,6 +272,53 @@ class CreateSubmissionForm(FlaskForm):
     submit = SubmitField('Create Submission')
 
 
+class EditSubmissionForm(FlaskForm):
+    id = HiddenField()
+    user_id = HiddenField()
+    title = StringField('Title', validators=[
+        DataRequired()
+    ])
+    abstract = TextAreaField('Abstract', validators=[
+        DataRequired()
+    ])
+
+    type = SelectField('Document type', validators=[
+        DataRequired()
+    ], choices=[
+        ('0', 'Master\'s Thesis'),
+        ('1', 'Educational Specialist\'s Thesis'),
+        ('2', 'Doctoral Disseration'),
+    ])
+
+    release = SelectField('Release type', validators=[
+        DataRequired()
+    ], choices=[
+        ('0', 'Worldwide'),
+        ('1', 'Restricted'),
+        ('2', 'Embargo'),
+    ])
+
+    professor = StringField('Major Professor\'s NetID', validators=[
+        DataRequired(),
+        Length(max=8)
+    ])
+
+    years = SelectField('Restict time (if Restricted is selected)', validators=[
+        DataRequired()
+    ], choices=[
+        ('0', ''),
+        ('1', '1 year'),
+        ('2', '2 years'),
+        ('3', '3 years'),
+    ])
+
+    signature = FileField('Signature file', validators=[
+        FileAllowed(['pdf'], "PDF's only!")
+    ])
+
+    submit = SubmitField('Update Submission')
+
+
 class CreateRevisionForm(FlaskForm):
     id = HiddenField()
     submission_id = HiddenField()

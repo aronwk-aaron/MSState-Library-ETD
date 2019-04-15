@@ -154,6 +154,21 @@ class Submission(db.Model):
         return submission.id
 
     @staticmethod
+    def update_submission(*, params=None):
+        submission = Submission.query.filter(params['submission_id'] == Submission.id).first()
+
+        submission.title = params['form_data']['title'],
+        submission.abstract = params['form_data']['abstract'],
+        submission.type = params['form_data']['type'],
+        submission.release_type = params['form_data']['release'],
+        submission.ww_length = params['form_data']['years'],
+        submission.professor = params['form_data']['professor'],
+        submission.signature_file = params['filename'],
+
+        submission.save()
+        return submission.id
+
+    @staticmethod
     def complete_submission_by_id(*, submission_id=None):
         submission = Submission.query.filter(submission_id == Submission.id).first()
 
@@ -176,7 +191,8 @@ class Submission(db.Model):
         # get ones that user owns
         own = Submission.query \
             .join(User, User.id == Submission.user_id) \
-            .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.state, Submission.title, Submission.started) \
+            .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.state, Submission.title,
+                         Submission.started) \
             .filter(User.id == Submission.user_id) \
             .filter(Submission.user_id == User.id) \
             .filter(Submission.user_id == user_id) \
@@ -185,7 +201,8 @@ class Submission(db.Model):
         # get ones that user is listed as professor
         professors = Submission.query \
             .join(User, User.id == Submission.user_id) \
-            .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.state, Submission.title, Submission.started) \
+            .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.state, Submission.title,
+                         Submission.started) \
             .filter(User.id == Submission.user_id) \
             .filter(Submission.user_id == User.id) \
             .filter(Submission.professor == current_user.net_id) \
@@ -195,10 +212,11 @@ class Submission(db.Model):
     @staticmethod
     def get_all():
         return Submission.query \
-                .join(User, User.id == Submission.user_id) \
-                .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.state, Submission.title, Submission.started) \
-                .filter(User.id == Submission.user_id) \
-                .filter(Submission.user_id == User.id).all()
+            .join(User, User.id == Submission.user_id) \
+            .add_columns(User.id, User.first_name, User.last_name, Submission.id, Submission.state, Submission.title,
+                         Submission.started) \
+            .filter(User.id == Submission.user_id) \
+            .filter(Submission.user_id == User.id).all()
 
     @staticmethod
     def get_submission_by_signature(*, signature_filename=None):
@@ -241,7 +259,8 @@ class Review(db.Model):
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key=True)
-    revision_id = db.Column(db.Integer(), db.ForeignKey('revisions.id', ondelete='CASCADE'), unique=True, nullable=False)
+    revision_id = db.Column(db.Integer(), db.ForeignKey('revisions.id', ondelete='CASCADE'), unique=True,
+                            nullable=False)
     reviewed = db.Column(ArrowType, default=arrow.now())
     reviewer_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     # 32 check boxes + comment box
