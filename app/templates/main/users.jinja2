@@ -66,16 +66,22 @@
               Helper
             {% endif %}
           </td>
-          <form method="POST">
-            {{ form.csrf_token }}
-            {{ form.user_id(value=user.id) }}
-            <td>
-              {{ form.role_id(class='form-control') }}
+          {% if user.id != current_user.id %}
+            <form method="POST">
+              {{ form.csrf_token }}
+              {{ form.user_id(value=user.id) }}
+              <td>
+                {{ form.role_id(class='form-control') }}
+              </td>
+              <td>
+                {{ render_submit_field(form.submit) }}
+              </td>
+            </form>
+          {% else %}
+            <td colspan="2">
+              Cannnot change your own role
             </td>
-            <td>
-              {{ render_submit_field(form.submit) }}
-            </td>
-          </form>
+          {% endif %}
         </tr>
       {% endfor %}
     </tbody>
