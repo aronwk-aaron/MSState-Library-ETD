@@ -1,8 +1,8 @@
 import os
-from flask import render_template, Blueprint, url_for, redirect, send_from_directory
+from flask import render_template, Blueprint, url_for, redirect, send_from_directory, request
 from flask_user import current_user, login_required, current_app, roles_required
-from app.models import Submission, Revision, Document
-from app.forms.forms import CreateDocumentForm
+from app.models import Submission, Revision, Document, User, UsersRoles
+from app.forms.forms import CreateDocumentForm, UpdateRoleForm
 from werkzeug.utils import secure_filename
 import datetime
 
@@ -102,6 +102,21 @@ def documents():
     """documents Page"""
     query = Document.get_all()
     return render_template('main/documents.jinja2', documents=query)
+
+
+@main_blueprint.route('/users', methods=['GET', 'POST'])
+@login_required
+@roles_required('admin')
+def users():
+    form = UpdateRoleForm()
+    # form will not validate, so just checking if it's a post request
+    # print(form.validate_on_submit())
+    if request.method == 'POST':
+        UsersRoles.update_userrole(user_id=form.user_id.data, role_id=form.role_id.data)
+
+    user_list = User.get_all()
+    """About Page"""
+    return render_template('main/users.jinja2', users=user_list, form=form)
 
 
 @main_blueprint.route('/about')

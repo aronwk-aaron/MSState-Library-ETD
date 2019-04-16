@@ -55,6 +55,16 @@ class User(db.Model, UserMixin):
     def get_user_by_id(*, user_id=None):
         return User.query.filter(user_id == User.id).first()
 
+    @staticmethod
+    def get_all():
+        return User.query \
+            .join(UsersRoles, User.id == UsersRoles.user_id) \
+            .add_columns(User.id, User.first_name, User.last_name, User.email, User.net_id, User.msu_id,
+                         UsersRoles.role_id) \
+            .filter(User.id == UsersRoles.user_id) \
+            .filter(UsersRoles.user_id == User.id) \
+            .all()
+
 
 # Define the Role data model
 class Role(db.Model):
@@ -70,6 +80,17 @@ class UsersRoles(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
     role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @staticmethod
+    def update_userrole(*, user_id=None, role_id=None):
+        user = UsersRoles.query.filter(user_id == UsersRoles.user_id).first()
+        user.role_id = role_id
+
+        user.save()
 
 
 class Notification(db.Model):

@@ -176,11 +176,11 @@ def create_users():
 
     # Adding roles
     print('Creating Roles.')
-    admin_role = find_or_create_role('admin', u'Admin')
-    user_role = find_or_create_role('user', u'User')
-    reviewer = find_or_create_role('reviewer', u'Reviewer')
-    viewer = find_or_create_role('viewer', u'Viewer')
-    helper = find_or_create_role('helper', u'Helper')
+    admin_role = find_or_create_role('admin', u'Admin')  # 1
+    user_role = find_or_create_role('user', u'User')  # 2
+    reviewer = find_or_create_role('reviewer', u'Reviewer')  # 3
+    viewer = find_or_create_role('viewer', u'Viewer')  # 4
+    helper = find_or_create_role('helper', u'Helper')  # 5
 
 
     # Add users

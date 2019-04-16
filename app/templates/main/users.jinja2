@@ -1,0 +1,101 @@
+{% extends 'base.jinja2' %}
+{% from "flask_user/_macros.html" import render_submit_field %}
+
+{% block title %}Users{% endblock %}
+
+
+{% block content_before %}
+
+  {# title jumbotron #}
+  <div class='jumbotron shadow-sm py-4'>
+    <div class='container'>
+      <h1 class="m-0">Users</h1>
+    </div>
+  </div>
+
+{% endblock %}
+
+
+
+{% block content %}
+  {{ form.csrf_token }}
+  <table class="table table-white table-striped table-bordered table-hover"
+         id="table_id"
+         data-order='[[ 1, "asc" ]]'
+         data-page-length='25'>
+    <thead>
+    <tr>
+      <th scope="col">User ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">NetID</th>
+      <th scope="col">MSU ID</th>
+      <th scope="col">Role</th>
+      <th scope="col">New Role</th>
+      <th scope="col">Update User</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+        <td>
+          {{ user.id }}
+        </td>
+          <td>
+            {{ user.last_name }}, {{ user.first_name }}
+          </td>
+          <td>
+            {{ user.email }}
+          </td>
+          <td>
+            {{ user.net_id }}
+          </td>
+          <td>
+            {{ user.msu_id }}
+          </td>
+          <td>
+            {% if user.role_id == 1 %}
+              Admin
+            {% elif user.role_id == 2 %}
+              User
+            {% elif user.role_id == 3 %}
+              Reviewer
+            {% elif user.role_id == 4 %}
+              Viewer
+            {% elif user.role_id == 5 %}
+              Helper
+            {% endif %}
+          </td>
+          <form method="POST">
+            {{ form.csrf_token }}
+            {{ form.user_id(value=user.id) }}
+            <td>
+              {{ form.role_id(class='form-control') }}
+            </td>
+            <td>
+              {{ render_submit_field(form.submit) }}
+            </td>
+          </form>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
+
+{% block css %}
+  {{ super() }}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+{% endblock %}
+
+{% block js %}
+  {{ super() }}
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  <script>
+    $(document).ready( function () {
+      $('#table_id').DataTable({
+        "columnDefs": [{ "orderable": false, "targets": 4 }]
+      });
+    });
+  </script>
+{% endblock %}
