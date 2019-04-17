@@ -111,7 +111,7 @@ def users():
     form = UpdateRoleForm()
     # form will not validate, so just checking if it's a post request
     # print(form.validate_on_submit())
-    if request.method == 'POST':
+    if request.method == 'POST' and form.user_id.data != current_user.id:
         UsersRoles.update_userrole(user_id=form.user_id.data, role_id=form.role_id.data)
 
     user_list = User.get_all()

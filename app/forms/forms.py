@@ -443,10 +443,10 @@ class UpdateRoleForm(FlaskForm):
                           choices=[
                               ('', ''),
                               (1, 'Admin'),
-                              {2, 'User'},
+                              (2, 'User'),
                               (3, 'Reviewer'),
                               (4, 'Viewer'),
-                              (5, 'Helper'),  # it needs this trailing comma to work properly?
+                              (5, 'Helper')
                           ],
                           validators=[
                               DataRequired()
