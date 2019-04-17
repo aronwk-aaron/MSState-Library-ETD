@@ -68,7 +68,7 @@ def upload_document():
         fname = secure_filename(f.filename)
         fileext = fname.rsplit('.', 1)[1].lower()
         filename = "{title}_{time}.{ext}".format(
-            title=form.tite.data,
+            title=form.title.data,
             time=datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S"),
             ext=fileext)
 
