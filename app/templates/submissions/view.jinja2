@@ -27,7 +27,9 @@
           Submission is in the review process
           <br>
           <br>
-          <a class="btn btn-primary" href="{{ url_for('submissions.edit', submission_id=submission.id) }}">Edit Submission</a>
+          {% if current_user.id == user.id %}
+            <a class="btn btn-primary" href="{{ url_for('submissions.edit', submission_id=submission.id) }}">Edit Submission</a>
+          {% endif %}
         {% endif %}
       </span>
     </div>
