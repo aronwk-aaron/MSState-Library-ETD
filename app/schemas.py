@@ -1,5 +1,4 @@
 from flask_marshmallow.sqla import ModelSchema
-from app import ma
 from .models import User, Notification, Submission, Revision, Review
 
 
