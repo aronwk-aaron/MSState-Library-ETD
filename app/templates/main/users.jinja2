@@ -19,27 +19,25 @@
 
 {% block content %}
   <table class="table table-white table-striped table-bordered table-hover"
-         id="table_id"
-         data-order='[[ 1, "asc" ]]'
-         data-page-length='25'>
+         id="user_table_id">
     <thead>
-    <tr>
-      <th scope="col">User ID</th>
-      <th scope="col">Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">NetID</th>
-      <th scope="col">MSU ID</th>
-      <th scope="col">Role</th>
-      <th scope="col">New Role</th>
-      <th scope="col">Update User</th>
-    </tr>
+      <tr>
+        <th scope="col">User ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">NetID</th>
+        <th scope="col">MSU ID</th>
+        <th scope="col">Role</th>
+        <th scope="col">New Role</th>
+        <th scope="col">Update User</th>
+      </tr>
     </thead>
     <tbody>
       {% for user in users %}
         <tr>
-        <td>
-          {{ user.id }}
-        </td>
+          <td>
+            {{ user.id }}
+          </td>
           <td>
             {{ user.last_name }}, {{ user.first_name }}
           </td>
@@ -80,26 +78,22 @@
             <td colspan="2">
               Cannnot change your own role
             </td>
+            <td class="d-none">
+            </td>
           {% endif %}
         </tr>
       {% endfor %}
     </tbody>
   </table>
-
-{% endblock %}
-
-{% block css %}
-  {{ super() }}
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 {% endblock %}
 
 {% block js %}
   {{ super() }}
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
   <script>
     $(document).ready( function () {
-      $('#table_id').DataTable({
-        "columnDefs": [{ "orderable": false, "targets": 4 }]
+      $('#user_table_id').DataTable({
+        "columnDefs": [{ "orderable": false, "targets": [6,7] },
+                       { "searchable": false, "targets": [6,7]}]
       });
     });
   </script>

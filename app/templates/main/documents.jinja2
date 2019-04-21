@@ -22,64 +22,77 @@
 {% endblock %}
 
 {% block content %}
-  <div class="card">
-    <div class="card-body">
-      {% if documents %}
-        <table class="table table-white table-striped table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>
-              Title
-            </th>
-            <th>
-              Description
-            </th>
-            <th>
-              File
-            </th>
-            {% if current_user.has_roles(['admin', 'reviewer']) %}
-              <th>
-                Delete
-              </th>
-            {% endif %}
-          </tr>
-        </thead>
-        <tbody>
-          {% for document in documents %}
-            <tr>
-              <td>
-                {{ document.title }}
-              </td>
-              <td>
-                {{ document.description }}
-              </td>
-              <td>
-                <a href="{{ url_for('main.serve_documents', filename=document.filename) }}"
-                 class="btn btn-primary"
-                 role="button"
-                 aria-disabled="true">
-                  View Document
-                </a>
-              </td>
-              {% if current_user.has_roles(['admin', 'reviewer']) %}
-                <td>
-                  <form>
-                    <a href="{{ url_for('main.delete_document', document_id = document.id) }}"
-                       class="btn btn-primary"
-                       role="button"
-                       aria-disabled="true">
-                        Delete
-                      </a>
-                  </form>
-                </td>
-              {% endif %}
-            </tr>
-          {% endfor %}
-        </tbody>
-        </table>
-      {% else %}
-      No documents
-      {% endif %}
-    </div>
-  </div>
+  {% if documents %}
+    <table class="table table-white table-striped table-bordered table-hover"
+           id="doc_table_id">
+    <thead>
+      <tr>
+        <th>
+          Title
+        </th>
+        <th>
+          Description
+        </th>
+        <th>
+          File
+        </th>
+        {% if current_user.has_roles(['admin', 'reviewer']) %}
+          <th>
+            Delete
+          </th>
+        {% else %}
+          <th class="d-none">DataTables Fix</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for document in documents %}
+        <tr>
+          <td>
+            {{ document.title }}
+          </td>
+          <td>
+            {{ document.description }}
+          </td>
+          <td>
+            <a href="{{ url_for('main.serve_documents', filename=document.filename) }}"
+             class="btn btn-primary"
+             role="button"
+             aria-disabled="true">
+              View Document
+            </a>
+          </td>
+          {% if current_user.has_roles(['admin', 'reviewer']) %}
+            <td>
+              <form>
+                <a href="{{ url_for('main.delete_document', document_id = document.id) }}"
+                   class="btn btn-primary"
+                   role="button"
+                   aria-disabled="true">
+                    Delete
+                  </a>
+              </form>
+            </td>
+          {% else %}
+            <td class="d-none">DataTables Fix</td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+  {% else %}
+    No documents
+  {% endif %}
+{% endblock %}
+
+{% block js %}
+  {{ super() }}
+  <script>
+    $(document).ready( function () {
+      $('#doc_table_id').DataTable({
+        "columnDefs": [{ "orderable": false, "targets": [2,3]},
+                       { "searchable": false, "targets": [2,3]}]
+      });
+    });
+  </script>
 {% endblock %}

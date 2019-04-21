@@ -24,8 +24,8 @@
                    aria-disabled="true">
       Create Submission
     </a>
-    {% endif %}
-  <hr/>
+    <hr/>
+  {% endif %}
 
   {% if submissions %}
   <table class="table table-white table-striped table-bordered table-hover"
@@ -78,14 +78,8 @@
 
 {% endblock %}
 
-{% block css %}
-  {{ super() }}
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-{% endblock %}
-
 {% block js %}
   {{ super() }}
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
   <script>
     $(document).ready( function () {
       $('#table_id').DataTable({
