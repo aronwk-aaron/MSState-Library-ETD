@@ -107,9 +107,6 @@ def register_blueprints(app):
     from .revisions import revisions_blueprint
     app.register_blueprint(revisions_blueprint, url_prefix='/revisions')
 
-    # from .auth import auth_blueprint
-    # app.register_blueprint(auth_blueprint)
-
 
 def init_email_error_handler(app):
     """

@@ -8,4 +8,4 @@ COPY ./app /app
 
 EXPOSE 8000
 
-ENTRYPOINT ["gunicorn", "-b", ":8000", "wsgi:app"]
+ENTRYPOINT ["gunicorn", "-b", ":8000", "-w", "4", "wsgi:app"]
