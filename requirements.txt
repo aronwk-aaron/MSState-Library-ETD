@@ -1,6 +1,6 @@
 alembic==1.0.8
 argon2-cffi==19.1.0
-arrow==0.13.1
+arrow==0.15.1
 asn1crypto==0.24.0
 bcrypt==3.1.6
 blinker==1.4
